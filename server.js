@@ -2,6 +2,7 @@ require("dotenv").config();
 const express = require('express');
 const connectDB = require("./config/database");
 const authRoutes = require("./routes/authRoutes");
+const dashboardRoutes = require("./routes/dashboardRoute");
 const app = express();
 const cors = require("cors");
 app.use(express.json());
@@ -10,6 +11,7 @@ app.use(cors());
 connectDB();
 
 app.use("/auth", authRoutes);
+app.use("/", dashboardRoutes);
 
 const PORT = process.env.PORT || 5000;
 // const JWT_SECRET = process.env.JWT_SECRET
