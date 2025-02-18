@@ -30,17 +30,20 @@ const Login = () => {
                 transition: Bounce,
             });
         } catch (error) {
-            toast.error(error.response?.data?.message || "Login failed. Please check your credentials.", {
-                position: "top-center",
-                autoClose: 5000,
-                hideProgressBar: false,
-                closeOnClick: true,
-                pauseOnHover: true,
-                draggable: true,
-                progress: undefined,
-                theme: "light",
-                transition: Bounce,
-            });
+            if (error.response?.data?.message) {
+                toast.error("Login Failed.Please check your credentials", {
+                    position: "top-center",
+                    autoClose: 5000,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: true,
+                    progress: undefined,
+                    theme: "light",
+                    transition: Bounce,
+                });
+            }
+
 
         } finally {
             setLoading(false);

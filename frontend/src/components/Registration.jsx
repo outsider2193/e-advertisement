@@ -52,65 +52,24 @@ const Registration = () => {
         setLoading(true);
         try {
             const res = await API.post("/auth/register", data);
-            // console.log("Registration succesfull"
             toast.success("Registration succesfull!");
+            console.log(data);
             navigate("/login")
         }
         catch (error) {
-            // console.log(error.response?.data?.message);
-            toast.error("Registration failed ", error.response?.data?.message);
+            if (error.response?.data?.message && error.status === 400) {
+                toast.error("User already exists");
+            }
+            else {
+                toast.error("Registration failed");
+            }
+
         }
         setLoading(false);
     }
 
     return (
-        // <div style={{ textAlign: "center" }}>
-        //     <h1> Registraion </h1>
 
-        //     <form onSubmit={handleSubmit(handlerSubmit)}>
-
-        //         <div>
-        //             <label>Firstname:</label>
-        //             <input type='text' placeholder='enter your firstname here '{...register("firstName", validations.nameValidation)}></input>
-        //             <span>
-        //                 {
-        //                     errors.firstname?.message
-        //                 }
-        //             </span>
-        //         </div>
-        //         <div>
-        //             <label>lastName:</label>
-        //             <input type='text' placeholder='enter your lastname here '{...register("lastName", validations.lastNameValidation)}></input>
-        //             <span>
-        //                 {
-        //                     errors.lastName?.message
-        //                 }
-        //             </span>
-        //         </div>
-        //         <div>
-        //             <label>Email:</label>
-        //             <input type='email' placeholder='enter your email here '{...register("email", validations.emailValidation)}></input>
-        //             <span>
-        //                 {
-        //                     errors.email?.message
-        //                 }
-        //             </span>
-        //         </div>
-        //         <div>                <label>Password:</label>
-        //             <input type='text' placeholder='enter your password here '{...register("password", validations.passwordValidation)}></input>
-        //             <span>
-        //                 {
-        //                     errors.password?.message
-        //                 }
-        //             </span>
-        //         </div>
-        //         <input type="submit" disabled={loading} value={loading ? "Registering..." : "Register"} />
-        //         <div>
-
-        //         </div>
-
-        //     </form>
-        // </div>
         <Container maxWidth="sm">
             <Box
                 sx={{
@@ -187,3 +146,5 @@ const Registration = () => {
 export default Registration
 //YOgesh!0vesD@@#
 //VE3gil!011
+//MiiR12@!
+//PrathaM1@!
