@@ -1,32 +1,3 @@
-
-// const user = require("../models/user");
-// const mongoose = require("mongoose");
-
-// const getAdDashboard = async (req, res) => {
-//     const { id } = req.params;
-//     try {
-//         if (!mongoose.Types.ObjectId.isValid(id)) {
-//             return res.status(400).json({ message: "Invalid ID format" });
-//         }
-
-//         // Compare ObjectId using .equals()
-//         if (!req.user.id.equals(mongoose.Types.ObjectId(id))) {
-//             return res.status(403).json({ message: "Forbidden! You don't have access" });
-//         }
-
-//         const advertiserData = await user.findById(id);
-//         if (!advertiserData) {
-//             return res.status(404).json({ message: "No advertiser data found" });
-//         }
-//         res.status(200).json({ message: `Hello ${req.user.firstname}, welcome to advertiser dashboard` });
-//     } catch (error) {
-//         console.error(error);
-//         res.status(500).json({ message: "Server Error" })
-//     }
-// };
-
-// module.exports = { getAdDashboard };
-
 const user = require("../models/user");
 const mongoose = require("mongoose");
 
