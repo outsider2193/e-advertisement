@@ -52,13 +52,7 @@ const Registration = () => {
         setLoading(true);
         try {
             const res = await API.post("/auth/register", data);
-            const token = res.data?.token;
-            if (!token) {
-                console.log("Token not received from the server");
-            }
-            localStorage.setItem("token", token);
-            console.log("token:",token);
-            toast.success("Registration succesfull!");
+                        toast.success("Registration succesfull!");
             navigate("/login")
         }
         catch (error) {

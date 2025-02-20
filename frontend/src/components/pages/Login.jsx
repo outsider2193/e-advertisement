@@ -15,7 +15,12 @@ const Login = () => {
         setLoading(true)
         try {
             const response = await API.post("/auth/login", data)
-            localStorage.setItem("token", response.data.token);
+            const token = res.data?.token;
+            if (!token) {
+                console.log("Token not received from the server");
+            }
+            localStorage.setItem("token", token);
+            console.log("token:", token);
             // navigate("/dashboard");
             console.log("logged in")
             toast.success("Successfully logged in!", {
