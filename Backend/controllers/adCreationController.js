@@ -1,4 +1,3 @@
-// const express = require("express");
 const Ad = require("../models/ads");
 
 const createAds = async (req, res) => {
