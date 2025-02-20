@@ -14,11 +14,12 @@ const Login = () => {
     const submitHandler = async (data) => {
         setLoading(true)
         try {
-            const response = await API.post("/auth/login", data)
+            const res = await API.post("/auth/login", data)
             const token = res.data?.token;
             if (!token) {
                 console.log("Token not received from the server");
             }
+            console.log(data);
             localStorage.setItem("token", token);
             console.log("token:", token);
             // navigate("/dashboard");

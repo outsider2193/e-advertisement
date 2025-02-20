@@ -1,5 +1,4 @@
 require("dotenv").config();
-const express = require("express");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const user = require("../models/user");
@@ -32,7 +31,18 @@ const registerAdvertiser = async (req, res) => {
             role
         });
         await newUser.save();
-        res.status(201).json({ message: "Advertiser registered succesfully" });
+        // const token = jwt.sign(
+        //     {
+        //         id: existingUser._id,
+        //         email: existingUser.email,
+        //         role: existingUser.role
+        //     },
+        //     secretKey,
+        //     {
+        //         expiresIn: "1y"
+        //     }
+        // );
+        res.status(201).json({ message: "Advertiser registered succesfully", token });
     } catch (error) {
         console.error(error);
         res.status(500).json({ message: "Server Error" });

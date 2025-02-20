@@ -1,4 +1,3 @@
-// const id = require("../controllers/adCreationController");
 const Ad = require("../models/ads");
 const getAds = async (req, res) => {
     try {
