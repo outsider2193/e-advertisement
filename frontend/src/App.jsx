@@ -6,6 +6,9 @@ import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { Navbar } from './components/Navbar';
 import { WelcomeHome } from './components/pages/WelcomeHome';
+import { SpecificRegister } from './components/pages/SpecificRegister';
+import { Dashboard } from './components/advertiser/Dashboard';
+import { User } from './components/user/User';
 function App() {
   const [count, setCount] = useState(0)
 
@@ -15,9 +18,12 @@ function App() {
         <Navbar></Navbar>
 
         <Routes>
-          <Route path='/' element={<WelcomeHome/>}></Route>
-          <Route path='/register' element={<Registration />}></Route>
+          <Route path='/' element={<WelcomeHome />}></Route>
+          <Route path='/register/:role' element={<Registration />}></Route>
           <Route path='/login' element={<Login />}></Route>
+          <Route path='/specificregister' element={<SpecificRegister />}></Route>
+          <Route path='/advertiser/dashboard' element={<Dashboard />}></Route>
+          <Route path='/user/dashboard' element={<User />}></Route>
 
         </Routes>
         <ToastContainer />

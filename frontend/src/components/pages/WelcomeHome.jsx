@@ -7,7 +7,7 @@ export const WelcomeHome = () => {
     const navigate = useNavigate();
 
     const handleStart = ()=>{
-        navigate('/register');
+        navigate('/specificregister');
     }
 
 

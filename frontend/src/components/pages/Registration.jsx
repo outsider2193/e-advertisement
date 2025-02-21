@@ -3,13 +3,13 @@ import { useForm } from "react-hook-form"
 import API from '../../api/axios';
 import { TextField, Button, Container, Typography, Box } from "@mui/material";
 import { toast } from "react-toastify";
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useNavigate, useParams } from 'react-router-dom';
 
 const Registration = () => {
     const { register, handleSubmit, formState: { errors } } = useForm();
     const [loading, setLoading] = useState(false);
     const navigate = useNavigate();
-
+    const { role } = useParams();
     const validations = {
         nameValidation: {
             required: {
@@ -48,11 +48,15 @@ const Registration = () => {
             }
         }
     }
+
+
     const handlerSubmit = async (data) => {
         setLoading(true);
+        const endpoint = role === "advertiser" ? "/auth/register/advertiser" : "/auth/register";
         try {
-            const res = await API.post("/auth/register", data);
-                        toast.success("Registration succesfull!");
+            const res = await API.post(endpoint, data);
+            console.log(res.data);
+            toast.success("Registration succesfull!");
             navigate("/login")
         }
         catch (error) {
@@ -147,3 +151,4 @@ export default Registration
 //VE3gil!011
 //MiiR12@!
 //PrathaM1@!
+//TEjas@#12
