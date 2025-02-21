@@ -7,10 +7,10 @@ import 'react-toastify/dist/ReactToastify.css';
 import { Navbar } from './components/Navbar';
 import { WelcomeHome } from './components/pages/WelcomeHome';
 import { SpecificRegister } from './components/pages/SpecificRegister';
-import { Dashboard } from './components/advertiser/Dashboard';
 import { User } from './components/user/User';
+import { Dashboard } from './components/agency/advertiser/Dashboard';
 function App() {
-  const [count, setCount] = useState(0)
+
 
   return (
     <>
@@ -22,6 +22,7 @@ function App() {
           <Route path='/register/:role' element={<Registration />}></Route>
           <Route path='/login' element={<Login />}></Route>
           <Route path='/specificregister' element={<SpecificRegister />}></Route>
+          {/* <Route path='/advertiser/dashboard' element={<Dashboard />}></Route> */}
           <Route path='/advertiser/dashboard' element={<Dashboard />}></Route>
           <Route path='/user/dashboard' element={<User />}></Route>
 
