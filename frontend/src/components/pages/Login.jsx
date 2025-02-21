@@ -5,6 +5,7 @@ import API from '../../api/axios';
 import { TextField, Button, Container, Typography, Box } from "@mui/material";
 import { toast, Bounce } from "react-toastify";
 import { Link, useNavigate } from 'react-router-dom';
+import { jwtDecode } from "jwt-decode";
 const Login = () => {
 
     const { register, handleSubmit, formState: { errors } } = useForm();
@@ -21,6 +22,13 @@ const Login = () => {
             }
             console.log(data);
             localStorage.setItem("token", token);
+            const decoded = jwtDecode(res.data.token);
+            const userRole = decoded.role;
+            if (userRole === "advertiser") {
+                navigate("/advertiser/dashboard");
+            } else {
+                navigate("/user/dashboard")
+            }
             console.log("token:", token);
             // navigate("/dashboard");
             console.log("logged in")
