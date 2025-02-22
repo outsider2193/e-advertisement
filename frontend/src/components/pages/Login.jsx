@@ -16,22 +16,34 @@ const Login = () => {
         setLoading(true)
         try {
             const res = await API.post("/auth/login", data)
-            const token = res.data?.token;
-            if (!token) {
-                console.log("Token not received from the server");
+            const token = res.data?.token || res.data?.message?.token;
+            if (token) {
+                localStorage.removeItem("token");
+                localStorage.setItem("token", token);
+            } else {
+                console.error("No token received from the server");
             }
-            console.log(data);
-            localStorage.setItem("token", token);
-            const decoded = jwtDecode(res.data.token);
+            // if (token) {
+            //     console.log("Removing old token...");
+            //     localStorage.removeItem("token"); // Ensure old token is removed
+
+            //     console.log("Saving new token:", token);
+            //     localStorage.setItem("token", token);
+
+            //     console.log("Checking if localStorage updated:", localStorage.getItem("token"));
+            // }
+            //  else {
+            //     console.error("No token received from the server");
+            // }
+            console.log(token);
+            const decoded = jwtDecode(token);
+            console.log(decoded);
             const userRole = decoded.role;
             if (userRole === "advertiser") {
                 navigate("/advertiser/dashboard");
             } else {
                 navigate("/user/dashboard")
             }
-            console.log("token:", token);
-            // navigate("/dashboard");
-            console.log("logged in")
             toast.success("Successfully logged in!", {
                 position: "top-center",
                 autoClose: 5000,
