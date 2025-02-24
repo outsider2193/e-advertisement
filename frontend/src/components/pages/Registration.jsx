@@ -52,7 +52,7 @@ const Registration = () => {
 
     const handlerSubmit = async (data) => {
         setLoading(true);
-        const endpoint = role === "advertiser" ? "/auth/register/advertiser" : "/auth/register";
+        const endpoint = role === "advertiser" ? "/auth/register/advertiser" : "/auth/register" ;
         try {
             const res = await API.post(endpoint, data);
             console.log(res.data);
@@ -153,3 +153,4 @@ export default Registration
 //PrathaM1@!
 //TEjas@#12
 //NIkunj@!12
+//VIsmay@#12

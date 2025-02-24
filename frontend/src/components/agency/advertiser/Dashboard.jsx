@@ -1,13 +1,41 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Box, Container, TextField, Typography, Button, CssBaseline } from '@mui/material'
 import { useForm } from 'react-hook-form'
-import axios from 'axios';
 import API from '../../../api/axios';
 import { toast } from 'react-toastify';
+import { useNavigate, useParams } from 'react-router-dom';
+import { jwtDecode } from "jwt-decode";
+
 export const Dashboard = () => {
 
     const { register, handleSubmit } = useForm();
     const [loading, setLoading] = useState(false);
+    const { id } = useParams();
+    const navigate = useNavigate();
+
+    useEffect(() => {
+        checkUser();
+    }, [id])
+
+    const checkUser = () => {
+        const token = localStorage.getItem("token");
+        if (!token) {
+            navigate("/token");
+        }
+        try {
+            const decoded = jwtDecode(token);
+            const userRole = decoded.role;
+            const userId = decoded.id;
+            if ((userId) !== id || userRole !== "advertiser") {
+                navigate("/login");
+
+            }
+        } catch (error) {
+            console.log(error);
+            navigate("/login");
+        }
+    }
+
     const handlerSubmit = async (data) => {
         setLoading(true);
         try {
@@ -23,7 +51,7 @@ export const Dashboard = () => {
     return (
         <>
             <CssBaseline />
-            <div style={{ paddingTop: "1px", textAlign: "center" }}> {/* Pushes content down */}
+            <div style={{ paddingTop: "1px", textAlign: "center" }}>
                 <h1>Advertiser Dashboard</h1>
             </div>
             <Container

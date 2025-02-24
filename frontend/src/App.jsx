@@ -1,4 +1,3 @@
-import { useState } from 'react'
 import { Routes, Route } from "react-router-dom";
 import Registration from './components/pages/Registration'
 import Login from './components/pages/Login';
@@ -22,8 +21,7 @@ function App() {
           <Route path='/register/:role' element={<Registration />}></Route>
           <Route path='/login' element={<Login />}></Route>
           <Route path='/specificregister' element={<SpecificRegister />}></Route>
-          {/* <Route path='/advertiser/dashboard' element={<Dashboard />}></Route> */}
-          <Route path='/advertiser/dashboard' element={<Dashboard />}></Route>
+          <Route path='/advertiser/dashboard/:id' element={<Dashboard />}></Route>
           <Route path='/user/dashboard' element={<User />}></Route>
 
         </Routes>

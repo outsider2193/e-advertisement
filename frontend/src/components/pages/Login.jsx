@@ -6,6 +6,7 @@ import { TextField, Button, Container, Typography, Box } from "@mui/material";
 import { toast, Bounce } from "react-toastify";
 import { Link, useNavigate } from 'react-router-dom';
 import { jwtDecode } from "jwt-decode";
+
 const Login = () => {
 
     const { register, handleSubmit, formState: { errors } } = useForm();
@@ -23,13 +24,14 @@ const Login = () => {
             } else {
                 console.error("No token received from the server");
             }
-            
+
             console.log(token);
             const decoded = jwtDecode(token);
             console.log(decoded);
             const userRole = decoded.role;
+            const userId = decoded.id;
             if (userRole === "advertiser") {
-                navigate("/advertiser/dashboard");
+                navigate(`/advertiser/dashboard/${userId}`);
             } else {
                 navigate("/user/dashboard")
             }
