@@ -93,7 +93,7 @@ export const SpecificRegister = () => {
                     </Card>
 
                     {/* Another Role (Optional) */}
-                    <Card
+                    {/* <Card
                         sx={{
                             flex: 1,
                             padding: 3,
@@ -118,7 +118,7 @@ export const SpecificRegister = () => {
                                 Register
                             </Button>
                         </CardContent>
-                    </Card>
+                    </Card> */}
                 </Box>
             </Container>
         </Box>

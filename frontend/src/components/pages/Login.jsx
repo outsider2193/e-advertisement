@@ -23,18 +23,7 @@ const Login = () => {
             } else {
                 console.error("No token received from the server");
             }
-            // if (token) {
-            //     console.log("Removing old token...");
-            //     localStorage.removeItem("token"); // Ensure old token is removed
-
-            //     console.log("Saving new token:", token);
-            //     localStorage.setItem("token", token);
-
-            //     console.log("Checking if localStorage updated:", localStorage.getItem("token"));
-            // }
-            //  else {
-            //     console.error("No token received from the server");
-            // }
+            
             console.log(token);
             const decoded = jwtDecode(token);
             console.log(decoded);
@@ -125,7 +114,7 @@ const Login = () => {
                     </Button>
                     <Typography variant='body2'
                         sx={{ mt: 2, textAlign: "center" }}>
-                        Don't have an account? <Link to="/register">Register here</Link>
+                        Don't have an account? <Link to="/register/:role">Register here</Link>
 
                     </Typography>
                 </form>
