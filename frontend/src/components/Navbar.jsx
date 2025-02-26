@@ -18,36 +18,7 @@ export const Navbar = () => {
             <li className="nav-item">
               <Link className="nav-link" to="/specificregister">Sign up</Link>
             </li>
-            {/* <li class="nav-item">
-      <Link class="nav-link" to="/formdemo1">Form1</Link>
-    </li>
-    <li class="nav-item">
-      <Link class="nav-link" to="/formdemo2">Form2</Link>
-    </li>
-    <li class="nav-item">
-      <Link class="nav-link" to="/formdemo3">Form3</Link>
-    </li>
-    <li class="nav-item">
-      <Link class="nav-link" to="/formdemo4">Form4</Link>
-    </li>
-    <li class="nav-item">
-      <Link class="nav-link" to="/formdemo5">Form5</Link>
-    </li>
-    <li class="nav-item">
-      <Link class="nav-link" to="/formdemo6">Form6</Link>
-    </li>
-    <li class="nav-item">
-      <Link class="nav-link" to="/formdemo7">Form7</Link>
-    </li>
-    <li class="nav-item">
-      <Link class="nav-link" to="/formdemo8">Form8</Link>
-    </li>
-    <li class="nav-item">
-      <Link class="nav-link" to="/formdemo9">Form9</Link>
-    </li> */}
-            {/* <li class="nav-item">
-      <Link class="nav-link" to="/formdemo10">Form10</Link>
-    </li> */}
+            
           </ul>
 
         </div>

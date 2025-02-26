@@ -1,4 +1,4 @@
-const Ad = require("../models/ads");
+const Ad = require("../models/adsModel");
 const getAds = async (req, res) => {
     try {
         const ads = await Ad.find({ advertserId: req.user._id });

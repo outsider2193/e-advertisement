@@ -6,6 +6,7 @@ import { TextField, Button, Container, Typography, Box } from "@mui/material";
 import { toast, Bounce } from "react-toastify";
 import { Link, useNavigate } from 'react-router-dom';
 import { jwtDecode } from "jwt-decode";
+import { Navbar } from "../Navbar"
 
 const Login = () => {
 
@@ -89,39 +90,42 @@ const Login = () => {
         }
     }
     return (
-        <Container maxWidth="sm">
-            <Box sx={{ mt: 5, p: 3, boxShadow: 3, borderRadius: 2 }}>
-                <Typography variant="h5" sx={{ mb: 2 }}>Login</Typography>
-                <form onSubmit={handleSubmit(submitHandler)}>
-                    <TextField
-                        fullWidth
-                        label="Email"
-                        type="email"
-                        {...register("email", validations.emailValidation)}
-                        error={!!errors.email}
-                        helperText={errors.email?.message}
-                        sx={{ mb: 2 }}
-                    />
-                    <TextField
-                        fullWidth
-                        label="Password"
-                        type="password"
-                        {...register("password", validations.passwordValidation)}
-                        error={!!errors.password}
-                        helperText={errors.password?.message}
-                        sx={{ mb: 2 }}
-                    />
-                    <Button type="submit" variant="contained" color="primary" fullWidth disabled={loading}>
-                        {loading ? "Logging in..." : "Login"}
-                    </Button>
-                    <Typography variant='body2'
-                        sx={{ mt: 2, textAlign: "center" }}>
-                        Don't have an account? <Link to="/register/:role">Register here</Link>
+        <>
+            <Navbar></Navbar>
+            <Container maxWidth="sm">
+                <Box sx={{ mt: 5, p: 3, boxShadow: 3, borderRadius: 2 }}>
+                    <Typography variant="h5" sx={{ mb: 2 }}>Login</Typography>
+                    <form onSubmit={handleSubmit(submitHandler)}>
+                        <TextField
+                            fullWidth
+                            label="Email"
+                            type="email"
+                            {...register("email", validations.emailValidation)}
+                            error={!!errors.email}
+                            helperText={errors.email?.message}
+                            sx={{ mb: 2 }}
+                        />
+                        <TextField
+                            fullWidth
+                            label="Password"
+                            type="password"
+                            {...register("password", validations.passwordValidation)}
+                            error={!!errors.password}
+                            helperText={errors.password?.message}
+                            sx={{ mb: 2 }}
+                        />
+                        <Button type="submit" variant="contained" color="primary" fullWidth disabled={loading}>
+                            {loading ? "Logging in..." : "Login"}
+                        </Button>
+                        <Typography variant='body2'
+                            sx={{ mt: 2, textAlign: "center" }}>
+                            Don't have an account? <Link to="/register/:role">Register here</Link>
 
-                    </Typography>
-                </form>
-            </Box>
-        </Container>
+                        </Typography>
+                    </form>
+                </Box>
+            </Container>
+        </>
     )
 }
 
