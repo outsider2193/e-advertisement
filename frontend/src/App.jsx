@@ -8,6 +8,7 @@ import { WelcomeHome } from './components/pages/WelcomeHome';
 import { SpecificRegister } from './components/pages/SpecificRegister';
 import { User } from './components/user/User';
 import { Dashboard } from './components/agency/advertiser/Dashboard';
+import { AdDetails } from "./components/agency/advertiser/AdDetails";
 function App() {
 
 
@@ -22,6 +23,7 @@ function App() {
           <Route path='/login' element={<Login />}></Route>
           <Route path='/specificregister' element={<SpecificRegister />}></Route>
           <Route path='/advertiser/dashboard/:id' element={<Dashboard />}></Route>
+          <Route path="/ad-detail" element={<AdDetails />}></Route>
           <Route path='/user/dashboard' element={<User />}></Route>
 
         </Routes>

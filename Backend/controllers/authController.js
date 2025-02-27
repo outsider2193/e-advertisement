@@ -13,7 +13,7 @@ const isValidPassword = (password) => /^.*(?=.{8,})(?=.*[a-zA-Z])(?=.*\d)(?=.*[!
 
 const registerUser = async (req, res) => {
     try {
-        const { firstName, lastName, email, password, role = "admin" } = req.body;
+        const { firstName, lastName, email, password, role = "viewer" } = req.body;
         if (firstName.length < 3) return res.status(400).json({ message: "FirstName should be at least 3 characters long!" });
         if (lastName.length < 3) return res.status(400).json({ message: "LastName should be at least 3 characters long!" });
         if (!isValidEmail(email)) return res.status(400).json({ message: "Invalid email format" });

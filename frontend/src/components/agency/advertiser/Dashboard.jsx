@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from 'react'
-import { Box, Container, TextField, Typography, Button, CssBaseline } from '@mui/material'
+import { Box, Button, Card, CardContent, Container, CssBaseline, Grid, Typography } from "@mui/material";
+
 import { useForm } from 'react-hook-form'
 import API from '../../../api/axios';
 import { toast } from 'react-toastify';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useNavigate, useParams, Link, Outlet } from 'react-router-dom';
 import { jwtDecode } from "jwt-decode";
 
 export const Dashboard = () => {
@@ -36,145 +37,174 @@ export const Dashboard = () => {
         }
     }
 
-    const handlerSubmit = async (data) => {
-        setLoading(true);
-        try {
-            const res = await API.post("/advertiser/createads", data);
-            console.log(res);
-            console.log(data);
-            toast.success("Ad details created succesfully!");
-        } catch (error) {
-            toast.error("Error submitting ad", error)
-        }
-        setLoading(false);
-    }
+    // const handlerSubmit = async (data) => {
+    //     setLoading(true);
+    //     try {
+    //         const res = await API.post("/advertiser/createads", data);
+    //         console.log(res);
+    //         console.log(data);
+    //         toast.success("Ad details created succesfully!");
+    //     } catch (error) {
+    //         toast.error("Error submitting ad", error)
+    //     }
+    //     setLoading(false);
+    // }
     return (
         <>
             <CssBaseline />
-            <div style={{ paddingTop: "1px", textAlign: "center" }}>
-                <h1>Advertiser Dashboard</h1>
-            </div>
             <Container
                 maxWidth={false}
                 disableGutters
                 sx={{
-                    minHeight: "90vh",
+                    minHeight: "100vh",
                     display: "flex",
+                    flexDirection: "column",
                     alignItems: "center",
                     justifyContent: "center",
                     backgroundColor: "#0A192F",
+                    color: "white",
+                    py: 4,
                 }}
-
             >
-
-
-
-                <Box
+                {/* Dashboard Heading */}
+                <Typography
+                    variant="h3"
                     sx={{
-                        width: "100%",
-                        maxWidth: 500,
-                        p: 4,
-                        borderRadius: 3,
-                        boxShadow: 4,
-                        textAlign: "center",
-                        bgcolor: "#112240",
+                        fontWeight: "bold",
+                        mb: 4,
+                        textTransform: "uppercase",
                         color: "white",
+                        textAlign: "center",
                     }}
                 >
-                    <Typography
-                        variant="h4"
-                        sx={{
-                            fontWeight: "bold",
-                            mb: 3,
-                            textTransform: "uppercase",
-                            color: "white",
-                        }}
-                    >
-                        Advertisement Details
-                    </Typography>
-                    <form onSubmit={handleSubmit(handlerSubmit)}>
-                        <TextField
-                            fullWidth
-                            label="Title"
-                            {...register("title")}
-                            variant="outlined"
+                    Dashboard
+                </Typography>
+
+                {/* Cards Grid */}
+                <Grid container spacing={3} justifyContent="center">
+                    {/* Bookings Card */}
+                    <Grid item xs={12} sm={6} md={4}>
+                        <Card
                             sx={{
-                                mb: 2,
-                                "& label": { color: "#A8B2D1" }, // Light bluish label
-                                "& input": { color: "white" },
-                                "& fieldset": { borderColor: "#233554" }, // Muted blue border
-                                "&:hover fieldset": { borderColor: "#64ffda" }, // Teal hover
-                            }}
-
-                        />
-
-                        <TextField
-                            fullWidth
-                            multiline
-                            rows={4}
-                            label="Description"
-                            {...register("description")}
-                            variant="outlined"
-                            sx={{
-                                mb: 2,
-                                "& label": { color: "#A8B2D1" },
-                                "& input, & textarea": { color: "white" }, // Apply to both input and textarea
-                                "& fieldset": { borderColor: "#233554" },
-                                "&:hover fieldset": { borderColor: "#64ffda" },
-                            }}
-
-                        />
-
-
-                        <TextField
-                            fullWidth
-                            label="Target Audience"
-                            variant="outlined"
-                            sx={{
-                                mb: 2,
-                                "& label": { color: "#A8B2D1" },
-                                "& input": { color: "white" },
-                                "& fieldset": { borderColor: "#233554" },
-                                "&:hover fieldset": { borderColor: "#64ffda" },
-                            }}
-                            {...register("targetAudience")}
-                        />
-
-                        <TextField
-                            fullWidth
-                            label="Budget ($)"
-                            variant="outlined"
-                            sx={{
-                                mb: 3,
-                                "& label": { color: "#A8B2D1" },
-                                "& input": { color: "white" },
-                                "& fieldset": { borderColor: "#233554" },
-                                "&:hover fieldset": { borderColor: "#64ffda" },
-                            }}
-                            {...register("budget")}
-                        />
-
-                        <Button
-                            type="submit"
-                            variant="contained"
-                            fullWidth
-                            sx={{
-                                background: "linear-gradient(to right, #2563EB, #17375E)", // Dark blue gradient
-                                fontWeight: "bold",
-                                fontSize: "1rem",
+                                backgroundColor: "rgba(17, 34, 64, 0.5)", // Transparent dark blue
+                                color: "white",
+                                p: 3,
+                                textAlign: "center",
+                                borderRadius: 3,
+                                boxShadow: 4,
+                                transition: "0.3s",
                                 "&:hover": {
-                                    background: "#0A74DA",
+                                    transform: "scale(1.05)",
+                                    backgroundColor: "rgba(17, 34, 64, 0.9)", // Darker hover effect
                                 },
                             }}
                         >
-                            {/* Submit Advertisement */}
-                            {loading ? "Posting...." : "Submit Advertisement"}
-                        </Button>
-                    </form>
-                </Box>
+                            <CardContent>
+                                <Typography variant="h5" fontWeight="bold" mb={2}>
+                                    BOOKINGS
+                                </Typography>
+                                <Button
+                                    component={Link}
+                                    to="/bookings"
+                                    variant="contained"
+                                    sx={{
+                                        background: "linear-gradient(to right, #2563EB, #17375E)",
+                                        fontWeight: "bold",
+                                        fontSize: "1rem",
+                                        "&:hover": {
+                                            background: "#0A74DA",
+                                        },
+                                    }}
+                                >
+                                    Manage Bookings
+                                </Button>
+                            </CardContent>
+                        </Card>
+                    </Grid>
+
+                    {/* Screenings/Hoarding Card */}
+                    <Grid item xs={12} sm={6} md={4}>
+                        <Card
+                            sx={{
+                                backgroundColor: "rgba(17, 34, 64, 0.5)",
+                                color: "white",
+                                p: 3,
+                                textAlign: "center",
+                                borderRadius: 3,
+                                boxShadow: 4,
+                                transition: "0.3s",
+                                "&:hover": {
+                                    transform: "scale(1.05)",
+                                    backgroundColor: "rgba(17, 34, 64, 0.9)",
+                                },
+                            }}
+                        >
+                            <CardContent>
+                                <Typography variant="h5" fontWeight="bold" mb={2}>
+                                    SCREENINGS/HOARDING
+                                </Typography>
+                                <Button
+                                    component={Link}
+                                    to="/screenings"
+                                    variant="contained"
+                                    sx={{
+                                        background: "linear-gradient(to right, #2563EB, #17375E)",
+                                        fontWeight: "bold",
+                                        fontSize: "1rem",
+                                        "&:hover": {
+                                            background: "#0A74DA",
+                                        },
+                                    }}
+                                >
+                                    View Screens
+                                </Button>
+                            </CardContent>
+                        </Card>
+                    </Grid>
+
+                    {/* Ad Detail Form Card */}
+                    <Grid item xs={12} sm={6} md={4}>
+                        <Card
+                            sx={{
+                                backgroundColor: "rgba(17, 34, 64, 0.5)",
+                                color: "white",
+                                p: 3,
+                                textAlign: "center",
+                                borderRadius: 3,
+                                boxShadow: 4,
+                                transition: "0.3s",
+                                "&:hover": {
+                                    transform: "scale(1.05)",
+                                    backgroundColor: "rgba(17, 34, 64, 0.9)",
+                                },
+                            }}
+                        >
+                            <CardContent>
+                                <Typography variant="h5" fontWeight="bold" mb={2}>
+                                    AD DETAIL FORM
+                                </Typography>
+                                <Button
+                                    component={Link}
+                                    to="/ad-detail"
+                                    variant="contained"
+                                    sx={{
+                                        background: "linear-gradient(to right, #2563EB, #17375E)",
+                                        fontWeight: "bold",
+                                        fontSize: "1rem",
+                                        "&:hover": {
+                                            background: "#0A74DA",
+                                        },
+                                    }}
+                                >
+                                    Create Ad
+                                </Button>
+                            </CardContent>
+                        </Card>
+                    </Grid>
+                </Grid>
             </Container>
+            <Outlet />
         </>
+    );
 
-
-    )
 }

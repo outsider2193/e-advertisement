@@ -2,14 +2,17 @@ const Ad = require("../models/adsModel");
 
 const createAds = async (req, res) => {
     try {
-        const { title, description, targetAudience, budget } = req.body;
-        if (!title || !description || !targetAudience || !budget) {
+        const { title, description, targetAudience, city, adType, adDuration, budget } = req.body;
+        if (!title || !description || !targetAudience || !budget || !city || !adType || !adDuration) {
             return res.status(400).json({ message: "All fields are empty" });
         }
         const newAds = new Ad({
             title,
             description,
             targetAudience,
+            city,
+            adType,
+            adDuration,
             budget,
             advertiserId: req.user.id,
         })
