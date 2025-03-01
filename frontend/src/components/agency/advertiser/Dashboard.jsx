@@ -6,6 +6,7 @@ import API from '../../../api/axios';
 import { toast } from 'react-toastify';
 import { useNavigate, useParams, Link, Outlet } from 'react-router-dom';
 import { jwtDecode } from "jwt-decode";
+import DashboardSidebar from "./DashboardSidebar";
 
 export const Dashboard = () => {
 
@@ -52,6 +53,7 @@ export const Dashboard = () => {
     return (
         <>
             <CssBaseline />
+            <DashboardSidebar/>
             <Container
                 maxWidth={false}
                 disableGutters
