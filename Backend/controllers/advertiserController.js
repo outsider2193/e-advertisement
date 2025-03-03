@@ -68,9 +68,7 @@ const loginAdvertiser = async (req, res) => {
             {
                 id: existingAdvertiser._id,
                 email: existingAdvertiser.email,
-                role: existingAdvertiser.role,
-                firstName: existingAdvertiser.firstName,
-                lastName: existingAdvertiser.lastName
+                role: existingAdvertiser.role
             },
             secretKey,
             { expiresIn: '1y' }
