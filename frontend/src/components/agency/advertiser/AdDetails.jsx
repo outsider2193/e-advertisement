@@ -1,15 +1,18 @@
-import React, { useState } from 'react';
-import { Box, Container, TextField, Typography, Button, CssBaseline, Select, Input,FormHelperText} from '@mui/material';
+import React, { useState, useEffect } from 'react';
+import { Box, Container, TextField, Typography, Button, CssBaseline, Select, Input, FormHelperText } from '@mui/material';
 import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
-import { Form, useForm } from 'react-hook-form';
+import { useForm } from 'react-hook-form';
 import API from '../../../api/axios';
 import { toast } from 'react-toastify';
+import { useNavigate } from 'react-router-dom';
 
 export const AdDetails = () => {
-    const { register, handleSubmit, formState: { errors } } = useForm();
+    const { register, handleSubmit, formState: { errors }, watch } = useForm();
     const [loading, setLoading] = useState(false);
+    const navigate = useNavigate();
+
 
 
     const handlerSubmit = async (data) => {
@@ -19,6 +22,7 @@ export const AdDetails = () => {
             console.log(res);
             console.log(data);
             toast.success("Ad details created successfully!");
+            navigate("/screenings");
         } catch (error) {
             toast.error("Error submitting ad", error);
         }
@@ -95,7 +99,7 @@ export const AdDetails = () => {
                 maxWidth={false}
                 disableGutters
                 sx={{
-                    height: "100vh", // Full viewport height
+                    height: "110vh", // Full viewport height
                     display: "flex",
                     justifyContent: "center",
                     alignItems: "center",
@@ -110,7 +114,7 @@ export const AdDetails = () => {
                         display: "flex",
                         width: "80%",
                         maxWidth: "1200px",
-                        height: "600px", // Fixed height
+                        height: "650px", // Fixed height
                         backgroundColor: "#112240",
                         borderRadius: "8px",
                         boxShadow: "4px 4px 10px rgba(0,0,0,0.3)",
@@ -181,7 +185,7 @@ export const AdDetails = () => {
                         </form>
                     </Box>
 
-
+                    {/* // right side of the box */}
                     <Box sx={{
                         flex: 1,
                         padding: "20px",
@@ -190,22 +194,37 @@ export const AdDetails = () => {
                         flexDirection: "column",
                         justifyContent: "center",
                     }}>
+
                         <Typography variant="h5" sx={{ mb: 2 }}>More Options</Typography>
 
+                        <TextField fullWidth label="Longitude and latitude"
+                            {...register("longitude_latitude", validations.cityValidation)}
+                            error={!!errors.longitude_latitude}
+                            helperText={errors.longitude_latitude?.message}
+                            variant="outlined" sx={inputStyles} />
+
                         <FormControl fullWidth error={!!errors.adType}>
-                            <InputLabel>adType</InputLabel>
+                            <InputLabel sx={{ color: "white" }}>adType</InputLabel>
                             <Select
                                 label="adType"
                                 {...register("adType", validations.adTypeValidation)}
-                                defaultValue=""
+                                // value={watch("adType") || ""}
+
+
 
                                 sx={inputStyles}
                             >
-                                <MenuItem value="Hoarding">Hoarding</MenuItem>
+                                <MenuItem value="Billboard">Billboard</MenuItem>
                                 <MenuItem value="Digital">Digital</MenuItem>
                             </Select>
                             {errors.adType && <FormHelperText>{errors.adType.message}</FormHelperText>}
+
+
+
                         </FormControl>
+
+                        <TextField fullWidth label="Dimensions" sx={inputStyles} {...register("adDimensions", validations.cityValidation)} ></TextField>
+
 
 
                         <TextField fullWidth label="Ad Duration (Days)"
@@ -221,7 +240,7 @@ export const AdDetails = () => {
                             variant="outlined" sx={inputStyles} />
                     </Box>
                 </Box>
-            </Container>
+            </Container >
         </>
     );
 };
@@ -231,10 +250,14 @@ const inputStyles = {
     mb: 2,
     '& .MuiInputBase-input': { color: "white" },
     '& .MuiInputLabel-root': { color: "white" },
+    '& .MuiInputLabel-root.Mui-focused': { color: "white" },
     '& .MuiOutlinedInput-root': {
         '& fieldset': { borderColor: "white" },
-        '&:hover fieldset': { borderColor: "#2563EB" },
+        '&:hover fieldset': { borderColor: "white" },
+        '&.Mui-focused fieldset': { borderColor: "white" },
     },
+    '& .MuiOutlinedInput-notchedOutline': { borderColor: "white !important" },
+    '& .MuiSvgIcon-root': { color: "white" }
 };
 
 export default AdDetails;

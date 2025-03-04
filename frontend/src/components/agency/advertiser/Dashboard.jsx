@@ -1,17 +1,13 @@
 import React, { useEffect, useState } from 'react'
 import { Box, Button, Card, CardContent, Container, CssBaseline, Grid, Typography } from "@mui/material";
-
-import { useForm } from 'react-hook-form'
-import API from '../../../api/axios';
-import { toast } from 'react-toastify';
 import { useNavigate, useParams, Link, Outlet } from 'react-router-dom';
 import { jwtDecode } from "jwt-decode";
 import DashboardSidebar from "./DashboardSidebar";
 
 export const Dashboard = () => {
 
-    const { register, handleSubmit } = useForm();
-    const [loading, setLoading] = useState(false);
+    
+    
     const { id } = useParams();
     const navigate = useNavigate();
 
@@ -38,18 +34,7 @@ export const Dashboard = () => {
         }
     }
 
-    // const handlerSubmit = async (data) => {
-    //     setLoading(true);
-    //     try {
-    //         const res = await API.post("/advertiser/createads", data);
-    //         console.log(res);
-    //         console.log(data);
-    //         toast.success("Ad details created succesfully!");
-    //     } catch (error) {
-    //         toast.error("Error submitting ad", error)
-    //     }
-    //     setLoading(false);
-    // }
+   
     return (
         <>
             <CssBaseline />
@@ -82,13 +67,13 @@ export const Dashboard = () => {
                     Dashboard
                 </Typography>
 
-                {/* Cards Grid */}
+              
                 <Grid container spacing={3} justifyContent="center">
-                    {/* Bookings Card */}
+                   
                     <Grid item xs={12} sm={6} md={4}>
                         <Card
                             sx={{
-                                backgroundColor: "rgba(17, 34, 64, 0.5)", // Transparent dark blue
+                                backgroundColor: "rgba(17, 34, 64, 0.5)", 
                                 color: "white",
                                 p: 3,
                                 textAlign: "center",
@@ -97,7 +82,7 @@ export const Dashboard = () => {
                                 transition: "0.3s",
                                 "&:hover": {
                                     transform: "scale(1.05)",
-                                    backgroundColor: "rgba(17, 34, 64, 0.9)", // Darker hover effect
+                                    backgroundColor: "rgba(17, 34, 64, 0.9)", 
                                 },
                             }}
                         >
@@ -165,7 +150,7 @@ export const Dashboard = () => {
                     </Grid>
 
                     {/* Ad Detail Form Card */}
-                    <Grid item xs={12} sm={6} md={4}>
+                    <Grid item xs={12} sm={6} md={3.8}>
                         <Card
                             sx={{
                                 backgroundColor: "rgba(17, 34, 64, 0.5)",
