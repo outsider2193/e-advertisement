@@ -7,6 +7,9 @@ const adRoutes = require("./routes/adCreateRoutes");
 const fetchAdRoutes = require("./routes/adFetchingRoutes");
 const deletedAdRoute = require("./routes/adDeleteRoutes");
 const deleteUserRoutes = require("./routes/userDeleteRoutes");
+const stateRoutes = require("./routes/stateRoutes");
+const cityRoutes = require("./routes/cityRoutes");
+const areaRoutes = require("./routes/areaRoutes");
 const app = express();
 const cors = require("cors");
 app.use(express.json());
@@ -20,6 +23,9 @@ app.use("/", adRoutes);
 app.use("/", fetchAdRoutes);
 app.use("/", deletedAdRoute);
 app.use("/", deleteUserRoutes);
+app.use("/state", stateRoutes);
+app.use("/city", cityRoutes);
+app.use("/area", areaRoutes);
 
 const PORT = process.env.PORT || 5000;
 // const JWT_SECRET = process.env.JWT_SECRET
