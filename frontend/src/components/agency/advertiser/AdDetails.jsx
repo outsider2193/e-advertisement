@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Box, Container, TextField, Typography, Button, CssBaseline, Select, Input, FormHelperText } from '@mui/material';
+import { Box, Container, TextField, Typography, Button, CssBaseline, Select, Input, FormHelperText, Menu } from '@mui/material';
 import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
@@ -28,6 +28,8 @@ export const AdDetails = () => {
         }
         setLoading(false);
     };
+
+    
 
     const validations = {
         titleValidation: {
@@ -216,6 +218,8 @@ export const AdDetails = () => {
                             >
                                 <MenuItem value="Billboard">Billboard</MenuItem>
                                 <MenuItem value="Digital">Digital</MenuItem>
+                                <MenuItem value="Gantry">Gantry</MenuItem>
+                                <MenuItem value="Unipole">Unipole</MenuItem>
                             </Select>
                             {errors.adType && <FormHelperText>{errors.adType.message}</FormHelperText>}
 

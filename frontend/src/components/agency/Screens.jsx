@@ -23,6 +23,7 @@ export const Screens = () => {
     setLoading(true);
     try {
       const res = await API.get("/ads");
+      console.log(res.data[0].advertiserId);
       setAds(res.data);
       toast.success("Ads fetched successfully!");
     } catch (error) {

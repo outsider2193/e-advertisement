@@ -16,7 +16,7 @@ const areaSchema = new Schema({
         ref: "State"
     },
     pincode:{
-        type:Number,
+        type:String,
         required:true,
         unique:true
     }

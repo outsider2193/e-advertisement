@@ -1,31 +1,42 @@
 const cityModel = require("../models/cityModel");
 
-const addCity = async(req,res) =>{
-    try{
+const addCity = async (req, res) => {
+    try {
         const savedCity = await cityModel.create(req.body);
         res.status(201).json({
             message: "City added succesfully",
-            data:savedCity
+            data: savedCity
         });
-    }catch(err){
+    } catch (err) {
         res.status(500).json({
-            message:err.message
+            message: err.message
         });
     }
 };
 
-const getCities = async(req,res) =>{
-    try{
+const getCities = async (req, res) => {
+    try {
         const cities = await cityModel.find().populate("stateId");
         res.status(200).json({
             message: "All cities",
             data: cities
         });
-    } catch(err){
+    } catch (err) {
         res.status(500).json({
             message: err
         });
     }
 };
 
-module.exports = { addCity, getCities };
+const getCityByStateId = async (req, res) => {
+    stateId = req.params.stateId;
+    try {
+        const cities = await cityModel.find({ stateId: stateId });
+        res.status(200).json({ message: "Fetched succesfully", data: cities });
+    } catch (error) {
+        console.error("Server error", error);
+        res.status(500).json({ message: "Internal server error" });
+    }
+}
+
+module.exports = { addCity, getCities, getCityByStateId };
