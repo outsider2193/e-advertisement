@@ -15,21 +15,49 @@ export const AdDetails = () => {
 
 
 
+    const [states, setStates] = useState([]);
+    const [cities, setCities] = useState([]);
+    const [areas, setAreas] = useState([]);
+
+    // Fetch States on Component Mount
+    const getStates = async () => {
+        const res = await API.get("/getstates");
+        console.log(res.data);
+        setStates(res.data.data);
+    };
+
+    const getCityByStateId = async (id) => {
+
+        const res = await API.get("/getcitybystateid/" + id);
+        console.log("city response...", res.data);
+        setCities(res.data.data);
+    };
+
+    const getAreaByCityId = async (id) => {
+
+        const res = await API.get("/getareabycity/" + id);
+        console.log("ad:-", res.data);
+        setAreas(res.data.data);
+    };
+
+    useEffect(() => {
+        getStates();
+    }, []);
+
+    // Form submission
     const handlerSubmit = async (data) => {
         setLoading(true);
         try {
             const res = await API.post("/advertiser/createads", data);
-            console.log(res);
-            console.log(data);
             toast.success("Ad details created successfully!");
             navigate("/screenings");
         } catch (error) {
-            toast.error("Error submitting ad", error);
+            toast.error("Error submitting ad: " + (error.response?.data?.message || error.message));
         }
         setLoading(false);
     };
 
-    
+
 
     const validations = {
         titleValidation: {
@@ -160,24 +188,46 @@ export const AdDetails = () => {
                                 helperText={errors.targetAudience?.message}
                                 variant="outlined" sx={inputStyles} />
 
+                            <FormControl fullWidth error={!!errors.adType}>
+                                <InputLabel sx={{ color: "white" }}>adType</InputLabel>
+                                <Select
+                                    label="adType"
+                                    {...register("adType", validations.adTypeValidation)}
+                                    // value={watch("adType") || ""}
 
-                            <TextField fullWidth label="State"
-                                {...register("state", validations.cityValidation)}
-                                error={!!errors.state}
-                                helperText={errors.state?.message}
+
+
+                                    sx={inputStyles}
+                                >
+                                    <MenuItem value="Billboard">Billboard</MenuItem>
+                                    <MenuItem value="Digital">Digital</MenuItem>
+                                    <MenuItem value="Gantry">Gantry</MenuItem>
+                                    <MenuItem value="Unipole">Unipole</MenuItem>
+                                </Select>
+                                {errors.adType && <FormHelperText>{errors.adType.message}</FormHelperText>}
+
+
+
+                            </FormControl>
+
+                            <TextField fullWidth label="Dimensions" sx={inputStyles} {...register("adDimensions", validations.cityValidation)} ></TextField>
+
+
+
+                            <TextField fullWidth label="Ad Duration (Days)"
+                                {...register("adDuration", validations.adDurationValidation)}
+                                error={!!errors.adDuration}
+                                helperText={errors.adDuration?.message}
                                 variant="outlined" sx={inputStyles} />
 
-                            <TextField fullWidth label="City"
-                                {...register("city", validations.cityValidation)}
-                                error={!!errors.city}
-                                helperText={errors.city?.message}
+                            <TextField fullWidth label="Budget ($)"
+                                {...register("budget", validations.budgetValidation)}
+                                error={!!errors.budget}
+                                helperText={errors.budget?.message}
                                 variant="outlined" sx={inputStyles} />
 
-                            <TextField fullWidth label="Location"
-                                {...register("location", validations.cityValidation)}
-                                error={!!errors.location}
-                                helperText={errors.loction?.message}
-                                variant="outlined" sx={inputStyles} />
+
+
 
                             <Button type="submit" variant="contained" fullWidth sx={{
                                 background: "#2563EB", fontWeight: "bold", fontSize: "1rem", mt: 2,
@@ -205,43 +255,62 @@ export const AdDetails = () => {
                             helperText={errors.longitude_latitude?.message}
                             variant="outlined" sx={inputStyles} />
 
-                        <FormControl fullWidth error={!!errors.adType}>
-                            <InputLabel sx={{ color: "white" }}>adType</InputLabel>
+
+                        {/* State Dropdown */}
+                        <FormControl fullWidth error={!!errors.state} sx={inputStyles}>
+                            <InputLabel>State</InputLabel>
                             <Select
-                                label="adType"
-                                {...register("adType", validations.adTypeValidation)}
-                                // value={watch("adType") || ""}
 
+                                onChange={(e) => {
+                                    getCityByStateId(e.target.value);
 
-
-                                sx={inputStyles}
+                                }}
                             >
-                                <MenuItem value="Billboard">Billboard</MenuItem>
-                                <MenuItem value="Digital">Digital</MenuItem>
-                                <MenuItem value="Gantry">Gantry</MenuItem>
-                                <MenuItem value="Unipole">Unipole</MenuItem>
+                                <MenuItem value="">Select State</MenuItem>
+                                {states?.map((state) => (
+                                    <MenuItem key={state._id} value={state._id}>{state.name}</MenuItem>
+                                ))}
                             </Select>
-                            {errors.adType && <FormHelperText>{errors.adType.message}</FormHelperText>}
-
-
-
+                            {errors.state && <FormHelperText>{errors.state.message}</FormHelperText>}
                         </FormControl>
 
-                        <TextField fullWidth label="Dimensions" sx={inputStyles} {...register("adDimensions", validations.cityValidation)} ></TextField>
+                        {/* City Dropdown */}
+                        <FormControl fullWidth error={!!errors.city} sx={inputStyles}>
+                            <InputLabel>City</InputLabel>
+                            <Select
+
+                                onChange={(e) => {
+                                    getAreaByCityId(e.target.value);
+
+                                }}
+                            >
+                                <MenuItem value="">Select City</MenuItem>
+                                {cities?.map((city) => (
+                                    <MenuItem key={city._id} value={city._id}>{city.name}</MenuItem>
+                                ))}
+                            </Select>
+                            {errors.city && <FormHelperText>{errors.city.message}</FormHelperText>}
+                        </FormControl>
+
+                        {/* Area Dropdown */}
+                        <FormControl fullWidth error={!!errors.area} sx={inputStyles}>
+                            <InputLabel>Area</InputLabel>
+                            <Select
+                                {...register("area", { required: "Area is required" })}
+                            >
+                                <MenuItem value="">Select Area</MenuItem>
+                                {areas?.map((area) => (
+                                    <MenuItem key={area._id} value={area._id}>{area.name}</MenuItem>
+                                ))}
+                            </Select>
+                            {errors.area && <FormHelperText>{errors.area.message}</FormHelperText>}
+                        </FormControl>
 
 
 
-                        <TextField fullWidth label="Ad Duration (Days)"
-                            {...register("adDuration", validations.adDurationValidation)}
-                            error={!!errors.adDuration}
-                            helperText={errors.adDuration?.message}
-                            variant="outlined" sx={inputStyles} />
 
-                        <TextField fullWidth label="Budget ($)"
-                            {...register("budget", validations.budgetValidation)}
-                            error={!!errors.budget}
-                            helperText={errors.budget?.message}
-                            variant="outlined" sx={inputStyles} />
+
+
                     </Box>
                 </Box>
             </Container >

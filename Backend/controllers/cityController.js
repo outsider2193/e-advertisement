@@ -30,13 +30,15 @@ const getCities = async (req, res) => {
 
 const getCityByStateId = async (req, res) => {
     stateId = req.params.stateId;
+    console.log(stateId);
     try {
         const cities = await cityModel.find({ stateId: stateId });
+        console.log(cities);
         res.status(200).json({ message: "Fetched succesfully", data: cities });
     } catch (error) {
         console.error("Server error", error);
         res.status(500).json({ message: "Internal server error" });
     }
-}
+};
 
 module.exports = { addCity, getCities, getCityByStateId };
