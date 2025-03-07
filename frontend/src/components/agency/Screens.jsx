@@ -1,80 +1,90 @@
-import React, { useState } from 'react'
-import { Button, Container, Typography, Box, List, ListItem, ListItemText, ListItemButton } from "@mui/material";
-import { ExpandLess, ExpandMore } from "@mui/icons-material";
-import Collapse from "@mui/material/Collapse";
+import React, { useEffect, useState } from "react";
+import { styled } from "@mui/material/styles";
+import { Card, CardHeader, CardContent, CardActions, IconButton, Typography, Avatar, Collapse } from "@mui/material";
+import { ExpandMore as ExpandMoreIcon } from "@mui/icons-material";
+import API from "../../api/axios";
 
-
-import { toast } from "react-toastify";
-import API from '../../api/axios';
+const ExpandMore = styled(IconButton, {
+  shouldForwardProp: (prop) => prop !== "expand",
+})(({ theme, expand }) => ({
+  marginLeft: "auto",
+  transition: theme.transitions.create("transform", {
+    duration: theme.transitions.duration.shortest,
+  }),
+  transform: expand ? "rotate(180deg)" : "rotate(0deg)",
+}));
 
 export const Screens = () => {
-  const [ads, setAds] = useState([]);
-  const [openAd, setOpenAd] = useState({});
-  const [loading, setLoading] = useState(false);
 
-  const toggleAd = (id) => {
-    setOpenAd((prev) => ({
+
+
+
+  const [ads, setAds] = useState([]);
+  const [expanded, setExpanded] = useState({});
+
+  useEffect(() => {
+    const fetchAds = async () => {
+      try {
+        const res = await API.get("/ads");
+        console.log(res);
+        console.log(res.data);
+        setAds(res.data);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    fetchAds();
+  }, []);
+
+  const handleExpand = (_id) => {
+    setExpanded((prev) => ({
       ...prev,
-      [id]: !prev[id],
+      [_id]: !prev[_id],
     }));
   };
 
-  const fetchAds = async () => {
-    setLoading(true);
-    try {
-      const res = await API.get("/ads");
-      console.log(res.data[0].advertiserId);
-      setAds(res.data);
-      toast.success("Ads fetched successfully!");
-    } catch (error) {
-      console.error("Error fetching ads:", error);
-      toast.error("Failed to fetch ads");
-    }
-    setLoading(false);
-  };
 
   return (
-    <Container sx={{ textAlign: "center", mt: 5 }}>
-      <Typography variant="h4" sx={{ mb: 3 }}>
-        Screens Section
-      </Typography>
-
-      <Button
-        variant="contained"
-        color="primary"
-        onClick={fetchAds}
-        disabled={loading}
-      >
-        {loading ? "Fetching..." : "Fetch Ads"}
-      </Button>
-
-      <Box sx={{ mt: 3 }}>
-        {ads.length > 0 ? (
-          <List>
-            {ads.map((ad) => (
-              <ListItem key={ad._id} sx={{ borderBottom: "1px solid #ddd", flexDirection: "column", alignItems: "stretch" }}>
-                <ListItemButton onClick={() => toggleAd(ad._id)}>
-                  <ListItemText primary={ad.title} />
-                  {openAd[ad._id] ? <ExpandLess /> : <ExpandMore />}
-                </ListItemButton>
-                <Collapse in={openAd[ad._id]} timeout="auto" unmountOnExit>
-                  <List component="div" disablePadding>
-                    <ListItemButton sx={{ pl: 4 }}>
-                      <ListItemText primary={`Description: ${ad.description}`} />
-                    </ListItemButton>
-                    <ListItemButton sx={{ pl: 4 }}>
-                      <ListItemText primary={`AdType: ${ad.adType}`} />
-                    </ListItemButton>
-                  </List>
-                </Collapse>
-              </ListItem>
-            ))}
-          </List>
-        ) : (
-          <Typography sx={{ mt: 2, color: "gray" }}>No ads available.</Typography>
-        )}
-      </Box>
-    </Container >
+    <div
+      style={{
+        display: "grid",
+        gridTemplateColumns: "repeat(4, 1fr)",
+        gap: "20px",
+        justifyItems: "center",
+        alignItems: "start",
+        padding: "20px",
+      }}
+    >
+      {ads.map((ad) => (
+        <Card key={ad._id} sx={{ width: "100%", maxWidth: 300, minHeight: "150px" }}>
+          <CardHeader
+            avatar={<Avatar sx={{ bgcolor: "red" }}>{ad.title[0]}</Avatar>}
+            title={ad.title}
+            subheader={ad.cityId?.name}
+          />
+          <CardContent>
+            <Typography variant="body2" color="text.secondary">
+              {ad.description}
+            </Typography>
+          </CardContent>
+          <CardActions>
+            <ExpandMore
+              onClick={() => handleExpand(ad._id)}
+              sx={{ transform: expanded[ad._id] ? "rotate(180deg)" : "rotate(0deg)" }}
+            >
+              <ExpandMoreIcon />
+            </ExpandMore>
+          </CardActions>
+          <Collapse in={expanded[ad._id]} timeout="auto" unmountOnExit sx={{ width: "100%" }}>
+            <CardContent>
+              <Typography variant="body2">Ad Type: {ad.adType}</Typography>
+              <Typography variant="body2">Target Audience: {ad.targetAudience}</Typography>
+              {ad.adDuration && <Typography variant="body2">Duration: {ad.adDuration} days</Typography>}
+            </CardContent>
+          </Collapse>
+        </Card>
+      ))}
+    </div>
   );
 }
 

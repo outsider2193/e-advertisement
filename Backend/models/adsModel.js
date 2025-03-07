@@ -7,8 +7,12 @@ const adSchema = new mongoose.Schema({
     longitude_latitude: { type: String, required: true },
     adType: { type: String, required: true },
     adDimensions: { type: String },
-    adDuration: { type: Number, required: true },
+    adDuration: { type: String, required: true },
     budget: { type: Number, required: true },
+    stateId: { type: mongoose.Schema.Types.ObjectId, ref: "State" },
+    cityId: { type: mongoose.Schema.Types.ObjectId, ref: "City" },
+    areaId: { type: mongoose.Schema.Types.ObjectId, ref: "Area" },
+
     advertiserId: { type: mongoose.Schema.Types.ObjectId, ref: "User", required: true }
 }, { timestamps: true });
 

@@ -49,6 +49,8 @@ export const AdDetails = () => {
         setLoading(true);
         try {
             const res = await API.post("/advertiser/createads", data);
+            console.log(res);
+            console.log(res.data);
             toast.success("Ad details created successfully!");
             navigate("/screenings");
         } catch (error) {
@@ -249,18 +251,14 @@ export const AdDetails = () => {
 
                         <Typography variant="h5" sx={{ mb: 2 }}>More Options</Typography>
 
-                        <TextField fullWidth label="Longitude and latitude"
-                            {...register("longitude_latitude", validations.cityValidation)}
-                            error={!!errors.longitude_latitude}
-                            helperText={errors.longitude_latitude?.message}
-                            variant="outlined" sx={inputStyles} />
+
 
 
                         {/* State Dropdown */}
                         <FormControl fullWidth error={!!errors.state} sx={inputStyles}>
                             <InputLabel>State</InputLabel>
                             <Select
-
+                                {...register("stateId", { required: "State is required" })}
                                 onChange={(e) => {
                                     getCityByStateId(e.target.value);
 
@@ -278,7 +276,7 @@ export const AdDetails = () => {
                         <FormControl fullWidth error={!!errors.city} sx={inputStyles}>
                             <InputLabel>City</InputLabel>
                             <Select
-
+                                {...register("cityId", { required: "City is required" })}
                                 onChange={(e) => {
                                     getAreaByCityId(e.target.value);
 
@@ -305,6 +303,12 @@ export const AdDetails = () => {
                             </Select>
                             {errors.area && <FormHelperText>{errors.area.message}</FormHelperText>}
                         </FormControl>
+
+                        <TextField fullWidth label="Longitude and latitude"
+                            {...register("longitude_latitude", validations.cityValidation)}
+                            error={!!errors.longitude_latitude}
+                            helperText={errors.longitude_latitude?.message}
+                            variant="outlined" sx={inputStyles} />
 
 
 

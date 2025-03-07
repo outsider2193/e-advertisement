@@ -3,13 +3,13 @@ const areaModel = require("../models/areaModel");
 
 const addArea = async (req, res) => {
     try {
-        const { name, cityId, stateId, pincode } = req.body;
+        const { name, cityId, stateId, pinCode } = req.body;
         const area = new areaModel(
             {
                 name,
                 cityId,
                 stateId,
-                pincode
+                pinCode
             }
         )
         await area.save();

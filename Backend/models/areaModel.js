@@ -15,8 +15,8 @@ const areaSchema = new Schema({
         type:Schema.Types.ObjectId,
         ref: "State"
     },
-    pincode:{
-        type:String,
+    pinCode:{
+        type:Number,
         required:true,
         unique:true
     }
