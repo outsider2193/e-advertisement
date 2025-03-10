@@ -9,17 +9,14 @@ import { toast } from 'react-toastify';
 import { useNavigate } from 'react-router-dom';
 
 export const AdDetails = () => {
-    const { register, handleSubmit, formState: { errors }, watch } = useForm();
+    const { register, handleSubmit, formState: { errors } } = useForm();
     const [loading, setLoading] = useState(false);
     const navigate = useNavigate();
-
-
-
     const [states, setStates] = useState([]);
     const [cities, setCities] = useState([]);
     const [areas, setAreas] = useState([]);
 
-    // Fetch States on Component Mount
+    
     const getStates = async () => {
         const res = await API.get("/getstates");
         console.log(res.data);
@@ -44,7 +41,7 @@ export const AdDetails = () => {
         getStates();
     }, []);
 
-    // Form submission
+  
     const handlerSubmit = async (data) => {
         setLoading(true);
         try {
@@ -259,10 +256,8 @@ export const AdDetails = () => {
                             <InputLabel>State</InputLabel>
                             <Select
                                 {...register("stateId", { required: "State is required" })}
-                                onChange={(e) => {
-                                    getCityByStateId(e.target.value);
-
-                                }}
+                                onChange={(e) => { getCityByStateId(e.target.value); }}
+                                label="State"
                             >
                                 <MenuItem value="">Select State</MenuItem>
                                 {states?.map((state) => (
@@ -276,11 +271,14 @@ export const AdDetails = () => {
                         <FormControl fullWidth error={!!errors.city} sx={inputStyles}>
                             <InputLabel>City</InputLabel>
                             <Select
+
                                 {...register("cityId", { required: "City is required" })}
                                 onChange={(e) => {
                                     getAreaByCityId(e.target.value);
 
+
                                 }}
+                                label="City"
                             >
                                 <MenuItem value="">Select City</MenuItem>
                                 {cities?.map((city) => (
@@ -295,6 +293,7 @@ export const AdDetails = () => {
                             <InputLabel>Area</InputLabel>
                             <Select
                                 {...register("area", { required: "Area is required" })}
+                                label="Area"
                             >
                                 <MenuItem value="">Select Area</MenuItem>
                                 {areas?.map((area) => (

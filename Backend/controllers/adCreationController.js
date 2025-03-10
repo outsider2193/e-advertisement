@@ -18,7 +18,8 @@ const createAds = async (req, res) => {
             stateId,
             cityId,
             areaId,
-            advertiserId: req.user.id,
+            advertiserId: req.user.id
+
         })
         await newAds.save();
 
@@ -26,6 +27,7 @@ const createAds = async (req, res) => {
             .populate("stateId", "name")
             .populate("cityId", "name")
             .populate("areaId", "name")
+        console.log(populatedAd.areaId);
 
         res.status(200).json({ message: "Ad succesfully created", ad: populatedAd })
 
@@ -35,5 +37,7 @@ const createAds = async (req, res) => {
         return res.status(500).json({ message: "Server error" });
     }
 }
+
+
 
 module.exports = { createAds };
