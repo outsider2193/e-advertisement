@@ -2,6 +2,7 @@ require("dotenv").config();
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const user = require("../models/userModel");
+const mailMiddleware = require("../middleware/mailMiddleware");
 
 // const router = express.Router();
 const secretKey = process.env.JWT_SECRET;
@@ -42,6 +43,7 @@ const registerAdvertiser = async (req, res) => {
         //         expiresIn: "1y"
         //     }
         // );
+        await mailMiddleware.sendingMail(newUser.email,"Welcome to Adverse","We Wish You a Warm Welcome");
         res.status(201).json({ message: "Advertiser registered succesfully" });
     } catch (error) {
         console.error(error);
