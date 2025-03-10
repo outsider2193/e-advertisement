@@ -61,7 +61,7 @@ export const Screens = () => {
 
   const fetchAdsByCity = async (id) => {
     if (!id) {
-      // setSpecificAds([]);
+      setSpecificAds([]);
       return;
     }
     try {
@@ -87,7 +87,7 @@ export const Screens = () => {
   return (
 
     <div style={{ padding: "20px" }}>
-      
+
       <Typography variant="h5" sx={{ marginBottom: "20px", fontWeight: "bold" }}>
         Screens:
       </Typography>
@@ -153,7 +153,8 @@ export const Screens = () => {
               <CardHeader
                 avatar={<Avatar sx={{ bgcolor: "red" }}>{ad.title[0]}</Avatar>}
                 title={ad.title}
-                subheader={ad.cityId?.name}
+                subheader={` ${ad.cityId?.name || "Cityname not available"}, ${ad.areaId?.name || "areaname not available"}`}
+
               />
               <CardContent>
                 <Typography variant="body2" color="text.secondary">
@@ -173,6 +174,9 @@ export const Screens = () => {
                   <Typography variant="body2">Ad Type: {ad.adType}</Typography>
                   <Typography variant="body2">Target Audience: {ad.targetAudience}</Typography>
                   {ad.adDuration && <Typography variant="body2">Duration: {ad.adDuration} days</Typography>}
+                  <Typography variant="body2">Longitude and Latitude:{ad.longitude_latitude}</Typography>
+                  <Typography variant="body2">Budget:{ad.budget}</Typography>
+                  <Typography variant="body2">Dimension:{ad.adDimensions}</Typography>
                 </CardContent>
               </Collapse>
             </Card>

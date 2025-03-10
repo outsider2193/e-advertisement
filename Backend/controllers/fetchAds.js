@@ -19,7 +19,7 @@ const getAdsByCityId = async (req, res) => {
     cityId = req.params.cityId;
     try {
 
-        const adsByCity = await Ad.find({ cityId: cityId }).populate("cityId", "name");
+        const adsByCity = await Ad.find({ cityId: cityId }).populate("cityId", "name").populate("areaId", "name");
         console.log(adsByCity)
         res.status(200).json({ message: "Ads by city:", ads: adsByCity })
     } catch (error) {
@@ -28,14 +28,14 @@ const getAdsByCityId = async (req, res) => {
     }
 }
 
-const getAdsbyAreaId = async (req, res) => {
-    areaId = req.params.areaId;
-    try {
-        const adsByArea = await Ad.find({ areaId: areaId });
-        res.status(200).json({ message: "Ads by Area:", ads: adsByArea })
-    } catch (error) {
-        console.log(error);
-        res.status(500).json({ message: "Internal Server Error" });
-    }
-}
+// const getAdsbyAreaId = async (req, res) => {
+//     areaId = req.params.areaId;
+//     try {
+//         const adsByArea = await Ad.find({ areaId: areaId });
+//         res.status(200).json({ message: "Ads by Area:", ads: adsByArea })
+//     } catch (error) {
+//         console.log(error);
+//         res.status(500).json({ message: "Internal Server Error" });
+//     }
+// }
 module.exports = { getAds, getAdsByCityId, getAdsbyAreaId };

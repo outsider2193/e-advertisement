@@ -9,6 +9,7 @@ const adSchema = new mongoose.Schema({
     adDimensions: { type: String },
     adDuration: { type: String, required: true },
     budget: { type: Number, required: true },
+    adUrl: { type: String },
     stateId: { type: mongoose.Schema.Types.ObjectId, ref: "State" },
     cityId: { type: mongoose.Schema.Types.ObjectId, ref: "City" },
     areaId: { type: mongoose.Schema.Types.ObjectId, ref: "Area" },
