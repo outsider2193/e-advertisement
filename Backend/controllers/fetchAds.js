@@ -1,7 +1,12 @@
 const Ad = require("../models/adsModel");
 const getAds = async (req, res) => {
+
+    const { id } = req.params;
     try {
-        const ads = await Ad.find({ advertserId: req.user._id })
+
+        const ads = await Ad.find({
+            advertiserId: id
+        })
             .populate("stateId", "name")
             .populate("cityId", "name")
             .populate("areaId", "name")
@@ -38,4 +43,4 @@ const getAdsByCityId = async (req, res) => {
 //         res.status(500).json({ message: "Internal Server Error" });
 //     }
 // }
-module.exports = { getAds, getAdsByCityId, getAdsbyAreaId };
+module.exports = { getAds, getAdsByCityId };
