@@ -93,7 +93,7 @@ export const User = () => {
         {/* Quick Access Cards */}
         <Grid container spacing={3} sx={{ my: 3, justifyContent: "center" }}>
           {[
-            { title: "Browse Ads", link: "/ads" },
+            { title: "Browse Ads", link: "/browseads" },
             { title: "Saved Ads", link: "/saved-ads" },
             { title: "Post an Ad", link: "/post-ad" },
           ].map((item, index) => (

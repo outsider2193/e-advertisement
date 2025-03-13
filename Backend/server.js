@@ -13,6 +13,7 @@ const cityByStateRoutes = require("./routes/cityRoutes");
 const areaRoutes = require("./routes/areaRoutes");
 const areaByCityRoutes = require("./routes/cityRoutes");
 const hoardingRoutes = require("./routes/adHoardingRoutes");
+// const allAdsRoutes = require("./routes/adFetchingRoutes");
 
 const app = express();
 const cors = require("cors");

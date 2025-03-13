@@ -10,6 +10,7 @@ import { User } from './components/user/User';
 import { Dashboard } from './components/agency/advertiser/Dashboard';
 import { AdDetails } from "./components/agency/advertiser/AdDetails";
 import { Screens } from "./components/agency/Screens";
+import { BrowseAds } from "./components/user/BrowseAds";
 function App() {
 
 
@@ -26,6 +27,8 @@ function App() {
           <Route path='/advertiser/dashboard/:id' element={<Dashboard />}></Route>
           <Route path="/ad-detail" element={<AdDetails />}></Route>
           <Route path='/user/dashboard' element={<User />}></Route>
+          {/* <Route path='/browseads' element={<BrowseAds/>}></Route> */}
+          <Route path="/browseads" element={<BrowseAds/>}></Route>
           <Route path="/screenings" element={<Screens />}></Route>
 
         </Routes>
