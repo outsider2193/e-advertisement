@@ -38,4 +38,4 @@ const getAdsByCityId = async (req, res) => {
 //         res.status(500).json({ message: "Internal Server Error" });
 //     }
 // }
-module.exports = { getAds, getAdsByCityId, getAdsbyAreaId };
+module.exports = { getAds, getAdsByCityId };

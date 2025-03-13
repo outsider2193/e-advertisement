@@ -5,5 +5,5 @@ const { getAds, getAdsByCityId } = require("../controllers/fetchAds");
 
 router.get("/ads", verifyToken, authorizedRoles("viewer", "advertiser", "admin"), getAds);
 router.get("/ads/city/:cityId", verifyToken, authorizedRoles("advertiser"), getAdsByCityId);
-
+router.get("/ads/area/:areaId", verifyToken, authorizedRoles("advertiser"), getAdsbyAreaId)
 module.exports = router;
