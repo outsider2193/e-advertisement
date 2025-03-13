@@ -21,7 +21,8 @@ const createBooking = async (req, res) => {
             clientId: req.user.id,
             adId,
             startTime: startDate,
-            endTime: endDate
+            endTime: endDate,
+
         });
         await newBookings.save();
         const fullBooking = await booking.findById(newBookings._id).populate("adId");
@@ -34,4 +35,22 @@ const createBooking = async (req, res) => {
     }
 }
 
-module.exports = { createBooking }
+
+
+const getBookings = async (req, res) => {
+    try {
+        const allBookings = await booking.find();
+        res.status(200).json({ message: "Bookings fetched", data: allBookings })
+    } catch (err) {
+        console.log(err);
+        res.status(200).json({ message: "Internal server error" });
+    }
+}
+// const checkBookingStatus = async (req, res) => {
+//     const { id, status } = req.body;
+
+//     const checkStatus = await booking.findById(id)
+
+// }
+
+module.exports = { createBooking, getBookings }
