@@ -1,9 +1,10 @@
 const express = require("express");
 const router = express.Router();
-const { createBooking, getBookings } = require("../controllers/bookingController");
+const { createBooking, getBookings, checkBookingStatus } = require("../controllers/bookingController");
 const { verifyToken, authorizedRoles } = require("../middleware/authMiddleware");
 
 router.post("/bookads", verifyToken, authorizedRoles("viewer"), createBooking)
 router.get("/getbookings", verifyToken, authorizedRoles("viewer", "advertiser"), getBookings)
+router.put("/updatebookingstatus", verifyToken, authorizedRoles("advertiser"), checkBookingStatus);
 
 module.exports = router;

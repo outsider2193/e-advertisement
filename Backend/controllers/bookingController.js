@@ -40,17 +40,34 @@ const createBooking = async (req, res) => {
 const getBookings = async (req, res) => {
     try {
         const allBookings = await booking.find();
+        
+
         res.status(200).json({ message: "Bookings fetched", data: allBookings })
     } catch (err) {
         console.log(err);
-        res.status(200).json({ message: "Internal server error" });
+        res.status(500).json({ message: "Internal server error" });
     }
 }
-// const checkBookingStatus = async (req, res) => {
-//     const { id, status } = req.body;
+const checkBookingStatus = async (req, res) => {
+    const { id, status } = req.body;
 
-//     const checkStatus = await booking.findById(id)
+    if (!["rejected", "confirmed"].includes(status)) {
+        return res.status(400).json({ message: "Invalid values for status" });
 
-// }
+    }
+    try {
 
-module.exports = { createBooking, getBookings }
+        const updatedBooking = await booking.findByIdAndUpdate(id, { status }, { new: true });
+        res.status(200).json({ message: "Booking status updated", data: updatedBooking });
+        if (!updatedBooking) {
+          return   res.status(404).json({ message: "Ad not found" });
+        }
+
+    } catch (error) {
+        console.log(error);
+        res.status(500).json({ message: "Internal server error" });
+    }
+
+}
+
+module.exports = { createBooking, getBookings, checkBookingStatus }
