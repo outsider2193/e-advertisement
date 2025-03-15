@@ -1,7 +1,8 @@
 require("dotenv").config();
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
-const user = require("../models/user");
+const user = require("../models/userModel");
+const mailMiddleware = require("../middleware/mailMiddleware");
 
 // const router = express.Router();
 const secretKey = process.env.JWT_SECRET;
@@ -42,7 +43,8 @@ const registerAdvertiser = async (req, res) => {
         //         expiresIn: "1y"
         //     }
         // );
-        res.status(201).json({ message: "Advertiser registered succesfully", token });
+        await mailMiddleware.sendingMail(newUser.email,"Welcome to Adverse","We Wish You a Warm Welcome");
+        res.status(201).json({ message: "Advertiser registered succesfully" });
     } catch (error) {
         console.error(error);
         res.status(500).json({ message: "Server Error" });
@@ -55,6 +57,7 @@ const loginAdvertiser = async (req, res) => {
     try {
         const { email, password } = req.body;
         const existingAdvertiser = await user.findOne({ email });
+        console.log("Existing Advertiser:", existingAdvertiser);
         if (!existingAdvertiser) {
             return res.status(400).json({ message: "advertiser not found!" });
         }
@@ -64,10 +67,15 @@ const loginAdvertiser = async (req, res) => {
 
         }
         const token = jwt.sign(
-            { id: existingAdvertiser._id, email: existingAdvertiser.email, role: existingAdvertiser.role },
+            {
+                id: existingAdvertiser._id,
+                email: existingAdvertiser.email,
+                role: existingAdvertiser.role
+            },
             secretKey,
             { expiresIn: '1y' }
         );
+        console.log("Token:", token);
         res.status(200).json({ message: "Login succesfull", token });
     } catch (error) {
         console.error(error);

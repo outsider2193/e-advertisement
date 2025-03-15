@@ -4,7 +4,7 @@ import API from '../../api/axios';
 import { TextField, Button, Container, Typography, Box } from "@mui/material";
 import { toast } from "react-toastify";
 import { Link, useNavigate, useParams } from 'react-router-dom';
-
+import { Navbar } from "../Navbar"
 const Registration = () => {
     const { register, handleSubmit, formState: { errors } } = useForm();
     const [loading, setLoading] = useState(false);
@@ -72,77 +72,78 @@ const Registration = () => {
     }
 
     return (
-
-        <Container maxWidth="sm">
-            <Box
-                sx={{
-                    mt: 5,
-                    p: 4,
-                    boxShadow: 3,
-                    borderRadius: 2,
-                    textAlign: "center",
-                    bgcolor: "white"
-                }}
-            >
-                <Typography variant="h5" sx={{ mb: 2, fontWeight: "bold" }}>
-                    Registration
-                </Typography>
-
-                <form onSubmit={handleSubmit(handlerSubmit)}>
-                    <TextField
-                        fullWidth
-                        label="First Name"
-                        {...register("firstName", validations.nameValidation)}
-                        error={!!errors.firstName}
-                        helperText={errors.firstName?.message}
-                        sx={{ mb: 3 }}
-                    />
-                    <TextField
-                        fullWidth
-                        label="Last Name"
-                        {...register("lastName", validations.lastNameValidation)}
-                        error={!!errors.lastName}
-                        helperText={errors.lastName?.message}
-                        sx={{ mb: 2 }}
-                    />
-                    <TextField
-                        fullWidth
-                        label="Email"
-                        type="email"
-                        {...register("email", validations.emailValidation)}
-                        error={!!errors.email}
-                        helperText={errors.email?.message}
-                        sx={{ mb: 2 }}
-                    />
-                    <TextField
-                        fullWidth
-                        label="Password"
-                        type="text  "
-                        {...register("password", validations.passwordValidation)}
-                        error={!!errors.password}
-                        helperText={errors.password?.message}
-                        sx={{ mb: 2 }}
-                    />
-
-                    <Button
-                        type="submit"
-                        variant="contained"
-                        color="primary"
-                        fullWidth
-                        disabled={loading}
-                        sx={{ mt: 2 }}
-                    >
-                        {loading ? "Registering..." : "Register"}
-                    </Button>
-
-                    <Typography variant="body2" sx={{ mt: 2 }}>
-                        Already have an account? <Link to="/login">Login here</Link>
+        <>
+            <Navbar></Navbar>
+            <Container maxWidth="sm">
+                <Box
+                    sx={{
+                        mt: 5,
+                        p: 4,
+                        boxShadow: 3,
+                        borderRadius: 2,
+                        textAlign: "center",
+                        bgcolor: "white"
+                    }}
+                >
+                    <Typography variant="h5" sx={{ mb: 2, fontWeight: "bold" }}>
+                        Registration
                     </Typography>
-                </form>
-            </Box>
-        </Container>
 
+                    <form onSubmit={handleSubmit(handlerSubmit)}>
+                        <TextField
+                            fullWidth
+                            label="First Name"
+                            {...register("firstName", validations.nameValidation)}
+                            error={!!errors.firstName}
+                            helperText={errors.firstName?.message}
+                            sx={{ mb: 3 }}
+                        />
+                        <TextField
+                            fullWidth
+                            label="Last Name"
+                            {...register("lastName", validations.lastNameValidation)}
+                            error={!!errors.lastName}
+                            helperText={errors.lastName?.message}
+                            sx={{ mb: 2 }}
+                        />
+                        <TextField
+                            fullWidth
+                            label="Email"
+                            type="email"
+                            {...register("email", validations.emailValidation)}
+                            error={!!errors.email}
+                            helperText={errors.email?.message}
+                            sx={{ mb: 2 }}
+                        />
+                        <TextField
+                            fullWidth
+                            label="Password"
+                            type="text  "
+                            {...register("password", validations.passwordValidation)}
+                            error={!!errors.password}
+                            helperText={errors.password?.message}
+                            sx={{ mb: 2 }}
+                        />
 
+                        <Button
+                            type="submit"
+                            variant="contained"
+                            color="primary"
+                            fullWidth
+                            disabled={loading}
+                            sx={{ mt: 2 }}
+                        >
+                            {loading ? "Registering..." : "Register"}
+                        </Button>
+
+                        <Typography variant="body2" sx={{ mt: 2 }}>
+                            Already have an account? <Link to="/login">Login here</Link>
+                        </Typography>
+                    </form>
+                </Box>
+            </Container>
+
+        </>
     )
 }
 
@@ -153,3 +154,6 @@ export default Registration
 //PrathaM1@!
 //TEjas@#12
 //NIkunj@!12
+//VIsmay@#12
+//RAvi@#123
+//RAvindra@#123

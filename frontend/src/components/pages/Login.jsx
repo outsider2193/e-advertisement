@@ -6,6 +6,8 @@ import { TextField, Button, Container, Typography, Box } from "@mui/material";
 import { toast, Bounce } from "react-toastify";
 import { Link, useNavigate } from 'react-router-dom';
 import { jwtDecode } from "jwt-decode";
+import { Navbar } from "../Navbar"
+
 const Login = () => {
 
     const { register, handleSubmit, formState: { errors } } = useForm();
@@ -16,22 +18,24 @@ const Login = () => {
         setLoading(true)
         try {
             const res = await API.post("/auth/login", data)
-            const token = res.data?.token;
-            if (!token) {
-                console.log("Token not received from the server");
+            const token = res.data?.token || res.data?.message?.token;
+            if (token) {
+                localStorage.removeItem("token");
+                localStorage.setItem("token", token);
+            } else {
+                console.error("No token received from the server");
             }
-            console.log(data);
-            localStorage.setItem("token", token);
-            const decoded = jwtDecode(res.data.token);
+
+            console.log(token);
+            const decoded = jwtDecode(token);
+            console.log(decoded);
             const userRole = decoded.role;
+            const userId = decoded.id;
             if (userRole === "advertiser") {
-                navigate("/advertiser/dashboard");
+                navigate(`/advertiser/dashboard/${userId}`);
             } else {
                 navigate("/user/dashboard")
             }
-            console.log("token:", token);
-            // navigate("/dashboard");
-            console.log("logged in")
             toast.success("Successfully logged in!", {
                 position: "top-center",
                 autoClose: 5000,
@@ -86,39 +90,42 @@ const Login = () => {
         }
     }
     return (
-        <Container maxWidth="sm">
-            <Box sx={{ mt: 5, p: 3, boxShadow: 3, borderRadius: 2 }}>
-                <Typography variant="h5" sx={{ mb: 2 }}>Login</Typography>
-                <form onSubmit={handleSubmit(submitHandler)}>
-                    <TextField
-                        fullWidth
-                        label="Email"
-                        type="email"
-                        {...register("email", validations.emailValidation)}
-                        error={!!errors.email}
-                        helperText={errors.email?.message}
-                        sx={{ mb: 2 }}
-                    />
-                    <TextField
-                        fullWidth
-                        label="Password"
-                        type="password"
-                        {...register("password", validations.passwordValidation)}
-                        error={!!errors.password}
-                        helperText={errors.password?.message}
-                        sx={{ mb: 2 }}
-                    />
-                    <Button type="submit" variant="contained" color="primary" fullWidth disabled={loading}>
-                        {loading ? "Logging in..." : "Login"}
-                    </Button>
-                    <Typography variant='body2'
-                        sx={{ mt: 2, textAlign: "center" }}>
-                        Don't have an account? <Link to="/register">Register here</Link>
+        <>
+            <Navbar></Navbar>
+            <Container maxWidth="sm">
+                <Box sx={{ mt: 5, p: 3, boxShadow: 3, borderRadius: 2 }}>
+                    <Typography variant="h5" sx={{ mb: 2 }}>Login</Typography>
+                    <form onSubmit={handleSubmit(submitHandler)}>
+                        <TextField
+                            fullWidth
+                            label="Email"
+                            type="email"
+                            {...register("email", validations.emailValidation)}
+                            error={!!errors.email}
+                            helperText={errors.email?.message}
+                            sx={{ mb: 2 }}
+                        />
+                        <TextField
+                            fullWidth
+                            label="Password"
+                            type="password"
+                            {...register("password", validations.passwordValidation)}
+                            error={!!errors.password}
+                            helperText={errors.password?.message}
+                            sx={{ mb: 2 }}
+                        />
+                        <Button type="submit" variant="contained" color="primary" fullWidth disabled={loading}>
+                            {loading ? "Logging in..." : "Login"}
+                        </Button>
+                        <Typography variant='body2'
+                            sx={{ mt: 2, textAlign: "center" }}>
+                            Don't have an account? <Link to="/register/:role">Register here</Link>
 
-                    </Typography>
-                </form>
-            </Box>
-        </Container>
+                        </Typography>
+                    </form>
+                </Box>
+            </Container>
+        </>
     )
 }
 

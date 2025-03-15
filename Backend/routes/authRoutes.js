@@ -7,3 +7,4 @@ router.post("/login", loginUser);
 router.post("/register/advertiser", registerAdvertiser);
 router.post("/login/advertiser", loginAdvertiser)
 module.exports = router;
+//KUshal@!12
