@@ -2,7 +2,8 @@ import React, { useEffect, useState } from "react";
 import { styled } from "@mui/material/styles";
 import { Card, CardHeader, CardContent, CardActions, IconButton, Typography, Avatar, Collapse, MenuItem, Select, FormControl, InputLabel, Box } from "@mui/material";
 import { ExpandMore as ExpandMoreIcon } from "@mui/icons-material";
-import API from "../../api/axios";
+import API from "../../../api/axios";
+import { jwtDecode } from "jwt-decode";
 
 const ExpandMore = styled(IconButton, {
   shouldForwardProp: (prop) => prop !== "expand",
@@ -21,15 +22,21 @@ export const Screens = () => {
   const [cities, setCity] = useState([]);
   const [filterActive, setFilterActive] = useState(false);
   const [specificAd, setSpecificAds] = useState([]);
+  const token = localStorage.getItem("token");
+  const decodedtoken = jwtDecode(token);
+  const id = decodedtoken.id;
 
 
 
   useEffect(() => {
     const fetchAds = async () => {
       try {
-        const res = await API.get("/ads");
+
+        console.log("Current user:", id);
+        const res = await API.get(`/ads/${id}`);
         console.log(res);
         console.log(res.data);
+        console.log(token);
         setAds(res.data);
       } catch (error) {
         console.log(error);
@@ -160,7 +167,7 @@ export const Screens = () => {
                 <Typography variant="body2" color="text.secondary">
                   {ad.description}
                 </Typography>
-              </CardContent>
+              </CardContent >
               <CardActions>
                 <ExpandMore
                   onClick={() => handleExpand(ad._id)}

@@ -1,7 +1,12 @@
 const Ad = require("../models/adsModel");
 const getAdsById = async (req, res) => {
+
+    const { id } = req.params;
     try {
-        const ads = await Ad.find({ advertserId: req.user._id })
+
+        const ads = await Ad.find({
+            advertiserId: id
+        })
             .populate("stateId", "name")
             .populate("cityId", "name")
             .populate("areaId", "name")

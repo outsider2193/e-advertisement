@@ -132,7 +132,7 @@ export const Dashboard = () => {
                                 </Typography>
                                 <Button
                                     component={Link}
-                                    to="/screenings"
+                                    to="/screenings2"
                                     variant="contained"
                                     sx={{
                                         background: "linear-gradient(to right, #2563EB, #17375E)",
@@ -172,7 +172,7 @@ export const Dashboard = () => {
                                 </Typography>
                                 <Button
                                     component={Link}
-                                    to="/ad-detail"
+                                    to="/ad-details2"
                                     variant="contained"
                                     sx={{
                                         background: "linear-gradient(to right, #2563EB, #17375E)",

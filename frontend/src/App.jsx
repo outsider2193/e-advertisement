@@ -9,8 +9,10 @@ import { SpecificRegister } from './components/pages/SpecificRegister';
 import { User } from './components/user/User';
 import { Dashboard } from './components/agency/advertiser/Dashboard';
 import { AdDetails } from "./components/agency/advertiser/AdDetails";
-import { Screens } from "./components/agency/Screens";
+import { Screens } from "./components/agency/advertiser/Screens";
 import { BrowseAds } from "./components/user/BrowseAds";
+import { AdDetails2 } from "./components/agency/advertiser/AdDetails2";
+import { Screens2 } from "./components/agency/advertiser/Screens2";
 function App() {
 
 
@@ -26,10 +28,12 @@ function App() {
           <Route path='/specificregister' element={<SpecificRegister />}></Route>
           <Route path='/advertiser/dashboard/:id' element={<Dashboard />}></Route>
           <Route path="/ad-detail" element={<AdDetails />}></Route>
+          <Route path="/ad-details2" element={<AdDetails2 />}></Route>
           <Route path='/user/dashboard' element={<User />}></Route>
           {/* <Route path='/browseads' element={<BrowseAds/>}></Route> */}
           <Route path="/browseads" element={<BrowseAds/>}></Route>
           <Route path="/screenings" element={<Screens />}></Route>
+          <Route path="/screenings2" element={<Screens2 />}></Route>
 
         </Routes>
         <ToastContainer />
