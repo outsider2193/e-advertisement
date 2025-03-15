@@ -13,6 +13,7 @@ const cityByStateRoutes = require("./routes/cityRoutes");
 const areaRoutes = require("./routes/areaRoutes");
 const areaByCityRoutes = require("./routes/cityRoutes");
 
+const bookingRoutes = require("./routes/adBookingRoutes");
 
 const app = express();
 const cors = require("cors");
@@ -32,7 +33,8 @@ app.use("/", cityRoutes);
 app.use("/", cityByStateRoutes);
 app.use("/", areaRoutes);
 app.use("/", areaByCityRoutes);
-
+app.use("/", hoardingRoutes);
+app.use("/", bookingRoutes);
 
 const PORT = process.env.PORT || 5000;
 // const JWT_SECRET = process.env.JWT_SECRET
