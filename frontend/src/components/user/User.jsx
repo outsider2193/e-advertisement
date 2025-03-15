@@ -16,7 +16,7 @@ const Footer = () => {
         mt: "auto", // Pushes the footer to the bottom dynamically
       }}
     >
-      <Typography variant="body2">© {new Date().getFullYear()} E-Advertisement. All rights reserved.</Typography>
+      <Typography variant="body2">© {new Date().getFullYear()} AdFirm. All rights reserved.</Typography>
       <Grid container justifyContent="center" spacing={2} sx={{ mt: 1 }}>
         {[
           { title: "About Us", link: "/about" },

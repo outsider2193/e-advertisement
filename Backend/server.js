@@ -12,7 +12,6 @@ const cityRoutes = require("./routes/cityRoutes");
 const cityByStateRoutes = require("./routes/cityRoutes");
 const areaRoutes = require("./routes/areaRoutes");
 const areaByCityRoutes = require("./routes/cityRoutes");
-
 const bookingRoutes = require("./routes/adBookingRoutes");
 
 const app = express();
@@ -33,7 +32,6 @@ app.use("/", cityRoutes);
 app.use("/", cityByStateRoutes);
 app.use("/", areaRoutes);
 app.use("/", areaByCityRoutes);
-app.use("/", hoardingRoutes);
 app.use("/", bookingRoutes);
 
 const PORT = process.env.PORT || 5000;
