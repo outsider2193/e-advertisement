@@ -52,6 +52,22 @@ const getallAds = async (req, res) => {
 
 }
 
+const getParticularAdById = async (req, res) => {
+    try {
+        const { id } = req.params;
+        const ad = await Ad.findById(id).populate("stateId").populate("cityId").populate("areaId");
+        
+        if (!ad) {
+            return res.status(404).json({ message: "Ad not found" });
+        }
+
+        res.status(200).json(ad);
+    } catch (error) {
+        console.error("Error fetching ad:", error);
+        res.status(500).json({ message: "Internal server error" });
+    }
+};
 
 
-module.exports = { getAdsById, getAdsByCityId, getallAds };
+
+module.exports = { getAdsById, getAdsByCityId, getallAds, getParticularAdById };

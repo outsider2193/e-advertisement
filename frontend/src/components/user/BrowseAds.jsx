@@ -168,7 +168,7 @@ export const BrowseAds = () => {
                   </Typography>
                   <Typography variant="body2" sx={{ marginTop: 1 }}>{ad.description}</Typography>
                   <Typography variant="body1" sx={{ fontWeight: "bold", marginTop: 1 }}>₹{ad.budget}</Typography>
-                  <Button variant="contained" color="primary" sx={{ marginTop: 2 }}>View Details</Button>
+                  <Button variant="contained" color="primary" sx={{ marginTop: 2 }} onClick={() => navigate("/viewdetails/" + ad._id)}>View Details</Button>
                   <Button variant="outlined" color="secondary" sx={{ marginTop: 2, marginLeft: 2 }} onClick={() => navigate("/bookings/" + ad._id)}>Book ad</Button>
                 </Box>
               </StyledCard>
