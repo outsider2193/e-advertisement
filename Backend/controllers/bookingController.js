@@ -5,7 +5,8 @@ const ads = require("../models/adsModel");
 const createBooking = async (req, res) => {
 
     try {
-        const { adId, startTime, endTime } = req.body;
+        const { startTime, endTime } = req.body;
+        const adId = req.params.adId;
 
         const startDate = new Date(startTime);
         const endDate = new Date(endTime);
@@ -26,7 +27,7 @@ const createBooking = async (req, res) => {
         });
         await newBookings.save();
         const fullBooking = await booking.findById(newBookings._id).populate("adId");
-        res.status(200).json({ message: "Booking done", newBookings })
+        res.status(200).json({ message: "Booking done", fullBooking })
 
 
     } catch (error) {
@@ -40,7 +41,7 @@ const createBooking = async (req, res) => {
 const getBookings = async (req, res) => {
     try {
         const allBookings = await booking.find();
-        
+
 
         res.status(200).json({ message: "Bookings fetched", data: allBookings })
     } catch (err) {
@@ -60,7 +61,7 @@ const checkBookingStatus = async (req, res) => {
         const updatedBooking = await booking.findByIdAndUpdate(id, { status }, { new: true });
         res.status(200).json({ message: "Booking status updated", data: updatedBooking });
         if (!updatedBooking) {
-          return   res.status(404).json({ message: "Ad not found" });
+            return res.status(404).json({ message: "Ad not found" });
         }
 
     } catch (error) {
