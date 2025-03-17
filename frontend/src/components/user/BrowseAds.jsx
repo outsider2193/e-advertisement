@@ -1,8 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { styled } from "@mui/material/styles";
 import {
-  Card, CardContent, Typography, Box, Select, MenuItem, FormControl, InputLabel, Button
+  Card, Typography, Box, Select, MenuItem, FormControl, InputLabel, Button, IconButton
 } from "@mui/material";
+import BookmarkBorderIcon from '@mui/icons-material/BookmarkBorder'; 
+import BookmarkIcon from '@mui/icons-material/Bookmark';
 import API from "../../api/axios";
 import { Link, useNavigate } from 'react-router-dom';
 
@@ -46,10 +48,12 @@ export const BrowseAds = () => {
   const [selectedState, setSelectedState] = useState("");
   const [selectedCity, setSelectedCity] = useState("");
   const [loading, setLoading] = useState(true);
+  const [savedAds, setSavedAds] = useState(new Set());
   const navigate = useNavigate();
 
   useEffect(() => {
     fetchAds();
+    fetchSavedAds();
     getStates();
   }, []);
 
@@ -63,6 +67,33 @@ export const BrowseAds = () => {
       console.log(error);
     } finally {
       setLoading(false);
+    }
+  };
+
+  const fetchSavedAds = async () => {
+    try {
+      const res = await API.get("/api/saved-ads");
+      setSavedAds(new Set(res.data.map(ad => ad._id)));
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const toggleSaveAd = async (adId) => {
+    try {
+      if (savedAds.has(adId)) {
+        await API.delete(`/api/remove-ad/${adId}`);
+        setSavedAds(prev => {
+          const newSet = new Set(prev);
+          newSet.delete(adId);
+          return newSet;
+        });
+      } else {
+        await API.post("/api/save-ad", { adId });
+        setSavedAds(prev => new Set(prev).add(adId));
+      }
+    } catch (error) {
+      console.log(error);
     }
   };
 
@@ -171,6 +202,11 @@ export const BrowseAds = () => {
                   <Button variant="contained" color="primary" sx={{ marginTop: 2 }} onClick={() => navigate("/viewdetails/" + ad._id)}>View Details</Button>
                   <Button variant="outlined" color="secondary" sx={{ marginTop: 2, marginLeft: 2 }} onClick={() => navigate("/bookings/" + ad._id)}>Book ad</Button>
                 </Box>
+
+                {/* Save Ad Icon */}
+                <IconButton onClick={() => toggleSaveAd(ad._id)}>
+                  {savedAds.has(ad._id) ? <BookmarkIcon color="primary" /> : <BookmarkBorderIcon />}
+                </IconButton>
               </StyledCard>
             ))
           ) : (

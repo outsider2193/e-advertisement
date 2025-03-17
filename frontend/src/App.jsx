@@ -15,6 +15,7 @@ import { AdDetails2 } from "./components/agency/advertiser/AdDetails2";
 import { Screens2 } from "./components/agency/advertiser/Screens2";
 import { BookingAds } from "./components/user/BookingAds";
 import { ViewDetails } from "./components/user/ViewDetails";
+import SavedAds from "./components/user/SavedAds";
 function App() {
 
 
@@ -38,6 +39,7 @@ function App() {
           <Route path="/bookings/:id" element={<BookingAds />}></Route>
           <Route path="/screenings" element={<Screens />}></Route>
           <Route path="/screenings2" element={<Screens2 />}></Route>
+          <Route path="/saved-ads" element={<SavedAds/>}></Route>
 
         </Routes>
         <ToastContainer />
