@@ -15,6 +15,7 @@ import { AdDetails2 } from "./components/agency/advertiser/AdDetails2";
 import { Screens2 } from "./components/agency/advertiser/Screens2";
 import { BookingAds } from "./components/user/BookingAds";
 import { ViewDetails } from "./components/user/ViewDetails";
+import { ManageBookings } from "./components/agency/advertiser/ManageBookings";
 function App() {
 
 
@@ -29,12 +30,13 @@ function App() {
           <Route path='/login' element={<Login />}></Route>
           <Route path='/specificregister' element={<SpecificRegister />}></Route>
           <Route path='/advertiser/dashboard/:id' element={<Dashboard />}></Route>
+          <Route path="/managebookings" element={<ManageBookings />}></Route>
           <Route path="/ad-detail" element={<AdDetails />}></Route>
           <Route path="/ad-details2" element={<AdDetails2 />}></Route>
           <Route path='/user/dashboard' element={<User />}></Route>
           {/* <Route path='/browseads' element={<BrowseAds/>}></Route> */}
           <Route path="/browseads" element={<BrowseAds />}></Route>
-          <Route path="/viewdetails/:id" element={<ViewDetails/>}></Route>
+          <Route path="/viewdetails/:id" element={<ViewDetails />}></Route>
           <Route path="/bookings/:id" element={<BookingAds />}></Route>
           <Route path="/screenings" element={<Screens />}></Route>
           <Route path="/screenings2" element={<Screens2 />}></Route>

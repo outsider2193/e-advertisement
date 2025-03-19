@@ -92,7 +92,7 @@ export const Dashboard = () => {
                                 </Typography>
                                 <Button
                                     component={Link}
-                                    to="/bookings"
+                                    to="/managebookings"
                                     variant="contained"
                                     sx={{
                                         background: "linear-gradient(to right, #2563EB, #17375E)",
