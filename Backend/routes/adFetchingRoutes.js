@@ -4,10 +4,10 @@ const { verifyToken, authorizedRoles } = require("../middleware/authMiddleware")
 const { getAdsByCityId, getallAds, getAdsById, getParticularAdById } = require("../controllers/fetchAds");
 
 
-router.get("/ads/:id", verifyToken, authorizedRoles("viewer", "advertiser"), getAdsById);
+router.get("/ads/:id", verifyToken, authorizedRoles("viewer", "advertiser"), getAdsById); 
 router.get("/ads/city/:cityId", verifyToken, authorizedRoles("advertiser", "viewer"), getAdsByCityId);
 router.get("/browseads", verifyToken, authorizedRoles("viewer"), getallAds);
 router.get("/ad/:id", getParticularAdById);
-router.get("/getads", verifyToken, authorizedRoles("viewer"), getallAds);
+router.get("/ads", verifyToken, authorizedRoles("viewer"), getallAds);
 // router.get("/ads/area/:areaId", verifyToken, authorizedRoles("advertiser"), getAdsbyAreaId)
 module.exports = router;

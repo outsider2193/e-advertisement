@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from "react";
-import { Container, Typography, Grid, Card, CardContent, CardMedia, Button, CircularProgress, Box } from "@mui/material";
+import { Container, Typography, Grid, Card, CardContent, CardMedia, Button, CircularProgress, Box, CssBaseline } from "@mui/material";
 import { Link } from "react-router-dom";
 import API from "../../api/axios";
 import bgImage from "../assets/UserBackground.jpg";
+import UserSidebar from "./UserSidebar";
 
 const Footer = () => {
   return (
@@ -45,7 +46,7 @@ export const User = () => {
   useEffect(() => {
     const fetchAds = async () => {
       try {
-        const res = await API.get("/getads");
+        const res = await API.get("/ads");
         setAds(res.data);
       } catch (error) {
         console.log("Error Fetching Ads:", error);
@@ -57,6 +58,10 @@ export const User = () => {
   }, []);
 
   return (
+    <>
+    <CssBaseline/>
+    <UserSidebar/>
+    
     <Box
       sx={{
         display: "flex",
@@ -142,7 +147,7 @@ export const User = () => {
                     <Typography variant="body2" color="textSecondary">
                       {ad.description.substring(0, 50)}...
                     </Typography>
-                    <Button component={Link} to={`/ads/${ad._id}`} size="small" sx={{ mt: 1 }}>
+                    <Button component={Link} to={`/viewdetails/${ad._id}`} size="small" sx={{ mt: 1 }}>
                       View Details
                     </Button>
                   </CardContent>
@@ -156,5 +161,6 @@ export const User = () => {
       {/* Footer */}
       <Footer />
     </Box>
+    </>
   );
 };
