@@ -45,7 +45,7 @@ export const User = () => {
   useEffect(() => {
     const fetchAds = async () => {
       try {
-        const res = await API.get("/ads");
+        const res = await API.get("/getads");
         setAds(res.data);
       } catch (error) {
         console.log("Error Fetching Ads:", error);
@@ -95,7 +95,6 @@ export const User = () => {
           {[
             { title: "Browse Ads", link: "/browseads" },
             { title: "Saved Ads", link: "/saved-ads" },
-            { title: "Post an Ad", link: "/post-ad" },
           ].map((item, index) => (
             <Grid item xs={12} sm={4} key={index}>
               <Card
