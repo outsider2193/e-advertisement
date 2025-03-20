@@ -98,7 +98,7 @@ export const ManageBookings = () => {
                     </Card>
                 ))
             ) : (
-                <Typography sx={{ mt: 2, color: "gray" }}>No Screens available</Typography>
+                <Typography sx={{ mt: 2, color: "gray" }}>No Bookings  available</Typography>
             )}
 
             <Dialog open={open} onclose={handleCloseDialog}>

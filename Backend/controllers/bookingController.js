@@ -53,7 +53,7 @@ const getBookings = async (req, res) => {
                     select: "name"
                 }
             ]
-        });
+        }).sort({ createdAt: -1 });
 
 
         res.status(200).json({ message: "Bookings fetched", data: allBookings })
