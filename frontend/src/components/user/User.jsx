@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Container, Typography, Grid, Card, CardContent, CardMedia, Button, CircularProgress, Box, CssBaseline } from "@mui/material";
 import { Link } from "react-router-dom";
 import API from "../../api/axios";
-import bgImage from "../assets/UserBackground.jpg";
+import bgImage from "../assets/images/UserBackground.jpg";
 import UserSidebar from "./UserSidebar";
 
 const Footer = () => {
@@ -89,7 +89,7 @@ export const User = () => {
       >
         {/* Welcome Section */}
         <Typography variant="h4" gutterBottom>
-          Welcome, {user?.name || "User"}! 🎉
+          Welcome, {user.data?.firstName || "User"}! 🎉
         </Typography>
         <Typography variant="subtitle1" color="textSecondary">
           Explore the latest ads and find what you need.

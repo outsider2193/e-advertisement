@@ -5,6 +5,7 @@ import { useForm } from "react-hook-form";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import API from "../../api/axios";
+import BookMyAd from "../assets/images/BookMyAd.jpg";
 
 export const BookingAds = () => {
     const { register, handleSubmit } = useForm();
@@ -13,13 +14,13 @@ export const BookingAds = () => {
     const [error, setError] = useState("");
 
     const postBooking = async (data) => {
-      
+
         if (new Date(data.endTime) < new Date(data.startTime)) {
             setError("End date must be after the start date.");
             toast.error("End date must be after the start date.");
             return;
         }
-        setError(""); 
+        setError("");
 
         try {
             const res = await API.post(`/bookads/${adId}`, {
@@ -35,19 +36,33 @@ export const BookingAds = () => {
     };
 
     return (
-        <Container sx={{ display: "flex", justifyContent: "center", alignItems: "center", height: "90vh" }}>
+        <Container sx={{
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+            minHeight: "100vh",
+            width: "100vw",
+            backgroundImage: `url(${BookMyAd})`, 
+            height: "100vh",
+            width: "100vw",
+            backgroundSize: "cover",
+            backgroundPosition: "center",
+            backgroundRepeat: "no-repeat",
+            padding: "20px"
+        }}>
             <Box sx={{
                 display: "flex",
                 flexDirection: "column",
                 justifyContent: "center",
                 alignItems: "center",
                 padding: "24px",
-                border: "1px solid #ccc",
-                borderRadius: "8px",
-                width: "100%",
+                borderRadius: "12px",
+                width: "40%",
+                minWidth: "320px",
                 maxWidth: "500px",
+                maxHeight: "80vh",
                 boxShadow: "0px 4px 10px rgba(0,0,0,0.1)",
-                backgroundColor: "white"
+                background: "rgba(255, 255, 255, 0.9)"
             }}>
                 <Typography variant="h5" sx={{ marginBottom: "16px", textAlign: "center" }}>
                     BOOK ADS
@@ -74,7 +89,7 @@ export const BookingAds = () => {
                             fullWidth
                             variant="outlined"
                         />
-                       
+
                         {error && (
                             <Typography color="error" sx={{ textAlign: "center" }}>
                                 {error}

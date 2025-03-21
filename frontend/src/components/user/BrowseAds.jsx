@@ -3,10 +3,11 @@ import { styled } from "@mui/material/styles";
 import {
   Card, Typography, Box, Select, MenuItem, FormControl, InputLabel, Button, IconButton
 } from "@mui/material";
-import BookmarkBorderIcon from '@mui/icons-material/BookmarkBorder'; 
+import BookmarkBorderIcon from '@mui/icons-material/BookmarkBorder';
 import BookmarkIcon from '@mui/icons-material/Bookmark';
 import API from "../../api/axios";
 import { Link, useNavigate } from 'react-router-dom';
+import BrowseBg from "../assets/images/BrowseAdsBg.jpg";
 
 
 const StyledCard = styled(Card)({
@@ -24,7 +25,7 @@ const StyledCard = styled(Card)({
     boxShadow: "0px 4px 12px rgba(0,0,0,0.2)"
   },
   borderRadius: "10px",
-  backgroundColor: "#fff",
+  backgroundColor: "#E3F2FD",
 });
 
 const ImagePlaceholder = styled(Box)({
@@ -148,7 +149,20 @@ export const BrowseAds = () => {
   };
 
   return (
-    <Box sx={{ padding: "20px", maxWidth: "1200px", margin: "auto" }}>
+    <Box sx={{
+      padding: "20px",
+      maxWidth: "100%",
+      margin: "auto",
+      minHeight: "100vh",
+      display: "flex",
+      flexDirection: "column",
+      alignItems: "center",
+      justifyContent: "flex-start",
+      backgroundImage: `url(${BrowseBg})`, 
+      backgroundSize: "cover",
+      backgroundPosition: "top",
+      backgroundRepeat: "no-repeat"
+    }}>
       <Typography variant="h5" sx={{ marginBottom: "20px", fontWeight: "bold", textAlign: "center" }}>
         Browse Ads
       </Typography>

@@ -2,7 +2,7 @@ import { Typography, Box, Button, Card, CardContent } from '@mui/material';
 import React, { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import API from "../../api/axios";
-
+import ViewDetailsBg from "../assets/images/ViewDetailsBg.jpg"
 
 export const ViewDetails = () => {
     const { id } = useParams();
@@ -29,32 +29,88 @@ export const ViewDetails = () => {
             setLoading(false);
         }
     };
-    
+
 
     if (loading)
         return <Typography>Loading...</Typography>;
     if (!ad)
         return <Typography>No ad details found.</Typography>;
     return (
-        <Box sx={{ padding: "20px", maxWidth: "800px", margin: "auto" }}>
-            <Card sx={{ boxShadow: 3, padding: "20px", borderRadius: "10px" }}>
-                <Typography variant="h4" sx={{ fontWeight: "bold", textAlign: "center", marginBottom: 2 }}>
-                    {ad.title}
+        <Box
+            sx={{
+                minHeight: "100vh",
+                display: "flex",
+                flexDirection: "column",
+                alignItems: "center",
+                justifyContent: "center",
+                backgroundImage: `url(${ViewDetailsBg})`,
+                backgroundSize: "cover",
+                backgroundPosition: "center",
+                backgroundRepeat: "no-repeat",
+                padding: "40px",
+                textAlign: "center"
+            }}
+        >
+            <Typography
+                variant="h4"
+                sx={{
+                    fontWeight: "bold",
+                    color: "#333",
+                    background: "rgba(255, 255, 255, 0.5)", // Soft glass effect
+                    padding: "10px 20px",
+                    borderRadius: "8px"
+                }}>
+                {ad.title}
+            </Typography>
+
+            {/* Image - Centered with a Shadow Effect */}
+            <Box sx={{ margin: "20px 0" }}>
+                <img
+                    src={ad.imageUrl}
+                    alt={ad.title}
+                    style={{
+                        width: "100%",
+                        maxWidth: "400px",
+                        borderRadius: "12px",
+                        boxShadow: "5px 5px 15px rgba(0, 0, 0, 0.2)"
+                    }}
+                />
+            </Box>
+
+            {/* Details Section */}
+            <Box sx={{
+                background: "rgba(255, 255, 255, 0.4)", // Light transparent background
+                padding: "20px",
+                borderRadius: "8px",
+                maxWidth: "600px"
+            }}>
+                <Typography variant="body1">
+                    <strong>Location:</strong> {ad.cityId?.name || "N/A"}, {ad.areaId?.name || "N/A"}
                 </Typography>
-                <Box sx={{ display: "flex", justifyContent: "center", marginBottom: 2 }}>
-                    <img
-                        src={ad.imageUrl}
-                        alt={ad.title}
-                        style={{ width: "100%", maxWidth: "400px", borderRadius: "8px" }}
-                    />
-                </Box>
-                <CardContent>
-                    <Typography variant="body1"><strong>Location:</strong> {ad.cityId?.name || "N/A"}, {ad.areaId?.name || "N/A"}</Typography>
-                    <Typography variant="body1"><strong>Description:</strong> {ad.description}</Typography>
-                    <Typography variant="h6" sx={{ fontWeight: "bold", marginTop: 2 }}>Price: ₹{ad.budget}</Typography>
-                    <Button variant="contained" color="primary" sx={{ marginTop: 2 }} onClick={handleBooking}>Book Now</Button>
-                </CardContent>
-            </Card>
+                <Typography variant="body1" sx={{ marginTop: 1 }}>
+                    <strong>Description:</strong> {ad.description}
+                </Typography>
+                <Typography variant="h5" sx={{ fontWeight: "bold", marginTop: 2, color: "#1976D2" }}>
+                    Price: ₹{ad.budget}
+                </Typography>
+            </Box>
+
+            {/* Book Now Button */}
+            <Button
+                variant="contained"
+                sx={{
+                    marginTop: 3,
+                    padding: "10px 20px",
+                    fontSize: "16px",
+                    borderRadius: "8px",
+                    backgroundColor: "#1976D2",
+                    "&:hover": { backgroundColor: "#1558A0" }
+                }}
+                onClick={handleBooking}
+            >
+                Book Now
+            </Button>
         </Box>
-    )
-}
+
+    );
+};

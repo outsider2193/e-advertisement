@@ -6,7 +6,8 @@ import {
 import API from "../../api/axios";
 import { useNavigate } from 'react-router-dom';
 import DeleteIcon from "@mui/icons-material/Delete";
-import BookmarkIcon from '@mui/icons-material/Bookmark'; 
+import BookmarkIcon from '@mui/icons-material/Bookmark';
+import BrowseBg from "../assets/images/BrowseAdsBg.jpg";
 
 const StyledCard = styled(Card)({
   display: "flex",
@@ -23,7 +24,7 @@ const StyledCard = styled(Card)({
     boxShadow: "0px 4px 12px rgba(0,0,0,0.2)"
   },
   borderRadius: "10px",
-  backgroundColor: "#fff",
+  backgroundColor: "#E3F2FD",
 });
 
 export const SavedAds = () => {
@@ -38,7 +39,7 @@ export const SavedAds = () => {
   const fetchSavedAds = async () => {
     setLoading(true);
     try {
-      const res = await API.get("/api/saved-ads"); 
+      const res = await API.get("/api/saved-ads");
       setSavedAds(res.data);
     } catch (error) {
       console.error("Error fetching saved ads:", error);
@@ -57,7 +58,20 @@ export const SavedAds = () => {
   };
 
   return (
-    <Box sx={{ padding: "20px", maxWidth: "1200px", margin: "auto" }}>
+    <Box sx={{
+      padding: "20px",
+      maxWidth: "100%",
+      margin: "auto",
+      minHeight: "100vh",
+      display: "flex",
+      flexDirection: "column",
+      alignItems: "center",
+      justifyContent: "flex-start",
+      backgroundImage: `url(${BrowseBg})`,
+      backgroundSize: "cover",
+      backgroundPosition: "top",
+      backgroundRepeat: "no-repeat"
+    }}>
       <Typography variant="h5" sx={{ marginBottom: "20px", fontWeight: "bold", textAlign: "center" }}>
         Your Saved Ads <BookmarkIcon sx={{ color: "primary" }} />
       </Typography>
