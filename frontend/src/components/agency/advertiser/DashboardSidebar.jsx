@@ -4,16 +4,18 @@ import MenuIcon from "@mui/icons-material/Menu";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import PaymentIcon from "@mui/icons-material/Payment";
 import HistoryIcon from "@mui/icons-material/History";
+import { useNavigate } from "react-router-dom";
 
 const Sidebar = () => {
   const [open, setOpen] = useState(false);
+  const navigate = useNavigate();
 
   const toggleDrawer = (open) => () => {
     setOpen(open);
   };
 
   const menuItems = [
-    { text: "Profile", icon: <AccountCircleIcon sx={{ color: "white" }} /> },
+    { text: "Profile", icon: <AccountCircleIcon sx={{ color: "white" }} />, path: "/advertiserprofile" },
     { text: "Payment", icon: <PaymentIcon sx={{ color: "white" }} /> },
     { text: "History", icon: <HistoryIcon sx={{ color: "white" }} /> }
   ];
@@ -31,13 +33,19 @@ const Sidebar = () => {
         open={open}
         onClose={toggleDrawer(false)}
         PaperProps={{
-          sx: { backgroundColor: "#0A1929", color: "white" }, 
+          sx: { backgroundColor: "#0A1929", color: "white" },
         }}
       >
         <List sx={{ width: 250 }}>
           {menuItems.map((item, index) => (
             <ListItem key={index} disablePadding>
-              <ListItemButton>
+              <ListItemButton
+                onClick={() => {
+                  if (item.text == "Profile") {
+                    navigate(item.path)
+                  }
+                }}
+              >
                 <ListItemIcon>{item.icon}</ListItemIcon>
                 <ListItemText primary={item.text} sx={{ color: "white" }} />
               </ListItemButton>

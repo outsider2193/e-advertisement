@@ -17,6 +17,11 @@ import { BookingAds } from "./components/user/BookingAds";
 import { ViewDetails } from "./components/user/ViewDetails";
 import { ManageBookings } from "./components/agency/advertiser/ManageBookings";
 import SavedAds from "./components/user/SavedAds";
+import { AdvertiserProfile } from "./components/agency/advertiser/profile/AdvertiserProfile";
+import { PersonalInfo } from "./components/agency/advertiser/profile/PersonalInfo";
+import { ChangePassword } from "./components/agency/advertiser/profile/ChangePassword";
+import { AdvertiserLogout } from "./components/agency/advertiser/profile/AdvertiserLogout";
+
 function App() {
 
 
@@ -34,6 +39,11 @@ function App() {
           <Route path="/managebookings" element={<ManageBookings />}></Route>
           <Route path="/ad-detail" element={<AdDetails />}></Route>
           <Route path="/ad-details2" element={<AdDetails2 />}></Route>
+          <Route path="/advertiserprofile" element={<AdvertiserProfile />}>
+            <Route path="profile" element={<PersonalInfo />} />
+            <Route path="change-password" element={<ChangePassword />} />
+            <Route path="logout" element={<AdvertiserLogout />} />
+          </Route>
           <Route path='/user/dashboard' element={<User />}></Route>
           {/* <Route path='/browseads' element={<BrowseAds/>}></Route> */}
           <Route path="/browseads" element={<BrowseAds />}></Route>
@@ -41,7 +51,7 @@ function App() {
           <Route path="/bookings/:id" element={<BookingAds />}></Route>
           <Route path="/screenings" element={<Screens />}></Route>
           <Route path="/screenings2" element={<Screens2 />}></Route>
-          <Route path="/saved-ads" element={<SavedAds/>}></Route>
+          <Route path="/saved-ads" element={<SavedAds />}></Route>
 
         </Routes>
         <ToastContainer />
