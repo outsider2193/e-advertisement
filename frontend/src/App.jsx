@@ -21,6 +21,9 @@ import { AdvertiserProfile } from "./components/agency/advertiser/profile/Advert
 import { PersonalInfo } from "./components/agency/advertiser/profile/PersonalInfo";
 import { ChangePassword } from "./components/agency/advertiser/profile/ChangePassword";
 import { AdvertiserLogout } from "./components/agency/advertiser/profile/AdvertiserLogout";
+import { UserProfile } from "./components/user/profile/UserProfile";
+import { UserChangePassword } from "./components/user/profile/UserChangePassword";
+import { UserInfo } from "./components/user/profile/UserInfo";
 
 function App() {
 
@@ -45,7 +48,10 @@ function App() {
             <Route path="logout" element={<AdvertiserLogout />} />
           </Route>
           <Route path='/user/dashboard' element={<User />}></Route>
-          {/* <Route path='/browseads' element={<BrowseAds/>}></Route> */}
+          <Route path="/userprofile" element={<UserProfile />}>
+            <Route path="profile" element={<UserInfo/>} />
+            <Route path="change-password" element={<UserChangePassword/>} />
+          </Route>
           <Route path="/browseads" element={<BrowseAds />}></Route>
           <Route path="/viewdetails/:id" element={<ViewDetails />}></Route>
           <Route path="/bookings/:id" element={<BookingAds />}></Route>

@@ -89,4 +89,48 @@ const getUsersById = async (req, res) => {
         res.status(500).json({ message: "Internal server error" });
     }
 }
-module.exports = { registerUser, loginUser, getUsersById };
+
+const updateuserProfile = async (req, res) => {
+    const { id } = req.params;
+    const { firstName, lastName, email } = req.body;
+    try {
+
+        const updateDetails = await user.findByIdAndUpdate(id, { firstName, lastName, email }, { new: true });
+        if (!updateDetails) {
+            res.status(404).json({ message: "User not found" });
+        }
+        res.status(200).json({ message: "Details updated succesfully", data: updateDetails })
+    } catch (error) {
+        console.log(error);
+        res.status(500).json({ message: "Internal Server error" });
+    }
+
+}
+
+const updateuserPassword = async (req, res) => {
+    const { id } = req.params;
+    const { oldPassword, newPassword, confirmPassword } = req.body;
+
+    try {
+        const existingUser = await user.findById(id);
+        if (!existingUser) return res.status(404).json({ message: "Not found" })
+
+        const isMatch = await bcrypt.compare(oldPassword, existingUser.password);
+        if (!isMatch) return res.status(404).json({ message: "Current password is wrong" });
+        if (confirmPassword !== newPassword) {
+            return res.status(400).json({ message: "Incorrect password" })
+        }
+        const salt = await bcrypt.genSalt(10);
+        const hashedPassword = await bcrypt.hash(newPassword, salt);
+
+        const updatePassword = await user.findByIdAndUpdate(id, { password: hashedPassword }, { new: true });
+
+        res.status(200).json({ message: "Password updated", data: updatePassword });
+
+
+    } catch (error) {
+        console.log(error);
+        res.status(500).json({ message: "Internal server error" });
+    }
+}
+module.exports = { registerUser, loginUser, getUsersById, updateuserProfile, updateuserPassword };

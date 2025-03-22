@@ -4,18 +4,24 @@ import MenuIcon from "@mui/icons-material/Menu";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import EventAvailableIcon from "@mui/icons-material/EventAvailable";
 import ExitToAppIcon from "@mui/icons-material/ExitToApp";
+import { useNavigate } from "react-router-dom";
 
 const UserSidebar = () => {
   const [open, setOpen] = useState(false);
-
+  const navigate = useNavigate();
   const toggleDrawer = (open) => () => {
     setOpen(open);
   };
 
+  const handleLogout = () => {
+    localStorage.clear(); // Clear all stored data
+    navigate("/login"); // Redirect to login page
+    window.location.reload(); // Reload to ensure session is cleared
+  };
   const menuItems = [
-    { text: "Profile", icon: <AccountCircleIcon sx={{ color: "#333" }} /> },
+    { text: "Profile", icon: <AccountCircleIcon sx={{ color: "#333" }} />, path: "/userprofile" },
     { text: "Bookings", icon: <EventAvailableIcon sx={{ color: "#333" }} /> },
-    { text: "Logout", icon: <ExitToAppIcon sx={{ color: "#D32F2F" }} /> }
+    { text: "Logout", icon: <ExitToAppIcon sx={{ color: "#D32F2F" }} />}
   ];
 
   return (
@@ -37,7 +43,15 @@ const UserSidebar = () => {
         <List sx={{ width: 250 }}>
           {menuItems.map((item, index) => (
             <ListItem key={index} disablePadding>
-              <ListItemButton>
+              <ListItemButton
+              onClick={() => {
+                if (item.text == "Profile") {
+                  navigate(item.path)
+                } else if (item.text === "Logout") {
+                  handleLogout(); // Call logout function
+                }
+              }}
+             >
                 <ListItemIcon>{item.icon}</ListItemIcon>
                 <ListItemText primary={item.text} sx={{ color: "#333" }} />
               </ListItemButton>

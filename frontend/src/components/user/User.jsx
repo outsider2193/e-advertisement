@@ -38,7 +38,7 @@ const Footer = () => {
 };
 
 export const User = () => {
-  const user = (localStorage.getItem("user")) || {};
+  const user = (localStorage.getItem("token")) || {};
 
   const [ads, setAds] = useState([]);
   const [loading, setLoading] = useState(true);
