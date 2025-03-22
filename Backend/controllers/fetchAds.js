@@ -1,12 +1,12 @@
 const Ad = require("../models/adsModel");
-const getAdsById = async (req, res) => {
+
+
+const getAdsByAdvertiserId = async (req, res) => {
 
     const { id } = req.params;
     try {
 
-        const ads = await Ad.find({
-            advertiserId: id
-        })
+        const ads = await Ad.find({ advertiserId: id })
             .populate("stateId", "name")
             .populate("cityId", "name")
             .populate("areaId", "name")
@@ -34,7 +34,7 @@ const getAdsByCityId = async (req, res) => {
 }
 
 const getallAds = async (req, res) => {
-   
+
 
     try {
         const ads = await Ad.find()
@@ -56,7 +56,7 @@ const getParticularAdById = async (req, res) => {
     try {
         const { id } = req.params;
         const ad = await Ad.findById(id).populate("stateId").populate("cityId").populate("areaId");
-        
+
         if (!ad) {
             return res.status(404).json({ message: "Ad not found" });
         }
@@ -70,4 +70,4 @@ const getParticularAdById = async (req, res) => {
 
 
 
-module.exports = { getAdsById, getAdsByCityId, getallAds, getParticularAdById };
+module.exports = { getAdsByAdvertiserId, getAdsByCityId, getallAds, getParticularAdById };
