@@ -14,9 +14,9 @@ const UserSidebar = () => {
   };
 
   const handleLogout = () => {
-    localStorage.clear(); // Clear all stored data
-    navigate("/login"); // Redirect to login page
-    window.location.reload(); // Reload to ensure session is cleared
+    localStorage.clear(); 
+    navigate("/login"); 
+    window.location.reload(); 
   };
   const menuItems = [
     { text: "Profile", icon: <AccountCircleIcon sx={{ color: "#333" }} />, path: "/userprofile" },

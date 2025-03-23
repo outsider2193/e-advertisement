@@ -44,7 +44,6 @@ export const BookingAds = () => {
             width: "100vw",
             backgroundImage: `url(${BookMyAd})`, 
             height: "100vh",
-            width: "100vw",
             backgroundSize: "cover",
             backgroundPosition: "center",
             backgroundRepeat: "no-repeat",
