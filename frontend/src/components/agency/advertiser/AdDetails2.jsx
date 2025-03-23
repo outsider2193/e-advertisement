@@ -216,10 +216,6 @@ export const AdDetails2 = () => {
                                 <Select
                                     label="adType"
                                     {...register("adType", validations.adTypeValidation)}
-                                    // value={watch("adType") || ""}
-
-
-
                                     sx={inputStyles}
                                 >
                                     <MenuItem value="Billboard">Billboard</MenuItem>
@@ -228,15 +224,8 @@ export const AdDetails2 = () => {
                                     <MenuItem value="Unipole">Unipole</MenuItem>
                                 </Select>
                                 {errors.adType && <FormHelperText>{errors.adType.message}</FormHelperText>}
-
-
-
                             </FormControl>
-
                             <TextField fullWidth label="Dimensions" sx={inputStyles} {...register("adDimensions", validations.cityValidation)} ></TextField>
-
-
-
                             <TextField fullWidth label="Ad Duration (Days)"
                                 {...register("adDuration", validations.adDurationValidation)}
                                 error={!!errors.adDuration}
@@ -248,10 +237,6 @@ export const AdDetails2 = () => {
                                 error={!!errors.budget}
                                 helperText={errors.budget?.message}
                                 variant="outlined" sx={inputStyles} />
-
-
-
-
                             <Button type="submit" variant="contained" fullWidth sx={{
                                 background: "#2563EB", fontWeight: "bold", fontSize: "1rem", mt: 2,
                             }}>

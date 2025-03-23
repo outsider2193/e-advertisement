@@ -20,7 +20,6 @@ import SavedAds from "./components/user/SavedAds";
 import { AdvertiserProfile } from "./components/agency/advertiser/profile/AdvertiserProfile";
 import { PersonalInfo } from "./components/agency/advertiser/profile/PersonalInfo";
 import { ChangePassword } from "./components/agency/advertiser/profile/ChangePassword";
-import { AdvertiserLogout } from "./components/agency/advertiser/profile/AdvertiserLogout";
 import { UserProfile } from "./components/user/profile/UserProfile";
 import { UserChangePassword } from "./components/user/profile/UserChangePassword";
 import { UserInfo } from "./components/user/profile/UserInfo";
@@ -45,7 +44,6 @@ function App() {
           <Route path="/advertiserprofile" element={<AdvertiserProfile />}>
             <Route path="profile" element={<PersonalInfo />} />
             <Route path="change-password" element={<ChangePassword />} />
-            <Route path="logout" element={<AdvertiserLogout />} />
           </Route>
           <Route path='/user/dashboard' element={<User />}></Route>
           <Route path="/userprofile" element={<UserProfile />}>
