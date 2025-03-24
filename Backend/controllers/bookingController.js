@@ -5,7 +5,11 @@ const ads = require("../models/adsModel");
 const createBooking = async (req, res) => {
 
     try {
-        const { startTime, endTime } = req.body;
+        const { startTime, endTime, displayFrequency,
+            specialPlacement,
+            contactPerson,
+            specialInstructions,
+            analyticsRequired } = req.body;
         const adId = req.params.adId;
 
         const startDate = new Date(startTime);
@@ -23,6 +27,11 @@ const createBooking = async (req, res) => {
             adId,
             startTime: startDate,
             endTime: endDate,
+            displayFrequency: displayFrequency || "standard",
+            specialPlacement,
+            contactPerson,
+            specialInstructions,
+            analyticsRequired: analyticsRequired || false
 
         });
         await newBookings.save();
@@ -40,20 +49,27 @@ const createBooking = async (req, res) => {
 
 const getBookings = async (req, res) => {
     try {
-        const allBookings = await booking.find().populate({
-            path: "adId",
-            select: "title description budget",
-            populate: [
-                {
-                    path: "stateId",
-                    select: "name"
-                },
-                {
-                    path: "cityId",
-                    select: "name"
-                }
-            ]
-        }).sort({ createdAt: -1 });
+        const allBookings = await booking.find()
+            .select("startTime endTime displayFrequency specialPlacement contactPerson specialInstructions analyticsRequired status")
+            .populate({
+                path: "adId",
+                select: "title description budget",
+                populate: [
+                    {
+                        path: "stateId",
+                        select: "name"
+                    },
+                    {
+                        path: "cityId",
+                        select: "name"
+                    }
+                ]
+            })
+            .populate({
+                path: "clientId",
+                select: "firstName email"
+            })
+            .sort({ createdAt: -1 });
 
 
         res.status(200).json({ message: "Bookings fetched", data: allBookings })
