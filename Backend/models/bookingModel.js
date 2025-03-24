@@ -5,6 +5,15 @@ const bookingSchema = new mongoose.Schema({
     adId: { type: mongoose.Schema.Types.ObjectId, ref: "Ad", required: true },
     startTime: { type: Date, required: true },
     endTime: { type: Date, required: true },
+    displayFrequency: {
+        type: String,
+        enum: ["low", "standard", "high", "premium"],
+        default: "standard"
+    },
+    specialPlacement: { type: String },
+    contactPerson: { type: String },
+    specialInstructions: { type: String },
+    analyticsRequired: { type: Boolean, default: false },
     status: {
         type: String,
         enum: ["confirmed", "pending", "rejected"],

@@ -89,6 +89,36 @@ export const ManageBookings = () => {
                             <Typography sx={{ fontSize: "0.9rem", mt: 1 }}>
                                 Location: {detail.adId.stateId.name}, {detail.adId.cityId.name}
                             </Typography>
+                            <Typography sx={{ fontSize: "0.9rem", mt: 1 }}>
+        Client: {detail.clientId?.name} ({detail.clientId?.email})
+    </Typography>
+    <Typography sx={{ fontSize: "0.9rem", mt: 1 }}>
+        Start Time: {new Date(detail.startTime).toLocaleString()}
+    </Typography>
+    <Typography sx={{ fontSize: "0.9rem", mt: 1 }}>
+        End Time: {new Date(detail.endTime).toLocaleString()}
+    </Typography>
+    <Typography sx={{ fontSize: "0.9rem", mt: 1 }}>
+        Display Frequency: {detail.displayFrequency}
+    </Typography>
+    {detail.specialPlacement && (
+        <Typography sx={{ fontSize: "0.9rem", mt: 1 }}>
+            Special Placement: {detail.specialPlacement}
+        </Typography>
+    )}
+    {detail.contactPerson && (
+        <Typography sx={{ fontSize: "0.9rem", mt: 1 }}>
+            Contact Person: {detail.contactPerson}
+        </Typography>
+    )}
+    {detail.specialInstructions && (
+        <Typography sx={{ fontSize: "0.9rem", mt: 1 }}>
+            Instructions: {detail.specialInstructions}
+        </Typography>
+    )}
+    <Typography sx={{ fontSize: "0.9rem", mt: 1 }}>
+        Analytics Required: {detail.analyticsRequired ? "Yes" : "No"}
+    </Typography>
                             <Typography sx={{ mt: 1, fontWeight: "bold", color: detail.status === "confirmed" ? "lightgreen" : "red" }}>
                                 Status: {detail.status}
                             </Typography>
