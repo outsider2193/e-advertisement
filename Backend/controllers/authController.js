@@ -5,7 +5,7 @@ const jwt = require("jsonwebtoken");
 const user = require("../models/userModel");
 const mailMiddleware = require("../middleware/mailMiddleware");
 
-const router = express.Router();
+
 const secretKey = process.env.JWT_SECRET;
 
 const isValidEmail = (email) => /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/.test(email);
@@ -34,15 +34,10 @@ const registerUser = async (req, res) => {
             role
         });
         await newUser.save();
-
-
-        // const token = jwt.sign(
-        //     { id: newUser._id, email: newUser.email, role: newUser.role },
-        //     secretKey,
-        //     { expiresIn: "1y" }
-        // );
-        await mailMiddleware.sendingMail(newUser.email, "Welcome to Adverse", "We adverse team welcome you to our family")
-        res.status(201).json({ message: "User registered succesfully" });
+        const verificationToken = jwt.sign({ email: newUser.email }, secretKey, { expiresIn: "12h" })
+        const verificationLink = `http://localhost:5173/verifymail/${verificationToken}`;
+        await mailMiddleware.sendingMail(newUser.email, "Welcome to Adverse", `Please verify your mail : ${verificationLink} `);
+        res.status(201).json({ message: "User registered succesfully", token: verificationToken });
     } catch (error) {
         console.error(error);
         res.status(500).json({ message: "Server Error" });
@@ -51,6 +46,34 @@ const registerUser = async (req, res) => {
 
 };
 
+const verifyEmail = async (req, res) => {
+    try {
+        const { token } = req.params;
+        const decoded = jwt.verify(token, secretKey);
+
+        const existingUser = await user.findOne({ email: decoded.email }); // Updated variable name to match your models
+        if (!existingUser) {
+            return res.status(400).json({ message: "Invalid or expired token" });
+        }
+
+        if (existingUser.verified) {
+            return res.status(400).json({ message: "Email already verified!" });
+        }
+
+        existingUser.verified = true;
+        await existingUser.save();
+
+        return res.status(200).json({ message: "Email verified successfully" });
+    } catch (error) {
+        console.log(error);
+        if (error.name === "TokenExpiredError") {
+            return res.status(400).json({ message: "Verification link has expired" });
+        }
+        res.status(500).json({ message: "Internal server error" });
+    }
+}
+
+
 const loginUser = async (req, res) => {
     try {
         const { email, password } = req.body;
@@ -58,6 +81,11 @@ const loginUser = async (req, res) => {
         if (!existingUser) {
             return res.status(400).json({ message: "User not found!" });
         }
+
+        if (existingUser.verified != true) {
+            return res.status(400).json({ message: "Email not verified" })
+        }
+
         const isMatch = await bcrypt.compare(password, existingUser.password);
         if (!isMatch) {
             return res.status(400).json({ message: "Invalid credentials!" });
@@ -133,4 +161,4 @@ const updateuserPassword = async (req, res) => {
         res.status(500).json({ message: "Internal server error" });
     }
 }
-module.exports = { registerUser, loginUser, getUsersById, updateuserProfile, updateuserPassword };
+module.exports = { registerUser, loginUser, getUsersById, updateuserProfile, updateuserPassword, verifyEmail };

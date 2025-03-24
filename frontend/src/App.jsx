@@ -23,6 +23,7 @@ import { ChangePassword } from "./components/agency/advertiser/profile/ChangePas
 import { UserProfile } from "./components/user/profile/UserProfile";
 import { UserChangePassword } from "./components/user/profile/UserChangePassword";
 import { UserInfo } from "./components/user/profile/UserInfo";
+import { VerifyMail } from "./components/pages/VerifyMail";
 
 function App() {
 
@@ -35,6 +36,7 @@ function App() {
         <Routes>
           <Route path='/' element={<WelcomeHome />}></Route>
           <Route path='/register/:role' element={<Registration />}></Route>
+          <Route path="/verifymail/:token" element={<VerifyMail />}></Route>
           <Route path='/login' element={<Login />}></Route>
           <Route path='/specificregister' element={<SpecificRegister />}></Route>
           <Route path='/advertiser/dashboard/:id' element={<Dashboard />}></Route>
@@ -47,8 +49,8 @@ function App() {
           </Route>
           <Route path='/user/dashboard' element={<User />}></Route>
           <Route path="/userprofile" element={<UserProfile />}>
-            <Route path="profile" element={<UserInfo/>} />
-            <Route path="change-password" element={<UserChangePassword/>} />
+            <Route path="profile" element={<UserInfo />} />
+            <Route path="change-password" element={<UserChangePassword />} />
           </Route>
           <Route path="/browseads" element={<BrowseAds />}></Route>
           <Route path="/viewdetails/:id" element={<ViewDetails />}></Route>

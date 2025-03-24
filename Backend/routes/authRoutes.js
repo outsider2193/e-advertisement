@@ -1,9 +1,10 @@
 const express = require("express");
-const { registerUser, loginUser, getUsersById, updateuserProfile, updateuserPassword } = require("../controllers/authController");
+const { registerUser, loginUser, getUsersById, updateuserProfile, updateuserPassword, verifyEmail } = require("../controllers/authController");
 const { registerAdvertiser, loginAdvertiser, updateAdvertiserProfile, updateAdvertiserPassword } = require("../controllers/advertiserController")
 const { verifyToken, authorizedRoles } = require("../middleware/authMiddleware");
 const router = express.Router();
 router.post("/register", registerUser);
+router.get("/verifymail/:token", verifyEmail)
 router.post("/login", loginUser);
 router.post("/register/advertiser", registerAdvertiser);
 router.post("/login/advertiser", loginAdvertiser)

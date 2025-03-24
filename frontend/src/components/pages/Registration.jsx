@@ -56,8 +56,11 @@ const Registration = () => {
         try {
             const res = await API.post(endpoint, data);
             console.log(res.data);
+            console.log(res.data.token);
             toast.success("Registration succesfull!");
-            navigate("/login")
+            const token = res.data.token;
+            navigate(`/verifymail/${token}`);
+
         }
         catch (error) {
             if (error.response?.data?.message && error.status === 400) {

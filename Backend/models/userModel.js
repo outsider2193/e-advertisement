@@ -10,7 +10,8 @@ const userSchema = new mongoose.Schema({
         enum: ["viewer", "admin", "advertiser"],
         default: "viewer"
     },
-    savedAds: { type: [mongoose.Schema.Types.ObjectId], ref: "Ad", default: [] }
+    savedAds: { type: [mongoose.Schema.Types.ObjectId], ref: "Ad", default: [] },
+    verified: { type: Boolean, default: false }
 
 
 }, { timestamps: true });
