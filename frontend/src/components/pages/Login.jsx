@@ -19,14 +19,17 @@ const Login = () => {
         try {
             const res = await API.post("/auth/login", data)
             const token = res.data?.token || res.data?.message?.token;
-            if (token) {
+            const user = res.data?.user || res.data?.message?.user;
+            if (token && user ) {
                 localStorage.removeItem("token");
                 localStorage.setItem("token", token);
+                localStorage.setItem("user", JSON.stringify(user));  // Store user details
             } else {
                 console.error("No token received from the server");
             }
 
             console.log(token);
+            console.log(user);
             const decoded = jwtDecode(token);
             console.log(decoded);
             const userRole = decoded.role;

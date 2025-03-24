@@ -158,7 +158,7 @@ export const BrowseAds = () => {
       flexDirection: "column",
       alignItems: "center",
       justifyContent: "flex-start",
-      backgroundImage: `url(${BrowseBg})`, 
+      backgroundImage: `url(${BrowseBg})`,
       backgroundSize: "cover",
       backgroundPosition: "top",
       backgroundRepeat: "no-repeat"
@@ -205,22 +205,32 @@ export const BrowseAds = () => {
           {filteredAds.length > 0 ? (
             filteredAds.map((ad) => (
               <StyledCard key={ad._id}>
-                <ImagePlaceholder>Image</ImagePlaceholder>
-                <Box sx={{ flex: 1, paddingLeft: 2 }}>
-                  <Typography variant="h6" sx={{ fontWeight: "bold" }}>{ad.title}</Typography>
-                  <Typography variant="body2" color="textSecondary">
-                    {ad.cityId?.name || "City not available"}, {ad.areaId?.name || "Area not available"}
-                  </Typography>
-                  <Typography variant="body2" sx={{ marginTop: 1 }}>{ad.description}</Typography>
-                  <Typography variant="body1" sx={{ fontWeight: "bold", marginTop: 1 }}>₹{ad.budget}</Typography>
-                  <Button variant="contained" color="primary" sx={{ marginTop: 2 }} onClick={() => navigate("/viewdetails/" + ad._id)}>View Details</Button>
-                  <Button variant="outlined" color="secondary" sx={{ marginTop: 2, marginLeft: 2 }} onClick={() => navigate("/bookings/" + ad._id)}>Book ad</Button>
-                </Box>
+                <Box sx={{ width: "120px", height: "120px", borderRadius: "8px", overflow: "hidden" }}>
+                  {ad.adUrl ? (
+                    <img
+                      src={ad.adUrl}
+                      alt={ad.title}
+                      style={{ width: "100%", height: "100%", objectFit: "cover" }}
+                    />
+                  ) : (
+                    <ImagePlaceholder>No Image</ImagePlaceholder>
+                  )}
+                  </Box>
+                  <Box sx={{ flex: 1, paddingLeft: 2 }}>
+                    <Typography variant="h6" sx={{ fontWeight: "bold" }}>{ad.title}</Typography>
+                    <Typography variant="body2" color="textSecondary">
+                      {ad.cityId?.name || "City not available"}, {ad.areaId?.name || "Area not available"}
+                    </Typography>
+                    <Typography variant="body2" sx={{ marginTop: 1 }}>{ad.description}</Typography>
+                    <Typography variant="body1" sx={{ fontWeight: "bold", marginTop: 1 }}>₹{ad.budget}</Typography>
+                    <Button variant="contained" color="primary" sx={{ marginTop: 2 }} onClick={() => navigate("/viewdetails/" + ad._id)}>View Details</Button>
+                    <Button variant="outlined" color="secondary" sx={{ marginTop: 2, marginLeft: 2 }} onClick={() => navigate("/bookings/" + ad._id)}>Book ad</Button>
+                  </Box>
 
-                {/* Save Ad Icon */}
-                <IconButton onClick={() => toggleSaveAd(ad._id)}>
-                  {savedAds.has(ad._id) ? <BookmarkIcon color="primary" /> : <BookmarkBorderIcon />}
-                </IconButton>
+                  {/* Save Ad Icon */}
+                  <IconButton onClick={() => toggleSaveAd(ad._id)}>
+                    {savedAds.has(ad._id) ? <BookmarkIcon color="primary" /> : <BookmarkBorderIcon />}
+                  </IconButton>
               </StyledCard>
             ))
           ) : (

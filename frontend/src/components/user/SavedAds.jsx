@@ -27,6 +27,20 @@ const StyledCard = styled(Card)({
   backgroundColor: "#E3F2FD",
 });
 
+const ImagePlaceholder = styled(Box)({
+  width: "120px",
+  height: "120px",
+  backgroundColor: "#f2f2f2",
+  display: "flex",
+  alignItems: "center",
+  justifyContent: "center",
+  borderRadius: "8px",
+  fontSize: "14px",
+  color: "gray",
+  fontWeight: "bold",
+});
+
+
 export const SavedAds = () => {
   const [savedAds, setSavedAds] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -89,6 +103,19 @@ export const SavedAds = () => {
         }}>
           {savedAds.map((ad) => (
             <StyledCard key={ad._id}>
+               {/* Ad Image */}
+               <Box sx={{ width: "120px", height: "120px", borderRadius: "8px", overflow: "hidden" }}>
+                {ad.adUrl ? (
+                  <img 
+                    src={ad.adUrl} 
+                    alt={ad.title} 
+                    style={{ width: "100%", height: "100%", objectFit: "cover" }} 
+                  />
+                ) : (
+                  <ImagePlaceholder>No Image</ImagePlaceholder>
+                )}
+              </Box>
+              {/* Ad Details */}
               <Box sx={{ flex: 1, paddingLeft: 2 }}>
                 <Typography variant="h6" sx={{ fontWeight: "bold" }}>{ad.title}</Typography>
                 <Typography variant="body2" color="textSecondary">

@@ -66,7 +66,7 @@ export const ViewDetails = () => {
             {/* Image - Centered with a Shadow Effect */}
             <Box sx={{ margin: "20px 0" }}>
                 <img
-                    src={ad.imageUrl}
+                    src={ad.adUrl}
                     alt={ad.title}
                     style={{
                         width: "100%",
@@ -90,6 +90,17 @@ export const ViewDetails = () => {
                 <Typography variant="body1" sx={{ marginTop: 1 }}>
                     <strong>Description:</strong> {ad.description}
                 </Typography>
+                <Typography variant="body1" sx={{ marginTop: 1 }}>
+                    <strong>Ad Type:</strong> {ad.adType || "N/A"}
+                </Typography>
+                <Typography variant="body1" sx={{ marginTop: 1 }}>
+                    <strong>Dimensions:</strong> {ad.adDimensions || "N/A"}
+                </Typography>
+                {ad.adDuration && (
+                <Typography variant="body1" sx={{ marginTop: 1 }}>
+                    <strong>Duration:</strong> {ad.adDuration} days
+                </Typography>
+                )}
                 <Typography variant="h5" sx={{ fontWeight: "bold", marginTop: 2, color: "#1976D2" }}>
                     Price: ₹{ad.budget}
                 </Typography>
