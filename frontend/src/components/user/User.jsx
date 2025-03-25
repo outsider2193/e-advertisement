@@ -38,7 +38,9 @@ const Footer = () => {
 };
 
 export const User = () => {
-  const user = (localStorage.getItem("token")) || {};
+  //const user = (localStorage.getItem("token")) || {};
+  const user = JSON.parse(localStorage.getItem("user")) || null;
+
 
   const [ads, setAds] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -89,7 +91,7 @@ export const User = () => {
       >
         {/* Welcome Section */}
         <Typography variant="h4" gutterBottom>
-          Welcome, {user.data?.firstName || "User"}! 🎉
+          Welcome, {user ? user.firstName : "User"}! 🎉
         </Typography>
         <Typography variant="subtitle1" color="textSecondary">
           Explore the latest ads and find what you need.
@@ -141,7 +143,7 @@ export const User = () => {
             {ads.slice(0, 6).map((ad) => (
               <Grid item xs={12} sm={6} md={4} key={ad._id}>
                 <Card>
-                  <CardMedia component="img" height="150" image={ad.image || "/placeholder.jpg"} alt={ad.title} />
+                  <CardMedia component="img" height="300" image={ad.adUrl || "/placeholder.jpg"} alt={ad.title} />
                   <CardContent>
                     <Typography variant="h6">{ad.title}</Typography>
                     <Typography variant="body2" color="textSecondary">

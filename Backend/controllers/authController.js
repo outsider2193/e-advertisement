@@ -68,13 +68,23 @@ const loginUser = async (req, res) => {
             secretKey,
             { expiresIn: '1y' }
         );
-        res.status(200).json({ message: "Login succesfull", token });
+
+        //send user data along with token
+        res.status(200).json({ message: "Login succesfull", token,
+            user: {
+                firstName: existingUser.firstName,
+                lastName: existingUser.lastName,
+                email: existingUser.email,
+                role: existingUser.role
+
+            }
+        });
     } catch (error) {
         console.error(error);
         res.status(500).json({ message: "Server Error" });
     }
 
-}
+};
 
 const getUsersById = async (req, res) => {
     const { id } = req.params;
