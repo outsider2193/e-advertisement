@@ -19,19 +19,19 @@ export const Navbar = () => {
 
         {/* Center Links with Scroll Feature */}
         <Box sx={{ flexGrow: 1, display: "flex", justifyContent: "center", gap: 3 }}>
-          <Button component={ScrollLink} to="services" smooth={true} duration={500} sx={{ color: "inherit", cursor: "pointer" }}>
+          <Button component={ScrollLink} to="services" smooth={true} duration={200} sx={{ color: "inherit", cursor: "pointer" }}>
             Services
           </Button>
-          <Button component={ScrollLink} to="faqs" smooth={true} duration={500} sx={{ color: "inherit", cursor: "pointer" }}>
+          <Button component={ScrollLink} to="faqs" smooth={true} duration={200} sx={{ color: "inherit", cursor: "pointer" }}>
             FAQs
           </Button>
-          <Button component={ScrollLink} to="about" smooth={true} duration={500} sx={{ color: "inherit", cursor: "pointer" }}>
+          <Button component={ScrollLink} to="about" smooth={true} duration={200} sx={{ color: "inherit", cursor: "pointer" }}>
             About Us
           </Button>
-          <Button component={ScrollLink} to="contact" smooth={true} duration={500} sx={{ color: "inherit", cursor: "pointer" }}>
+          <Button component={ScrollLink} to="contact" smooth={true} duration={200} sx={{ color: "inherit", cursor: "pointer" }}>
             Contact Us
           </Button>
-          <Button component={ScrollLink} to="terms" smooth={true} duration={500} sx={{ color: "inherit", cursor: "pointer" }}>
+          <Button component={ScrollLink} to="terms" smooth={true} duration={200} sx={{ color: "inherit", cursor: "pointer" }}>
             Terms & Conditions
           </Button>
         </Box>
