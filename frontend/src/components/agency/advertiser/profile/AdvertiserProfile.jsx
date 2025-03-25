@@ -1,10 +1,17 @@
 import { Height } from '@mui/icons-material'
 import { Box, Button, Typography } from '@mui/material'
 import React from 'react'
-import { Link, Navigate, Outlet, useLocation } from 'react-router-dom'
+import { Link, Navigate, Outlet, useLocation, useNavigate } from 'react-router-dom'
 
 export const AdvertiserProfile = () => {
   const location = useLocation();
+  const navigate = useNavigate();
+
+  function handleLogout() {
+    localStorage.clear();
+    navigate("/login");
+    window.location.reload();
+  }
   return (
     <Box
       display="flex"
@@ -47,6 +54,7 @@ export const AdvertiserProfile = () => {
           component={Link} to="logout"
           variant='contained'
           color='error'
+          onClick={(handleLogout)}
           sx={{ width: "180px", ml: "6px" }}
         >Logout</Button>
       </Box>

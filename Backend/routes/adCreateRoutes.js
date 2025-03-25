@@ -7,6 +7,6 @@ const { createAds, createAdsWithFile, updateAds, updateAdsWithFile } = require("
 router.post("/advertiser/createads", verifyToken, authorizedRoles("advertiser"), createAds);
 router.post("/advertiser/createadswithfile", verifyToken, authorizedRoles("advertiser"), createAdsWithFile);
 router.put("/advertiser/updateads/:id", verifyToken, authorizedRoles("advertiser", "viewer"), updateAds);
-router.put("/advertiser/updateadswithfile/:id", verifyToken, authorizedRoles("advertiser", "viewer"), updateAdsWithFile);
+router.put("/advertiser/updateadswithfile/:id", verifyToken, authorizedRoles("advertiser"), updateAdsWithFile);
 
 module.exports = router;
