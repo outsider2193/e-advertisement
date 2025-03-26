@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
-import { Container, Typography, Grid, Card, CardContent, CardMedia, Button, CircularProgress, Box, CssBaseline, Accordion, AccordionSummary, AccordionDetails } from "@mui/material";
+import { Container, Typography, Grid, Card, CardContent, CardMedia, Button, CircularProgress, Box, CssBaseline, Accordion, AccordionSummary, AccordionDetails, List, ListItem, ListItemIcon, ListItemText } from "@mui/material";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
+import CheckCircleOutlineIcon from "@mui/icons-material/CheckCircleOutline";
 import { Link } from "react-router-dom";
 import API from "../../api/axios";
 import bgImage from "../assets/images/UserBackground.jpg";
@@ -21,10 +22,10 @@ const Footer = () => {
         color: "white",
         textAlign: "center",
         py: 2,
-        mt: "auto", // Pushes the footer to the bottom dynamically
+        mt: "auto" // Pushes the footer to the bottom dynamically
       }}
     >
-      <Typography variant="body2">© {new Date().getFullYear()} AdFirm. All rights reserved.</Typography>
+      <Typography variant="body2">© {new Date().getFullYear()} AdVerse. All rights reserved.</Typography>
       <Grid container justifyContent="center" spacing={2} sx={{ mt: 1 }}>
         {[
           { title: "About Us", id: "about" },
@@ -166,7 +167,7 @@ export const User = () => {
             </Grid>
           )}
           {/* About Us Section */}
-          <Box id="about" sx={{ py: 5, px: 3, textAlign: "center", backgroundColor: "#eef2f5", marginTop: "10px" }}>
+          <Box id="about" sx={{ py: 5, px: 3, textAlign: "center", backgroundColor: "#eef2f5", marginTop: "10px", width: "1550px" }}>
             <Typography variant="h4" gutterBottom>
               About AdFirm
             </Typography>
@@ -208,7 +209,7 @@ export const User = () => {
           </Box>
 
           {/* Contact Us Section */}
-          <Box id="contact" sx={{ py: 5, px: 3, textAlign: "center", backgroundColor: "#eef2f5", marginTop: "10px", width: "1460px" }}>
+          <Box id="contact" sx={{ py: 5, px: 3, textAlign: "center", backgroundColor: "#eef2f5", marginTop: "0px", width: "1550px" }}>
             <Typography variant="h4" gutterBottom>
               Contact Us 📞
             </Typography>
@@ -274,7 +275,7 @@ export const User = () => {
 
 
           {/* FAQs Section */}
-          <Box id="faqs" sx={{ mt: 6, padding: 4, marginTop: "10px", textAlign: "center", width: "1460px", backgroundColor: "#eef2f5" }}>
+          <Box id="faqs" sx={{ mt: 6, padding: 4, marginTop: "0px", textAlign: "center", width: "1550px", backgroundColor: "#eef2f5" }}>
             <Typography variant="h4" fontWeight="bold" gutterBottom>
               Frequently Asked Questions
             </Typography>
@@ -355,104 +356,137 @@ export const User = () => {
 
 
           {/* Privacy Policy Section */}
-          <Box id="privacy-policy" sx={{ mt: 6, padding: 4, textAlign: "left", width: "100%" }}>
-            <Typography variant="h5" sx={{ fontWeight: "bold", textAlign: "center", mb: 2 }}>
-              Privacy Policy 🔒
-            </Typography>
+          <Box id="privacy-policy" sx={{ textAlign: "left", width: "1540px", justifyContent: "center" }}>
+            <Card sx={{ width: "100%", backgroundColor: "#eef2f5", padding: 3 }}>
+              <Typography variant="h5" fontWeight="bold" textAlign="center" mb={2}>
+                Privacy Policy 🔒
+              </Typography>
 
-            <Typography variant="body1" sx={{ mb: 2 }}>
-              At AdFirm, we prioritize your privacy. This Privacy Policy explains how we collect, use, and protect your personal data.
-            </Typography>
+              {/* Accordion for Sections */}
+              <Accordion>
+                <AccordionSummary expandIcon={<ExpandMoreIcon />}>
+                  <Typography fontWeight="bold">1. Data Collection</Typography>
+                </AccordionSummary>
+                <AccordionDetails>
+                  <Typography>
+                    We collect information such as your name, email, and browsing history when you use our platform.
+                  </Typography>
+                </AccordionDetails>
+              </Accordion>
 
-            <Typography variant="subtitle1" sx={{ fontWeight: "bold", mt: 2 }}>
-              1. Data Collection
-            </Typography>
-            <Typography variant="body2">
-              We collect information such as your name, email, and browsing history when you use our platform.
-            </Typography>
+              <Accordion>
+                <AccordionSummary expandIcon={<ExpandMoreIcon />}>
+                  <Typography fontWeight="bold">2. How We Use Your Data</Typography>
+                </AccordionSummary>
+                <AccordionDetails>
+                  <Typography>
+                    We use your data to enhance user experience, personalize ads, and improve our services.
+                  </Typography>
+                </AccordionDetails>
+              </Accordion>
 
-            <Typography variant="subtitle1" sx={{ fontWeight: "bold", mt: 2 }}>
-              2. How We Use Your Data
-            </Typography>
-            <Typography variant="body2">
-              We use your data to enhance user experience, personalize ads, and improve our services.
-            </Typography>
+              <Accordion>
+                <AccordionSummary expandIcon={<ExpandMoreIcon />}>
+                  <Typography fontWeight="bold">3. Third-Party Sharing</Typography>
+                </AccordionSummary>
+                <AccordionDetails>
+                  <Typography>
+                    We do not sell your data to third parties. However, we may share it with trusted partners for service improvement.
+                  </Typography>
+                </AccordionDetails>
+              </Accordion>
 
-            <Typography variant="subtitle1" sx={{ fontWeight: "bold", mt: 2 }}>
-              3. Third-Party Sharing
-            </Typography>
-            <Typography variant="body2">
-              We do not sell your data to third parties. However, we may share it with trusted partners for service improvement.
-            </Typography>
+              <Accordion>
+                <AccordionSummary expandIcon={<ExpandMoreIcon />}>
+                  <Typography fontWeight="bold">4. Security Measures</Typography>
+                </AccordionSummary>
+                <AccordionDetails>
+                  <Typography>
+                    We implement encryption, secure servers, and access controls to protect your data.
+                  </Typography>
+                </AccordionDetails>
+              </Accordion>
 
-            <Typography variant="subtitle1" sx={{ fontWeight: "bold", mt: 2 }}>
-              4. Security Measures
-            </Typography>
-            <Typography variant="body2">
-              We implement encryption, secure servers, and access controls to protect your data.
-            </Typography>
-
-            <Typography variant="subtitle1" sx={{ fontWeight: "bold", mt: 2 }}>
-              5. Your Rights
-            </Typography>
-            <Typography variant="body2">
-              You can request data access, corrections, or deletion by contacting our support team.
-            </Typography>
+              <Accordion>
+                <AccordionSummary expandIcon={<ExpandMoreIcon />}>
+                  <Typography fontWeight="bold">5. Your Rights</Typography>
+                </AccordionSummary>
+                <AccordionDetails>
+                  <Typography>
+                    You can request data access, corrections, or deletion by contacting our support team.
+                  </Typography>
+                </AccordionDetails>
+              </Accordion>
+            </Card>
           </Box>
+
 
 
           {/* Terms and Conditions Section */}
-          <Box id="terms-conditions" sx={{ mt: 6, padding: 4, textAlign: "left", width: "100%" }}>
-            <Typography variant="h5" sx={{ fontWeight: "bold", textAlign: "center", mb: 2 }}>
-              Terms and Conditions 📜
-            </Typography>
+          <Box
+            id="terms-conditions"
+            sx={{
+              display: "flex",
+              justifyContent: "center",
+              width: "1590px",
+            }}
+          >
+            <Card
+              sx={{
+                width: "100%",
+                backgroundColor: "#eef2f5",
+                textAlign: "center",
+              }}
+            >
+              <Typography variant="h5" fontWeight="bold" textAlign="center" mb={2} marginTop={3}>
+                Terms and Conditions 📜
+              </Typography>
 
-            <Typography variant="body1" sx={{ mb: 2 }}>
-              Welcome to AdFirm! By using our platform, you agree to comply with the following terms and conditions.
-            </Typography>
+              <Typography variant="body1" mb={2}>
+                Welcome to AdFirm! By using our platform, you agree to comply with the following terms and conditions:
+              </Typography>
 
-            <Typography variant="subtitle1" sx={{ fontWeight: "bold", mt: 2 }}>
-              1. Account Registration
-            </Typography>
-            <Typography variant="body2">
-              Users must provide accurate information during registration. Any fraudulent activity will result in account suspension.
-            </Typography>
-
-            <Typography variant="subtitle1" sx={{ fontWeight: "bold", mt: 2 }}>
-              2. Ad Content Policy
-            </Typography>
-            <Typography variant="body2">
-              Advertisements must comply with ethical and legal standards. We reserve the right to remove inappropriate content.
-            </Typography>
-
-            <Typography variant="subtitle1" sx={{ fontWeight: "bold", mt: 2 }}>
-              3. Payment and Refunds
-            </Typography>
-            <Typography variant="body2">
-              Payments are processed securely. Refunds are subject to our refund policy and eligibility criteria.
-            </Typography>
-
-            <Typography variant="subtitle1" sx={{ fontWeight: "bold", mt: 2 }}>
-              4. User Responsibilities
-            </Typography>
-            <Typography variant="body2">
-              Users must not engage in any fraudulent activities, misleading advertisements, or abuse of our platform.
-            </Typography>
-
-            <Typography variant="subtitle1" sx={{ fontWeight: "bold", mt: 2 }}>
-              5. Platform Modifications
-            </Typography>
-            <Typography variant="body2">
-              We may update our terms and services periodically. Continued use of our platform implies acceptance of these changes.
-            </Typography>
-
-            <Typography variant="subtitle1" sx={{ fontWeight: "bold", mt: 2 }}>
-              6. Contact and Support
-            </Typography>
-            <Typography variant="body2">
-              If you have any questions regarding our terms, feel free to contact our support team.
-            </Typography>
+              <List sx={{ textAlign: "center", display: "inline-block" }}>
+                <ListItem>
+                  <ListItemIcon>
+                    <CheckCircleOutlineIcon color="primary" />
+                  </ListItemIcon>
+                  <ListItemText primary="Users must provide accurate information during registration." />
+                </ListItem>
+                <ListItem>
+                  <ListItemIcon>
+                    <CheckCircleOutlineIcon color="primary" />
+                  </ListItemIcon>
+                  <ListItemText primary="Advertisements must comply with ethical and legal standards." />
+                </ListItem>
+                <ListItem>
+                  <ListItemIcon>
+                    <CheckCircleOutlineIcon color="primary" />
+                  </ListItemIcon>
+                  <ListItemText primary="Payments are processed securely, and refunds follow our policy." />
+                </ListItem>
+                <ListItem>
+                  <ListItemIcon>
+                    <CheckCircleOutlineIcon color="primary" />
+                  </ListItemIcon>
+                  <ListItemText primary="Users must not engage in fraudulent activities or misleading ads." />
+                </ListItem>
+                <ListItem>
+                  <ListItemIcon>
+                    <CheckCircleOutlineIcon color="primary" />
+                  </ListItemIcon>
+                  <ListItemText primary="We may update terms periodically, and continued use implies acceptance." />
+                </ListItem>
+                <ListItem>
+                  <ListItemIcon>
+                    <CheckCircleOutlineIcon color="primary" />
+                  </ListItemIcon>
+                  <ListItemText primary="For any queries, contact our support team." />
+                </ListItem>
+              </List>
+            </Card>
           </Box>
+
 
 
         </Container>

@@ -23,6 +23,7 @@ import { ChangePassword } from "./components/agency/advertiser/profile/ChangePas
 import { UserProfile } from "./components/user/profile/UserProfile";
 import { UserChangePassword } from "./components/user/profile/UserChangePassword";
 import { UserInfo } from "./components/user/profile/UserInfo";
+import BookedAds from "./components/user/BookedAds";
 
 function App() {
 
@@ -56,6 +57,7 @@ function App() {
           <Route path="/screenings" element={<Screens />}></Route>
           <Route path="/screenings2" element={<Screens2 />}></Route>
           <Route path="/saved-ads" element={<SavedAds />}></Route>
+          <Route path="/getbookings" element={<BookedAds />}></Route>
 
         </Routes>
         <ToastContainer />
