@@ -13,4 +13,6 @@ router.get("/advertiser/:id", verifyToken, authorizedRoles("advertiser", "admin"
 router.put("/updateuserprofile/:id", verifyToken, authorizedRoles("viewer"), updateuserProfile);
 router.put("/updateuserpassword/:id", verifyToken, authorizedRoles("viewer"), updateuserPassword);
 router.get("/user/:id", verifyToken, authorizedRoles("viewer"), getUsersById);
+
+
 module.exports = router;

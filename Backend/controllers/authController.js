@@ -35,12 +35,6 @@ const registerUser = async (req, res) => {
         });
         await newUser.save();
 
-
-        // const token = jwt.sign(
-        //     { id: newUser._id, email: newUser.email, role: newUser.role },
-        //     secretKey,
-        //     { expiresIn: "1y" }
-        // );
         await mailMiddleware.sendingMail(newUser.email, "Welcome to Adverse", "We adverse team welcome you to our family")
         res.status(201).json({ message: "User registered succesfully" });
     } catch (error) {
@@ -69,8 +63,9 @@ const loginUser = async (req, res) => {
             { expiresIn: '1y' }
         );
 
-        //send user data along with token
-        res.status(200).json({ message: "Login succesfull", token,
+
+        res.status(200).json({
+            message: "Login succesfull", token,
             user: {
                 firstName: existingUser.firstName,
                 lastName: existingUser.lastName,
@@ -142,5 +137,7 @@ const updateuserPassword = async (req, res) => {
         console.log(error);
         res.status(500).json({ message: "Internal server error" });
     }
+
+    
 }
 module.exports = { registerUser, loginUser, getUsersById, updateuserProfile, updateuserPassword };

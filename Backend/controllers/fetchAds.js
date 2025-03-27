@@ -41,6 +41,10 @@ const getallAds = async (req, res) => {
             .populate("stateId", "name")
             .populate("cityId", "name")
             .populate("areaId", "name")
+            .populate({
+                path: "advertiserId",
+                select: "firstName lastName email"
+            })
             .sort({ createdAt: -1 });
 
         console.log("Fetched Ads: ", ads);

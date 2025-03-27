@@ -20,7 +20,7 @@ const Login = () => {
             const res = await API.post("/auth/login", data)
             const token = res.data?.token || res.data?.message?.token;
             const user = res.data?.user || res.data?.message?.user;
-            if (token && user ) {
+            if (token && user) {
                 localStorage.removeItem("token");
                 localStorage.setItem("token", token);
                 localStorage.setItem("user", JSON.stringify(user));  // Store user details
@@ -36,7 +36,11 @@ const Login = () => {
             const userId = decoded.id;
             if (userRole === "advertiser") {
                 navigate(`/advertiser/dashboard/${userId}`);
-            } else {
+            }
+            else if (userRole === "admin") {
+                navigate(`/admin/${userId}`)
+            }
+            else {
                 navigate("/user/dashboard")
             }
             toast.success("Successfully logged in!", {
