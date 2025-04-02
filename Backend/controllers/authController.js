@@ -5,7 +5,7 @@ const jwt = require("jsonwebtoken");
 const user = require("../models/userModel");
 const mailMiddleware = require("../middleware/mailMiddleware");
 
-const router = express.Router();
+
 const secretKey = process.env.JWT_SECRET;
 
 const isValidEmail = (email) => /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/.test(email);
@@ -34,13 +34,6 @@ const registerUser = async (req, res) => {
             role
         });
         await newUser.save();
-
-
-        // const token = jwt.sign(
-        //     { id: newUser._id, email: newUser.email, role: newUser.role },
-        //     secretKey,
-        //     { expiresIn: "1y" }
-        // );
         await mailMiddleware.sendingMail(newUser.email, "Welcome to Adverse", "We adverse team welcome you to our family")
         res.status(201).json({ message: "User registered succesfully" });
     } catch (error) {
@@ -69,8 +62,9 @@ const loginUser = async (req, res) => {
             { expiresIn: '1y' }
         );
 
-        //send user data along with token
-        res.status(200).json({ message: "Login succesfull", token,
+
+        res.status(200).json({
+            message: "Login succesfull", token,
             user: {
                 firstName: existingUser.firstName,
                 lastName: existingUser.lastName,
