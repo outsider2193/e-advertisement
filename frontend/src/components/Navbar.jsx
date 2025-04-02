@@ -1,30 +1,51 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
+import React from "react";
+import { AppBar, Toolbar, Typography, Button, Box } from "@mui/material";
+import { Link as RouterLink } from "react-router-dom";
+import { Link as ScrollLink } from "react-scroll";
 
 export const Navbar = () => {
   return (
-    <div>
-      <nav className="navbar navbar-expand-lg navbar-light bg-light">
-        <a className="navbar-brand" href="/">Home</a>
-        <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-          <span className="navbar-toggler-icon"></span>
-        </button>
+    <AppBar position="static" sx={{ backgroundColor: "#ffffff", color: "#333", boxShadow: 3 }}>
+      <Toolbar sx={{ display: "flex", justifyContent: "space-between" }}>
+        {/* Left-Side Logo */}
+        <Typography
+          variant="h6"
+          component={RouterLink}
+          to="/"
+          sx={{ textDecoration: "none", color: "inherit", fontWeight: "bold" }}
+        >
+          Adverse
+        </Typography>
 
-        <div className="collapse navbar-collapse" id="navbarSupportedContent">
-          <ul className="navbar-nav mr-auto">
-            <li className="nav-item active">
-              <Link className="nav-link" to="/login">Login</Link>
-            </li>
-            <li className="nav-item">
-              <Link className="nav-link" to="/specificregister">Sign up</Link>
-            </li>
-            
-          </ul>
+        {/* Center Links with Scroll Feature */}
+        <Box sx={{ flexGrow: 1, display: "flex", justifyContent: "center", gap: 3 }}>
+          <Button component={ScrollLink} to="services" smooth={true} duration={500} sx={{ color: "inherit", cursor: "pointer" }}>
+            Services
+          </Button>
+          <Button component={ScrollLink} to="faqs" smooth={true} duration={500} sx={{ color: "inherit", cursor: "pointer" }}>
+            FAQs
+          </Button>
+          <Button component={ScrollLink} to="about" smooth={true} duration={500} sx={{ color: "inherit", cursor: "pointer" }}>
+            About Us
+          </Button>
+          <Button component={ScrollLink} to="contact" smooth={true} duration={500} sx={{ color: "inherit", cursor: "pointer" }}>
+            Contact Us
+          </Button>
+          <Button component={ScrollLink} to="terms" smooth={true} duration={500} sx={{ color: "inherit", cursor: "pointer" }}>
+            Terms & Conditions
+          </Button>
+        </Box>
 
-        </div>
-      </nav>
-    </div>
-  )
-}
-
-
+        {/* Right-Side Buttons */}
+        <Box sx={{ display: "flex", gap: 2 }}>
+          <Button component={RouterLink} to="/login" variant="outlined" sx={{ borderColor: "#1976d2", color: "#1976d2" }}>
+            Login
+          </Button>
+          <Button component={RouterLink} to="/specificregister" variant="contained" sx={{ backgroundColor: "#1976d2", color: "#fff" }}>
+            Sign Up
+          </Button>
+        </Box>
+      </Toolbar>
+    </AppBar>
+  );
+};

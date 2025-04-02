@@ -5,7 +5,7 @@ const jwt = require("jsonwebtoken");
 const user = require("../models/userModel");
 const mailMiddleware = require("../middleware/mailMiddleware");
 
-const router = express.Router();
+
 const secretKey = process.env.JWT_SECRET;
 
 const isValidEmail = (email) => /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/.test(email);
@@ -34,7 +34,6 @@ const registerUser = async (req, res) => {
             role
         });
         await newUser.save();
-
         await mailMiddleware.sendingMail(newUser.email, "Welcome to Adverse", "We adverse team welcome you to our family")
         res.status(201).json({ message: "User registered succesfully" });
     } catch (error) {

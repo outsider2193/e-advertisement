@@ -20,7 +20,7 @@ const UserSidebar = () => {
   };
   const menuItems = [
     { text: "Profile", icon: <AccountCircleIcon sx={{ color: "#333" }} />, path: "/userprofile" },
-    { text: "Bookings", icon: <EventAvailableIcon sx={{ color: "#333" }} /> },
+    { text: "Bookings", icon: <EventAvailableIcon sx={{ color: "#333" }} />, path: "/getbookings" },
     { text: "Logout", icon: <ExitToAppIcon sx={{ color: "#D32F2F" }} />}
   ];
 
@@ -48,7 +48,9 @@ const UserSidebar = () => {
                 if (item.text == "Profile") {
                   navigate(item.path)
                 } else if (item.text === "Logout") {
-                  handleLogout(); // Call logout function
+                  handleLogout();
+                } else if (item.text === "Bookings") {
+                  navigate(item.path)  
                 }
               }}
              >

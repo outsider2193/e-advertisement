@@ -27,6 +27,7 @@ import { AdminPage } from "./components/admin/AdminPage";
 import { AllAds } from "./components/admin/AllAds";
 import { AllUsers } from "./components/admin/AllUsers";
 import { AllBookings } from "./components/admin/AllBookings";
+import BookedAds from "./components/user/BookedAds";
 
 function App() {
 
@@ -62,6 +63,13 @@ function App() {
           <Route path="/screenings" element={<Screens />}></Route>
           <Route path="/screenings2" element={<Screens2 />}></Route>
           <Route path="/saved-ads" element={<SavedAds />}></Route>
+          <Route path="/getbookings" element={<BookedAds />}></Route>
+
+          <Route path="/admin/:id" element={<AdminPage />}>
+            <Route path="viewallads" element={<AllAds />} />
+            <Route path="viewallusers" element={<AllUsers />} />
+            <Route path="viewallbookings" element={<AllBookings />} />
+          </Route>
 
           <Route path="/admin/:id" element={<AdminPage />}>
             <Route path="viewallads" element={<AllAds />} />

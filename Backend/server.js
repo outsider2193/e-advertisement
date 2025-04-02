@@ -38,7 +38,6 @@ app.use("/", bookingRoutes);
 app.use("/api", savedAdRoutes);
 
 const PORT = process.env.PORT || 5000;
-// const JWT_SECRET = process.env.JWT_SECRET
 app.listen(PORT, () => console.log("Server is running on port 5000..."));
 
 
