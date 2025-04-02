@@ -59,16 +59,13 @@ export const ManageBookings = () => {
             {bookings.length > 0 ? (
 
                 bookings.map((detail) => (
-
-
-
                     <Card key={detail._id}
                         sx={{
                             width: "30vw", mt: "20px", ml: "60px",
                             borderRadius: "15px",
-                            background: "linear-gradient(135deg,rgb(42, 60, 136) 0%,#0A192F 100%)", 
-                            color: "#fff", 
-                            boxShadow: "0px 4px 10px rgba(0, 0, 0, 0.3)", 
+                            background: "linear-gradient(135deg,rgb(42, 60, 136) 0%,#0A192F 100%)",
+                            color: "#fff",
+                            boxShadow: "0px 4px 10px rgba(0, 0, 0, 0.3)",
                             transition: "transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out",
                             "&:hover": {
                                 transform: "scale(1.05)",
@@ -78,49 +75,49 @@ export const ManageBookings = () => {
                     >
                         <CardContent>
                             <Typography sx={{ fontSize: "1.2rem", fontWeight: "bold", mb: 1 }}>
-                                {detail.adId.title}
+                                {detail.adId?.title}
                             </Typography>
                             <Typography sx={{ opacity: 0.9, fontSize: "0.9rem" }}>
-                                {detail.adId.description}
+                                {detail.adId?.description}
                             </Typography>
                             <Typography sx={{ fontWeight: "bold", mt: 1 }}>
-                                Budget: <span style={{ color: "#ffd700" }}>{detail.adId.budget} RS</span>
+                                Budget: <span style={{ color: "#ffd700" }}>{detail.adId?.budget} RS</span>
                             </Typography>
                             <Typography sx={{ fontSize: "0.9rem", mt: 1 }}>
-                                Location: {detail.adId.stateId.name}, {detail.adId.cityId.name}
+                                Location: {detail.adId?.stateId.name}, {detail.adId?.cityId.name}
                             </Typography>
                             <Typography sx={{ fontSize: "0.9rem", mt: 1 }}>
-        Client: {detail.clientId?.name} ({detail.clientId?.email})
-    </Typography>
-    <Typography sx={{ fontSize: "0.9rem", mt: 1 }}>
-        Start Time: {new Date(detail.startTime).toLocaleString()}
-    </Typography>
-    <Typography sx={{ fontSize: "0.9rem", mt: 1 }}>
-        End Time: {new Date(detail.endTime).toLocaleString()}
-    </Typography>
-    <Typography sx={{ fontSize: "0.9rem", mt: 1 }}>
-        Display Frequency: {detail.displayFrequency}
-    </Typography>
-    {detail.specialPlacement && (
-        <Typography sx={{ fontSize: "0.9rem", mt: 1 }}>
-            Special Placement: {detail.specialPlacement}
-        </Typography>
-    )}
-    {detail.contactPerson && (
-        <Typography sx={{ fontSize: "0.9rem", mt: 1 }}>
-            Contact Person: {detail.contactPerson}
-        </Typography>
-    )}
-    {detail.specialInstructions && (
-        <Typography sx={{ fontSize: "0.9rem", mt: 1 }}>
-            Instructions: {detail.specialInstructions}
-        </Typography>
-    )}
-    <Typography sx={{ fontSize: "0.9rem", mt: 1 }}>
-        Analytics Required: {detail.analyticsRequired ? "Yes" : "No"}
-    </Typography>
+                                Client: {detail.clientId?.name} ({detail.clientId?.email})
+                            </Typography>
+                            <Typography sx={{ fontSize: "0.9rem", mt: 1 }}>
+                                Start Time: {new Date(detail?.startTime).toLocaleString()}
+                            </Typography>
+                            <Typography sx={{ fontSize: "0.9rem", mt: 1 }}>
+                                End Time: {new Date(detail?.endTime).toLocaleString()}
+                            </Typography>
+                            <Typography sx={{ fontSize: "0.9rem", mt: 1 }}>
+                                Display Frequency: {detail?.displayFrequency}
+                            </Typography>
+                            {detail?.specialPlacement && (
+                                <Typography sx={{ fontSize: "0.9rem", mt: 1 }}>
+                                    Special Placement: {detail?.specialPlacement}
+                                </Typography>
+                            )}
+                            {detail.contactPerson && (
+                                <Typography sx={{ fontSize: "0.9rem", mt: 1 }}>
+                                    Contact Person: {detail?.contactPerson}
+                                </Typography>
+                            )}
+                            {detail.specialInstructions && (
+                                <Typography sx={{ fontSize: "0.9rem", mt: 1 }}>
+                                    Instructions: {detail?.specialInstructions}
+                                </Typography>
+                            )}
+                            <Typography sx={{ fontSize: "0.9rem", mt: 1 }}>
+                                Analytics Required: {detail?.analyticsRequired ? "Yes" : "No"}
+                            </Typography>
                             <Typography sx={{ mt: 1, fontWeight: "bold", color: detail.status === "confirmed" ? "lightgreen" : "red" }}>
-                                Status: {detail.status}
+                                Status: {detail?.status}
                             </Typography>
 
                         </CardContent>
