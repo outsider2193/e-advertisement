@@ -4,6 +4,7 @@ const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const user = require("../models/userModel");
 const mailMiddleware = require("../middleware/mailMiddleware");
+const nodemailer = require("nodemailer");
 
 
 const secretKey = process.env.JWT_SECRET;
@@ -161,4 +162,71 @@ const updateuserPassword = async (req, res) => {
         res.status(500).json({ message: "Internal server error" });
     }
 }
-module.exports = { registerUser, loginUser, getUsersById, updateuserProfile, updateuserPassword, verifyEmail };
+
+const forgotPassword = async (req, res) => {
+    const { email } = req.body;
+
+    try {
+        const existingUser = await user.findOne({ email });
+
+        if (!existingUser) {
+            return res.status(404).json({ message: "No user found with this email" });
+        }
+
+        const token = jwt.sign({ email: existingUser.email }, secretKey, { expiresIn: "15m" });
+
+        const resetLink = `http://localhost:5173/reset-password/${token}`; // Replace with your frontend URL
+
+        // Send email (using nodemailer or any service)
+        const transporter = nodemailer.createTransport({
+            service: "gmail", // Or your preferred SMTP
+            auth: {
+                user: process.env.USER_MAIL,
+                pass: process.env.MAIL_PASS,
+            },
+        });
+
+        const mailOptions = {
+            from: process.env.USER_MAIL,
+            to: email,
+            subject: "Password Reset Link",
+            html: `<p>Click the link below to reset your password:</p><a href="${resetLink}">${resetLink}</a>`,
+        };
+
+        await transporter.sendMail(mailOptions);
+
+        res.status(200).json({ message: "Password reset email sent successfully" });
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ message: "Internal server error" });
+    }
+};
+
+const resetPassword = async (req, res) => {
+    const { token } = req.params;
+    const { newPassword } = req.body;
+
+    try {
+        const decoded = jwt.verify(token, secretKey);
+        const existingUser = await user.findOne({ email: decoded.email });
+
+        if (!existingUser) {
+            return res.status(400).json({ message: "Invalid token or user not found" });
+        }
+
+        const hashedPassword = await bcrypt.hash(newPassword, 10);
+        existingUser.password = hashedPassword;
+
+        await existingUser.save();
+
+        res.status(200).json({ message: "Password reset successfully" });
+    } catch (error) {
+        console.error(error);
+        if (error.name === "TokenExpiredError") {
+            return res.status(400).json({ message: "Reset link has expired" });
+        }
+        res.status(500).json({ message: "Internal server error" });
+    }
+};
+
+module.exports = { registerUser, loginUser, getUsersById, updateuserProfile, updateuserPassword, verifyEmail, forgotPassword, resetPassword };

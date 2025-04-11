@@ -52,14 +52,15 @@ const Registration = () => {
 
     const handlerSubmit = async (data) => {
         setLoading(true);
-        const endpoint = role === "advertiser" ? "/auth/register/advertiser" : "/auth/register";
+        const endpoint = role === "advertiser" ? "/auth/register/advertiser" : "/auth/register/user";
         try {
             const res = await API.post(endpoint, data);
             console.log(res.data);
             console.log(res.data.token);
             toast.success("Registration succesfull!");
             const token = res.data.token;
-            navigate(`/verifymail/${token}`);
+            navigate(`/verifymail/${token}?role=${role}`);
+
 
         }
         catch (error) {
@@ -121,7 +122,7 @@ const Registration = () => {
                         <TextField
                             fullWidth
                             label="Password"
-                            type="text  "
+                            type="password"
                             {...register("password", validations.passwordValidation)}
                             error={!!errors.password}
                             helperText={errors.password?.message}

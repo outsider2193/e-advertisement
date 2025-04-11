@@ -24,6 +24,8 @@ import { UserProfile } from "./components/user/profile/UserProfile";
 import { UserChangePassword } from "./components/user/profile/UserChangePassword";
 import { UserInfo } from "./components/user/profile/UserInfo";
 import { VerifyMail } from "./components/pages/VerifyMail";
+import SetPassword from "./components/pages/SetPassword";
+import ResetPassword from "./components/pages/ResetPassword";
 
 function App() {
 
@@ -58,6 +60,11 @@ function App() {
           <Route path="/screenings" element={<Screens />}></Route>
           <Route path="/screenings2" element={<Screens2 />}></Route>
           <Route path="/saved-ads" element={<SavedAds />}></Route>
+
+          <Route path="/forgot-password/" element={<SetPassword/>} />
+          <Route path="/reset-password/:role/:token" element={<ResetPassword />} />
+
+
 
         </Routes>
         <ToastContainer />
