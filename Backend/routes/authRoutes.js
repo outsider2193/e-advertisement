@@ -1,10 +1,9 @@
 const express = require("express");
-const { registerUser, loginUser, getUsersById, updateuserProfile, updateuserPassword, verifyEmail, forgotPassword, resetPassword } = require("../controllers/authController");
+const { registerUser, loginUser, getUsersById, updateuserProfile, updateuserPassword, forgotPassword, resetPassword } = require("../controllers/authController");
 const { registerAdvertiser, loginAdvertiser, updateAdvertiserProfile, updateAdvertiserPassword, resetAdvertiserPassword, forgotAdvertiserPassword } = require("../controllers/advertiserController")
 const { verifyToken, authorizedRoles } = require("../middleware/authMiddleware");
 const router = express.Router();
 router.post("/register", registerUser);
-router.get("/verifymail/:token", verifyEmail);
 router.post("/login", loginUser);
 router.post("/register/advertiser", registerAdvertiser);
 router.post("/login/advertiser", loginAdvertiser)

@@ -35,10 +35,8 @@ const registerUser = async (req, res) => {
             role
         });
         await newUser.save();
-        const verificationToken = jwt.sign({ email: newUser.email }, secretKey, { expiresIn: "12h" })
-        const verificationLink = `http://localhost:5173/verifymail/${verificationToken}`;
-        await mailMiddleware.sendingMail(newUser.email, "Welcome to Adverse", `Please verify your mail : ${verificationLink} `);
-        res.status(201).json({ message: "User registered succesfully", token: verificationToken });
+        await mailMiddleware.sendingMail(newUser.email, newUser.firstName);
+        res.status(201).json({ message: "User registered succesfully"});
     } catch (error) {
         console.error(error);
         res.status(500).json({ message: "Server Error" });
@@ -47,32 +45,32 @@ const registerUser = async (req, res) => {
 
 };
 
-const verifyEmail = async (req, res) => {
-    try {
-        const { token } = req.params;
-        const decoded = jwt.verify(token, secretKey);
+// const verifyEmail = async (req, res) => {
+//     try {
+//         const { token } = req.params;
+//         const decoded = jwt.verify(token, secretKey);
 
-        const existingUser = await user.findOne({ email: decoded.email }); // Updated variable name to match your models
-        if (!existingUser) {
-            return res.status(400).json({ message: "Invalid or expired token" });
-        }
+//         const existingUser = await user.findOne({ email: decoded.email }); // Updated variable name to match your models
+//         if (!existingUser) {
+//             return res.status(400).json({ message: "Invalid or expired token" });
+//         }
 
-        if (existingUser.verified) {
-            return res.status(400).json({ message: "Email already verified!" });
-        }
+//         if (existingUser.verified) {
+//             return res.status(400).json({ message: "Email already verified!" });
+//         }
 
-        existingUser.verified = true;
-        await existingUser.save();
+//         existingUser.verified = true;
+//         await existingUser.save();
 
-        return res.status(200).json({ message: "Email verified successfully" });
-    } catch (error) {
-        console.log(error);
-        if (error.name === "TokenExpiredError") {
-            return res.status(400).json({ message: "Verification link has expired" });
-        }
-        res.status(500).json({ message: "Internal server error" });
-    }
-}
+//         return res.status(200).json({ message: "Email verified successfully" });
+//     } catch (error) {
+//         console.log(error);
+//         if (error.name === "TokenExpiredError") {
+//             return res.status(400).json({ message: "Verification link has expired" });
+//         }
+//         res.status(500).json({ message: "Internal server error" });
+//     }
+// }
 
 
 const loginUser = async (req, res) => {
@@ -229,4 +227,4 @@ const resetPassword = async (req, res) => {
     }
 };
 
-module.exports = { registerUser, loginUser, getUsersById, updateuserProfile, updateuserPassword, verifyEmail, forgotPassword, resetPassword };
+module.exports = { registerUser, loginUser, getUsersById, updateuserProfile, updateuserPassword, forgotPassword, resetPassword };

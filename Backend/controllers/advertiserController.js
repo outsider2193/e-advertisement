@@ -34,7 +34,7 @@ const registerAdvertiser = async (req, res) => {
         });
         await newUser.save();
 
-        await mailMiddleware.sendingMail(newUser.email, "Welcome to Adverse", "We Wish You a Warm Welcome");
+        await mailMiddleware.sendingMail(newUser.email, newUser.firstName);
         res.status(201).json({ message: "Advertiser registered succesfully" });
     } catch (error) {
         console.error(error);

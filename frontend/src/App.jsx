@@ -23,7 +23,6 @@ import { ChangePassword } from "./components/agency/advertiser/profile/ChangePas
 import { UserProfile } from "./components/user/profile/UserProfile";
 import { UserChangePassword } from "./components/user/profile/UserChangePassword";
 import { UserInfo } from "./components/user/profile/UserInfo";
-import { VerifyMail } from "./components/pages/VerifyMail";
 import SetPassword from "./components/pages/SetPassword";
 import ResetPassword from "./components/pages/ResetPassword";
 
@@ -38,7 +37,6 @@ function App() {
         <Routes>
           <Route path='/' element={<WelcomeHome />}></Route>
           <Route path='/register/:role' element={<Registration />}></Route>
-          <Route path="/verifymail/:token" element={<VerifyMail />}></Route>
           <Route path='/login' element={<Login />}></Route>
           <Route path='/specificregister' element={<SpecificRegister />}></Route>
           <Route path='/advertiser/dashboard/:id' element={<Dashboard />}></Route>
