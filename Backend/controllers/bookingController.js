@@ -9,7 +9,7 @@ const createBooking = async (req, res) => {
             specialPlacement,
             contactPerson,
             specialInstructions,
-            analyticsRequired } = req.body;
+            analyticsRequired, payment } = req.body;
         const adId = req.params.adId;
 
         const startDate = new Date(startTime);
@@ -31,7 +31,15 @@ const createBooking = async (req, res) => {
             specialPlacement,
             contactPerson,
             specialInstructions,
-            analyticsRequired: analyticsRequired || false
+            analyticsRequired: analyticsRequired || false,
+            payment: {
+                orderId: payment.orderId,
+                paymentId: payment.paymentId,
+                signature: payment.signature,   
+                amount: payment.amount || 0,
+                currency: payment.currency || "INR",
+                paymentDate: new Date()
+            }
 
         });
         await newBookings.save();
