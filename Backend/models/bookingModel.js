@@ -19,6 +19,32 @@ const bookingSchema = new mongoose.Schema({
         enum: ["confirmed", "pending", "rejected"],
         default: "pending",
         required: true
+    },
+    payment: {
+        orderId: {
+            type: String,
+            required: true
+        },
+        paymentId: {
+            type: String,
+            required: true
+        },
+        signature: {
+            type: String,
+            required: true
+        },
+        amount: {
+            type: Number,
+            required: true
+        },
+        currency: {
+            type: String,
+            default: "INR"
+        },
+        paymentDate: {
+            type: Date,
+            default: Date.now
+        }
     }
 }, { timestamps: true })
 

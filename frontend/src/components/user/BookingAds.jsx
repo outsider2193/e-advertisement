@@ -1,4 +1,4 @@
-import React, { useState ,useEffect} from "react";
+import React, { useState, useEffect } from "react";
 import {
     Box,
     Container,
@@ -15,21 +15,22 @@ import {
     Grid,
     Paper
 } from "@mui/material";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import API from "../../api/axios";
-import BookMyAd from "../assets/images/BookMyAd.jpg";
 
 export const BookingAds = () => {
-    const { register, handleSubmit, watch, setValue } = useForm();
+    const { register, handleSubmit } = useForm();
     const adId = useParams().id;
+    const navigate = useNavigate();
     const [adDetails, setAdDetails] = useState(null);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState("");
+    const [bookingData, setBookingData] = useState(null);
+    const [processingPayment, setProcessingPayment] = useState(false);
 
-   
     useEffect(() => {
         const fetchAdDetails = async () => {
             try {
@@ -46,7 +47,160 @@ export const BookingAds = () => {
         fetchAdDetails();
     }, [adId]);
 
-    const postBooking = async (data) => {
+    const loadRazorpayScript = () => {
+        return new Promise((resolve) => {
+            const script = document.createElement("script");
+            script.src = "https://checkout.razorpay.com/v1/checkout.js";
+            script.onload = () => resolve(true);
+            script.onerror = () => resolve(false);
+            document.body.appendChild(script);
+        });
+    };
+
+    const initiatePayment = async (formData) => {
+        try {
+            setProcessingPayment(true);
+
+
+            const amount = 100;
+
+
+            // const receipt = `booking-${adId}-${Date.now()}`;
+
+
+            const orderResponse = await API.post("/createorder", {
+                amount: amount,
+                currency: "INR",
+                receipt: "receipt_order_123"
+            });
+
+            // const orderData = orderResponse.data;
+            const orderData = orderResponse.data.order || orderResponse.data;
+
+        
+            const scriptLoaded = await loadRazorpayScript();
+            if (!scriptLoaded) {
+                setProcessingPayment(false);
+                toast.error("Failed to load payment gateway. Please check your internet connection.");
+                return;
+            }
+
+
+            setBookingData({
+                ...formData,
+                amount: amount,
+                currency: "INR"
+            });
+
+            // Configure Razorpay options
+            const options = {
+                // key: import.meta.env.VITE_RAZORPAY_KEY_ID || "rzp_test_QHSpqK630bLb7U",
+                key: "rzp_test_uI9hi6mNzicqly",
+                amount: orderData.amount,
+                currency: orderData.currency,
+                name: "Ad Booking",
+                description: `Booking for ${adDetails.title}`,
+                order_id: orderData.id,
+                handler: async function (response) {
+                    handlePaymentSuccess(response, orderData);
+                },
+                prefill: {
+                    name: formData.contactPerson || "contactPerson",
+                    email: localStorage.getItem("email") || "",
+                    // contact: localStorage.getItem("userPhone") || ""
+                },
+                theme: {
+                    color: "#3f51b5"
+                },
+                modal: {
+                    ondismiss: function () {
+                        setProcessingPayment(false);
+                        toast.info("Payment cancelled. Your booking was not processed.");
+                    }
+                }
+            };
+
+
+            const paymentObject = new window.Razorpay(options);
+            paymentObject.open();
+
+        } catch (error) {
+            setProcessingPayment(false);
+            console.error("Payment initiation failed:", error);
+            toast.error("Failed to initiate payment. Please try again.");
+        }
+    };
+
+    const handlePaymentSuccess = async (paymentResponse, orderData) => {
+        try {
+            // Verify payment with backend
+            const verificationResponse = await API.post("/verifyorder", {
+                razorpay_order_id: paymentResponse.razorpay_order_id,
+                razorpay_payment_id: paymentResponse.razorpay_payment_id,
+                razorpay_signature: paymentResponse.razorpay_signature
+            });
+
+            if (verificationResponse.data.status === "success") {
+
+                await submitBooking(paymentResponse, orderData);
+            } else {
+                setProcessingPayment(false);
+                toast.error("Payment verification failed. Please contact support.");
+            }
+        } catch (error) {
+            setProcessingPayment(false);
+            console.error("Payment verification failed:", error);
+            toast.error("Payment verification failed. Please try again.");
+        }
+    };
+
+    const submitBooking = async (paymentDetails, orderData) => {
+        if (!bookingData) {
+            setProcessingPayment(false);
+            toast.error("Booking data not found. Please try again.");
+            return;
+        }
+
+        try {
+
+            const finalBookingData = {
+                // Booking details
+                startTime: bookingData.startTime,
+                endTime: bookingData.endTime,
+                displayFrequency: bookingData.displayFrequency || "standard",
+                specialPlacement: bookingData.specialPlacement || "",
+                contactPerson: bookingData.contactPerson || "",
+                specialInstructions: bookingData.specialInstructions || "",
+                analyticsRequired: bookingData.analyticsRequired || false,
+
+                // Payment details
+                payment: {
+                    orderId: paymentDetails.razorpay_order_id,
+                    paymentId: paymentDetails.razorpay_payment_id,
+                    signature: paymentDetails.razorpay_signature,
+                    amount: bookingData.amount,
+                    currency: bookingData.currency
+                }
+            };
+
+
+            const res = await API.post(`/bookads/${adId}`, finalBookingData);
+
+            setProcessingPayment(false);
+            toast.success("Booking successful! 🎉");
+
+
+            setBookingData(null);
+
+
+        } catch (error) {
+            setProcessingPayment(false);
+            console.error("Booking failed:", error);
+            toast.error("Booking failed. Please try again.");
+        }
+    };
+
+    const validateAndProceed = (data) => {
         if (new Date(data.endTime) < new Date(data.startTime)) {
             setError("End date must be after the start date.");
             toast.error("End date must be after the start date.");
@@ -54,25 +208,8 @@ export const BookingAds = () => {
         }
         setError("");
 
-        try {
-        
-            const bookingData = {
-                startTime: data.startTime,
-                endTime: data.endTime,
-                displayFrequency: data.displayFrequency || "standard",
-                specialPlacement: data.specialPlacement || "",
-                contactPerson: data.contactPerson || "",
-                specialInstructions: data.specialInstructions || "",
-                analyticsRequired: data.analyticsRequired || false
-            };
-
-            const res = await API.post(`/bookads/${adId}`, bookingData);
-            toast.success("Booking successful! 🎉");
-            console.log("Booking successful:", res.data);
-        } catch (error) {
-            console.error("Booking failed:", error);
-            toast.error("Booking failed. Please try again.");
-        }
+        // Proceed to payment
+        initiatePayment(data);
     };
 
     if (loading) {
@@ -107,10 +244,10 @@ export const BookingAds = () => {
                             </Grid>
                             <Grid item xs={12} sm={6}>
                                 <Typography variant="body2">
-                                    <strong>Duration:</strong> {adDetails.adDuration}
+                                    <strong>Duration:</strong> {adDetails?.adDuration}
                                 </Typography>
                                 <Typography variant="body2">
-                                    <strong>Budget:</strong> ${adDetails.budget}
+                                    <strong>Budget:</strong> ${adDetails?.budget}
                                 </Typography>
                             </Grid>
                         </Grid>
@@ -130,7 +267,7 @@ export const BookingAds = () => {
                         BOOK ADVERTISEMENT
                     </Typography>
 
-                    <form onSubmit={handleSubmit(postBooking)} style={{ width: "100%" }}>
+                    <form onSubmit={handleSubmit(validateAndProceed)} style={{ width: "100%" }}>
                         <Grid container spacing={3}>
                             {/* Required Booking Fields */}
                             <Grid item xs={12}>
@@ -241,9 +378,10 @@ export const BookingAds = () => {
                                         type="submit"
                                         variant="contained"
                                         size="large"
+                                        disabled={processingPayment}
                                         sx={{ minWidth: 200 }}
                                     >
-                                        Submit Booking
+                                        {processingPayment ? "Processing..." : "Proceed to Payment"}
                                     </Button>
                                 </Box>
                             </Grid>

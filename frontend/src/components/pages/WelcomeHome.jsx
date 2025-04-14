@@ -63,16 +63,16 @@ const contactDetails = [
     title: "Email Us",
     icon: "📧",
     info: [
-      { label: "For general inquiries:", value: "yogeshkarthik1524@gmail.com" },
-      { label: "For business partnerships:", value: "c2kushalsingh@gmail.com" },
+      { label: "For general inquiries:", value: "zeelp3868@gmail.com" },
+      { label: "For business partnerships:", value: "samirvithlani@gmail.com" },
     ],
   },
   {
     title: "Call Us",
     icon: "📱",
     info: [
-      { label: "Customer Support:", value: "+91 8511605724" },
-      { label: "Business Inquiries:", value: "+91 9624246710" },
+      { label: "Customer Support:", value: "+91 8799554591" },
+      { label: "Business Inquiries:", value: "+91 8799554591" },
     ],
   },
 ];
@@ -357,7 +357,7 @@ export const WelcomeHome = () => {
             px: 4,
             "&:hover": { backgroundColor: "#005bb5" },
           }}
-          href="mailto:yogeshkarthik1524@gmail.com"
+          href="mailto:zeelp3868@gmail.com"
         >
           Send an Email
         </Button>

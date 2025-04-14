@@ -225,11 +225,11 @@ export const User = () => {
                   <Typography variant="h6" sx={{ fontWeight: "bold" }}>📧 Email Us</Typography>
                   <Typography variant="body2" color="textSecondary">For general inquiries:</Typography>
                   <Typography variant="body1" sx={{ fontWeight: "bold", color: "#0073e6" }}>
-                    yogeshkarthik1524@gmail.com
+                    zeelp3868@gmail.com
                   </Typography>
                   <Typography variant="body2" color="textSecondary" sx={{ mt: 1 }}>For business partnerships:</Typography>
                   <Typography variant="body1" sx={{ fontWeight: "bold", color: "#0073e6" }}>
-                    c2kushalsingh@gmail.com
+                    samirvithlani@gmail.com
                   </Typography>
                 </Card>
               </Grid>
@@ -240,11 +240,11 @@ export const User = () => {
                   <Typography variant="h6" sx={{ fontWeight: "bold" }}>📱 Call Us</Typography>
                   <Typography variant="body2" color="textSecondary">Customer Support:</Typography>
                   <Typography variant="body1" sx={{ fontWeight: "bold", color: "#0073e6" }}>
-                    +91 8511605724
+                    +91 8799554591
                   </Typography>
                   <Typography variant="body2" color="textSecondary" sx={{ mt: 1 }}>Business Inquiries:</Typography>
                   <Typography variant="body1" sx={{ fontWeight: "bold", color: "#0073e6" }}>
-                    +91 9624246710
+                    +91 9799554591
                   </Typography>
                 </Card>
               </Grid>

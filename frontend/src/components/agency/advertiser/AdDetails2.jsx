@@ -68,7 +68,7 @@ export const AdDetails2 = () => {
             formData.append("image", data.image[0]);
             formData.append("advertiserId", advertiserId);
 
-            const res = await API.post("/advertiser/createadswithfile", formData);
+            const res = await API.post("/advertiser/createadswithfile", formData)   ;
             console.log(data);
             console.log(res.data);
 
