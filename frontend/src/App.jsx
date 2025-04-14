@@ -24,6 +24,8 @@ import { UserProfile } from "./components/user/profile/UserProfile";
 import { UserChangePassword } from "./components/user/profile/UserChangePassword";
 import { UserInfo } from "./components/user/profile/UserInfo";
 import BookedAds from "./components/user/BookedAds";
+import SetPassword from "./components/pages/SetPassword";
+import ResetPassword from "./components/pages/ResetPassword";
 
 function App() {
 
@@ -48,8 +50,8 @@ function App() {
           </Route>
           <Route path='/user/dashboard' element={<User />}></Route>
           <Route path="/userprofile" element={<UserProfile />}>
-            <Route path="profile" element={<UserInfo/>} />
-            <Route path="change-password" element={<UserChangePassword/>} />
+            <Route path="profile" element={<UserInfo />} />
+            <Route path="change-password" element={<UserChangePassword />} />
           </Route>
           <Route path="/browseads" element={<BrowseAds />}></Route>
           <Route path="/viewdetails/:id" element={<ViewDetails />}></Route>
@@ -57,6 +59,11 @@ function App() {
           <Route path="/screenings" element={<Screens />}></Route>
           <Route path="/screenings2" element={<Screens2 />}></Route>
           <Route path="/saved-ads" element={<SavedAds />}></Route>
+
+          <Route path="/forgot-password/" element={<SetPassword/>} />
+          <Route path="/reset-password/:role/:token" element={<ResetPassword />} />
+
+
           <Route path="/getbookings" element={<BookedAds />}></Route>
 
         </Routes>

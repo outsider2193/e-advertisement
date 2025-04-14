@@ -56,8 +56,10 @@ const Registration = () => {
         try {
             const res = await API.post(endpoint, data);
             console.log(res.data);
-            toast.success("Registration succesfull!");
-            navigate("/login")
+            console.log(res.data.token);
+            toast.success("Registration successful! Please check your email for a welcome message.");
+            const token = res.data.token;
+            navigate("/login");
         }
         catch (error) {
             if (error.response?.data?.message && error.status === 400) {
@@ -118,7 +120,7 @@ const Registration = () => {
                         <TextField
                             fullWidth
                             label="Password"
-                            type="text  "
+                            type="password"
                             {...register("password", validations.passwordValidation)}
                             error={!!errors.password}
                             helperText={errors.password?.message}
