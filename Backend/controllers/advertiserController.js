@@ -3,6 +3,7 @@ const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const user = require("../models/userModel");
 const mailMiddleware = require("../middleware/mailMiddleware");
+const nodemailer = require("nodemailer");
 
 // const router = express.Router();
 const secretKey = process.env.JWT_SECRET;
@@ -33,7 +34,7 @@ const registerAdvertiser = async (req, res) => {
         });
         await newUser.save();
 
-        await mailMiddleware.sendingMail(newUser.email, "Welcome to Adverse", "We Wish You a Warm Welcome");
+        await mailMiddleware.sendingMail(newUser.email, newUser.firstName);
         res.status(201).json({ message: "Advertiser registered succesfully" });
     } catch (error) {
         console.error(error);
@@ -115,8 +116,78 @@ const updateAdvertiserPassword = async (req, res) => {
         console.log(error);
         res.status(500).json({ message: "Internal server error" });
     }
-}
+};
+
+const forgotAdvertiserPassword = async (req, res) => {
+    try {
+        const { email } = req.body;
+        const existingAdvertiser = await user.findOne({ email, role: "advertiser" });
+
+        if (!existingAdvertiser) {
+            return res.status(404).json({ message: "Advertiser not found" });
+        }
+
+        const token = jwt.sign({ email: existingAdvertiser.email }, secretKey, { expiresIn: "10m" });
+        const resetLink = `http://localhost:5173/reset-password/advertiser/${token}`; // make sure this matches your frontend
+
+        const transporter = nodemailer.createTransport({
+            service: "gmail",
+            auth: {
+                user: process.env.USER_MAIL,
+                pass: process.env.MAIL_PASS,
+            },
+        });
+
+        const mailOptions = {
+            from: process.env.USER_MAIL,
+            to: existingAdvertiser.email,
+            subject: "Reset Your Advertiser Password",
+            html: `<p>Click the following link to reset your password:</p>
+                   <a href="${resetLink}">${resetLink}</a>
+                   <p>This link will expire in 10 minutes.</p>`,
+        };
+
+        await transporter.sendMail(mailOptions);
+
+        return res.status(200).json({ message: "Reset password link sent to your email." });
+    } catch (error) {
+        console.error("Error in forgotAdvertiserPassword:", error);
+        return res.status(500).json({ message: "Server Error" });
+    }
+};
+
+const resetAdvertiserPassword = async (req, res) => {
+    try {
+        const { token } = req.params;
+        const { newPassword, confirmPassword } = req.body;
+
+        const decoded = jwt.verify(token, secretKey);
+        const advertiser = await user.findOne({ email: decoded.email, role: "advertiser" });
+
+        if (!advertiser) {
+            return res.status(400).json({ message: "Invalid or expired token" });
+        }
+
+        if (newPassword !== confirmPassword) {
+            return res.status(400).json({ message: "Passwords do not match" });
+        }
+
+        const salt = await bcrypt.genSalt(10);
+        const hashedPassword = await bcrypt.hash(newPassword, salt);
+        advertiser.password = hashedPassword;
+        await advertiser.save();
+
+        return res.status(200).json({ message: "Password has been reset successfully" });
+    } catch (error) {
+        console.error(error);
+        if (error.name === "TokenExpiredError") {
+            return res.status(400).json({ message: "Reset token has expired" });
+        }
+        return res.status(500).json({ message: "Server Error" });
+    }
+};
 
 
 
-module.exports = { registerAdvertiser, loginAdvertiser, updateAdvertiserProfile, updateAdvertiserPassword };
+
+module.exports = { registerAdvertiser, loginAdvertiser, updateAdvertiserProfile, updateAdvertiserPassword, forgotAdvertiserPassword, resetAdvertiserPassword };

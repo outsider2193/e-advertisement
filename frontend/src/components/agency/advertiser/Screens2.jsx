@@ -1,23 +1,33 @@
 import React, { useEffect, useState } from "react";
-import {  Container, Card, CardHeader, CardContent, IconButton, Typography, Avatar, MenuItem, Select, FormControl, InputLabel, Box, CardMedia, Dialog, DialogTitle, DialogContent, TextField, Button, DialogActions, FormHelperText } from "@mui/material";
+import { styled } from "@mui/material/styles";
+import { CssBaseline, Container, Card, CardHeader, CardContent, CardActions, IconButton, Typography, Avatar, Collapse, MenuItem, Select, FormControl, InputLabel, Box, CardMedia, Dialog, DialogTitle, DialogContent, TextField, Button, DialogActions, FormHelperText } from "@mui/material";
+import { ExpandMore as ExpandMoreIcon } from "@mui/icons-material";
 import API from "../../../api/axios";
 import { jwtDecode } from "jwt-decode";
 import EditIcon from "@mui/icons-material/Edit";
 import { useForm } from "react-hook-form";
 import { toast } from "react-toastify";
 
-
+const ExpandMore = styled(IconButton, {
+    shouldForwardProp: (prop) => prop !== "expand",
+})(({ theme, expand }) => ({
+    marginLeft: "auto",
+    transition: theme.transitions.create("transform", {
+        duration: theme.transitions.duration.shortest,
+    }),
+    transform: expand ? "rotate(180deg)" : "rotate(0deg)",
+}));
 
 export const Screens2 = () => {
     const [ads, setAds] = useState([]);
+    const [expanded, setExpanded] = useState({});
     const [states, setStates] = useState([]);
     const [cities, setCities] = useState([]);
     const [areas, setAreas] = useState([]);
     const [selectedAd, setSelectedAd] = useState(null);
     const [filterActive, setFilterActive] = useState(false);
     const [specificAd, setSpecificAds] = useState([]);
-    const [editOpen, setEditOpen] = useState(false);
-    const [viewOpen, setViewOpen] = useState(false);
+    const [open, setOpen] = useState(false);
     const { register, handleSubmit, setValue, reset, formState: { errors } } = useForm();
     const token = localStorage.getItem("token");
     const decodedtoken = jwtDecode(token);
@@ -42,9 +52,11 @@ export const Screens2 = () => {
         }
     };
 
-    const handleEditOpen = (adId) => {
+    const handleOpen = (adId) => {
         const adToEdit = ads.find(ad => ad._id === adId);
         setSelectedAd(adToEdit);
+
+
         if (adToEdit) {
             setValue("title", adToEdit.title);
             setValue("description", adToEdit.description);
@@ -54,33 +66,18 @@ export const Screens2 = () => {
             setValue("adDimensions", adToEdit.adDimensions);
             setValue("adDuration", adToEdit.adDuration);
             setValue("budget", adToEdit.budget);
-            if (adToEdit.stateId) setValue("stateId", adToEdit.stateId._id);
-            if (adToEdit.cityId) setValue("cityId", adToEdit.cityId._id);
-            if (adToEdit.areaId) setValue("areaId", adToEdit.areaId._id)
+
+
+            
         }
 
-        setEditOpen(true);
+        setOpen(true);
     };
 
-    const handleEditClose = () => {
-        setEditOpen(false);
-        reset();
+    const handleClose = () => {
+        setOpen(false);
+        reset(); 
     };
-
-    const handleViewOpen = (adId) => {
-        if (!viewOpen) {
-            const adToView = ads.find(ad => ad._id === adId);
-            setSelectedAd(adToView);
-            setViewOpen(true);
-        }
-    };
-
-
-    const handleViewCLose = () => {
-        setViewOpen(false);
-        // setSelectedAd(null);
-        reset();
-    }
 
     const getStates = async () => {
         try {
@@ -139,6 +136,13 @@ export const Screens2 = () => {
         }
     };
 
+    const handleExpand = (_id) => {
+        setExpanded((prev) => ({
+            ...prev,
+            [_id]: !prev[_id],
+        }));
+    };
+
     const submitHandler = async (data) => {
         if (!selectedAd) {
             console.error("No ad selected for update");
@@ -167,7 +171,7 @@ export const Screens2 = () => {
 
             const res = await API.put(`/advertiser/updateadswithfile/${selectedAd._id}`, formData);
             console.log("Update response:", res.data);
-            handleEditClose();
+            handleClose();
             await fetchAds();
             toast.success("Ad details updated successfully!");
 
@@ -290,21 +294,13 @@ export const Screens2 = () => {
                             boxShadow: "0px 4px 12px rgba(0, 0, 0, 0.1)",
                             transition: "transform 0.3s ease-in-out",
                             "&:hover": { transform: "scale(1.05)", boxShadow: "0px 6px 15px rgba(0, 0, 0, 0.2)" },
-                        }}
-                            onClick={(e) => {
-                                e.stopPropagation();
-                                handleViewOpen(ad._id);
-                            }}
-                        >
+                        }}>
                             <CardHeader
                                 avatar={<Avatar sx={{ bgcolor: "red" }}>{ad.title[0]}</Avatar>}
                                 title={ad.title}
                                 subheader={` ${ad.cityId?.name || "Cityname not available"}, ${ad.areaId?.name || "areaname not available"}`}
                                 action={
-                                    <IconButton onClick={(e) => {
-                                        e.stopPropagation();
-                                        handleEditOpen(ad._id);
-                                    }} sx={{ color: "primary.main" }}>
+                                    <IconButton onClick={() => handleOpen(ad._id)} sx={{ color: "primary.main" }}>
                                         <EditIcon />
                                     </IconButton>
                                 }
@@ -320,54 +316,46 @@ export const Screens2 = () => {
                                     {ad.description}
                                 </Typography>
                             </CardContent >
-                            <Dialog
-                                open={viewOpen}
-                                onClose={handleViewCLose}
-                                maxWidth="md"
-                                fullWidth
-                            >
-                                <DialogTitle sx={{ fontWeight: "bold", fontSize: "1.5rem", textAlign: "center" }}>
-                                    {selectedAd?.title}
-                                </DialogTitle>
+                            <CardActions>
+                                <ExpandMore
+                                    onClick={() => handleExpand(ad._id)}
+                                    sx={{ transform: expanded[ad._id] ? "rotate(180deg)" : "rotate(0deg)" }}
+                                >
+                                    <ExpandMoreIcon />
+                                </ExpandMore>
+                            </CardActions>
+                            <Collapse in={expanded[ad._id]} timeout="auto" unmountOnExit sx={{ width: "100%" }}>
+                                <CardContent>
+                                    <Typography variant="body2">
+                                        <span style={{ fontWeight: "bold" }}>Ad Type:</span> <span style={{ color: "green" }}> {ad.adType}</span></Typography>
+                                    <Typography variant="body2" sx={{ mt: 1 }}>
+                                        <span style={{ fontWeight: "bold" }}>Target Audience:</span>
+                                        <span style={{ color: "blue" }}> {ad.targetAudience}</span>
+                                    </Typography>
 
-                                <DialogContent dividers sx={{ p: 3 }}>
-                                    <Box display="flex" flexDirection={{ xs: "column", md: "row" }} gap={3}>
+                                    {ad.adDuration && (
+                                        <Typography variant="body2" sx={{ mt: 1 }}>
+                                            <span style={{ fontWeight: "bold" }}>Duration:</span>
+                                            <span style={{ color: "purple" }}> {ad.adDuration} days</span>
+                                        </Typography>
+                                    )}
 
-                                        <Box flex="0 0 45%" display="flex" justifyContent="center">
-                                            <CardMedia
-                                                component="img"
-                                                image={selectedAd?.adUrl}
-                                                alt={selectedAd?.title}
-                                                sx={{ width: "100%", maxHeight: 350, objectFit: "cover", borderRadius: "12px", boxShadow: 3 }}
-                                            />
-                                        </Box>
+                                    <Typography variant="body2" sx={{ mt: 1 }}>
+                                        <span style={{ fontWeight: "bold" }}>Longitude and Latitude:</span>
+                                        <span style={{ color: "orange" }}> {ad.longitude_latitude}</span>
+                                    </Typography>
 
+                                    <Typography variant="body2" sx={{ mt: 1 }}>
+                                        <span style={{ fontWeight: "bold" }}>Budget:</span>
+                                        <span style={{ color: "red" }}> {ad.budget} Rs</span>
+                                    </Typography>
 
-                                        <Box flex="1" display="flex" flexDirection="column" gap={2}>
-                                            {[
-                                                { label: "City", value: selectedAd?.cityId?.name },
-                                                { label: "Area", value: selectedAd?.areaId?.name },
-                                                { label: "Ad Type", value: selectedAd?.adType, color: "green" },
-                                                { label: "Target Audience", value: selectedAd?.targetAudience, color: "blue" },
-                                                { label: "Duration", value: selectedAd?.adDuration ? `${selectedAd.adDuration} days` : "N/A", color: "purple" },
-                                                { label: "Longitude & Latitude", value: selectedAd?.longitude_latitude, color: "orange" },
-                                                { label: "Budget", value: `${selectedAd?.budget} Rs`, color: "red" },
-                                                { label: "Dimension", value: selectedAd?.adDimensions, color: "teal" },
-                                            ].map((item, index) => (
-                                                <Typography key={index} variant="body1" sx={{ fontWeight: "bold", fontSize: "1rem", color: item.color || "inherit" }}>
-                                                    <strong>{item.label}:</strong> {item.value || "Not available"}
-                                                </Typography>
-                                            ))}
-                                        </Box>
-                                    </Box>
-                                </DialogContent>
-
-                                <DialogActions sx={{ justifyContent: "center", pb: 2 }}>
-                                    <Button onClick={handleViewCLose} color="primary" variant="contained" sx={{ px: 3, py: 1 }}>
-                                        Close
-                                    </Button>
-                                </DialogActions>
-                            </Dialog>
+                                    <Typography variant="body2" sx={{ mt: 1 }}>
+                                        <span style={{ fontWeight: "bold" }}>Dimension:</span>
+                                        <span style={{ color: "teal" }}> {ad.adDimensions}</span>
+                                    </Typography>
+                                </CardContent>
+                            </Collapse>
                         </Card>
                     ))
                 ) : (
@@ -375,7 +363,7 @@ export const Screens2 = () => {
                 )}
             </div>
 
-            <Dialog open={editOpen} onClose={handleEditClose} maxWidth="lg" fullWidth>
+            <Dialog open={open} onClose={handleClose} maxWidth="lg" fullWidth>
                 <DialogTitle>Edit Ad</DialogTitle>
                 <form onSubmit={handleSubmit(submitHandler)}>
                     <DialogContent>
@@ -533,7 +521,7 @@ export const Screens2 = () => {
                     </DialogContent>
 
                     <DialogActions sx={{ px: 3, pb: 3 }}>
-                        <Button onClick={handleEditClose} color="secondary" variant="outlined">
+                        <Button onClick={handleClose} color="secondary" variant="outlined">
                             Cancel
                         </Button>
                         <Button type="submit" variant="contained" color="primary">

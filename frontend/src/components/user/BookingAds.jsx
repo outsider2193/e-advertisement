@@ -1,3 +1,8 @@
+<<<<<<< HEAD
+import React, { useState } from "react";
+import { Box, Container, TextField, Typography, Button } from "@mui/material";
+import { useParams } from "react-router-dom";
+=======
 import React, { useState, useEffect } from "react";
 import {
     Box,
@@ -16,6 +21,7 @@ import {
     Paper
 } from "@mui/material";
 import { useParams, useNavigate } from "react-router-dom";
+>>>>>>> 208ccc70bdf1d111ff50315f2c6bf675854f7eee
 import { useForm } from "react-hook-form";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -24,13 +30,21 @@ import API from "../../api/axios";
 export const BookingAds = () => {
     const { register, handleSubmit } = useForm();
     const adId = useParams().id;
+<<<<<<< HEAD
+
+=======
     const navigate = useNavigate();
     const [adDetails, setAdDetails] = useState(null);
     const [loading, setLoading] = useState(true);
+>>>>>>> 208ccc70bdf1d111ff50315f2c6bf675854f7eee
     const [error, setError] = useState("");
     const [bookingData, setBookingData] = useState(null);
     const [processingPayment, setProcessingPayment] = useState(false);
 
+<<<<<<< HEAD
+    const postBooking = async (data) => {
+
+=======
     useEffect(() => {
         const fetchAdDetails = async () => {
             try {
@@ -201,6 +215,7 @@ export const BookingAds = () => {
     };
 
     const validateAndProceed = (data) => {
+>>>>>>> 208ccc70bdf1d111ff50315f2c6bf675854f7eee
         if (new Date(data.endTime) < new Date(data.startTime)) {
             setError("End date must be after the start date.");
             toast.error("End date must be after the start date.");
@@ -208,21 +223,91 @@ export const BookingAds = () => {
         }
         setError("");
 
+<<<<<<< HEAD
+        try {
+            const res = await API.post(`/bookads/${adId}`, {
+                startTime: data.startTime,
+                endTime: data.endTime,
+            });
+            toast.success("Booking successful! 🎉");
+            console.log("Booking successful:", res.data);
+        } catch (error) {
+            console.error("Booking failed:", error);
+            toast.error("Booking failed. Please try again.");
+        }
+=======
         // Proceed to payment
         initiatePayment(data);
+>>>>>>> 208ccc70bdf1d111ff50315f2c6bf675854f7eee
     };
 
-    if (loading) {
-        return (
-            <Container>
-                <Box sx={{ display: "flex", justifyContent: "center", alignItems: "center", height: "90vh" }}>
-                    <Typography>Loading advertisement details...</Typography>
-                </Box>
-            </Container>
-        );
-    }
-
     return (
+<<<<<<< HEAD
+        <Container sx={{
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+            minHeight: "100vh",
+            width: "100vw",
+            backgroundImage: `url(${BookMyAd})`, 
+            height: "100vh",
+            backgroundSize: "cover",
+            backgroundPosition: "center",
+            backgroundRepeat: "no-repeat",
+            padding: "20px"
+        }}>
+            <Box sx={{
+                display: "flex",
+                flexDirection: "column",
+                justifyContent: "center",
+                alignItems: "center",
+                padding: "24px",
+                borderRadius: "12px",
+                width: "40%",
+                minWidth: "320px",
+                maxWidth: "500px",
+                maxHeight: "80vh",
+                boxShadow: "0px 4px 10px rgba(0,0,0,0.1)",
+                background: "rgba(255, 255, 255, 0.9)"
+            }}>
+                <Typography variant="h5" sx={{ marginBottom: "16px", textAlign: "center" }}>
+                    BOOK ADS
+                </Typography>
+                <form onSubmit={handleSubmit(postBooking)} style={{ width: "100%" }}>
+                    <Box sx={{ display: "flex", flexDirection: "column", gap: 2 }}>
+                        {/* Start Date */}
+                        <TextField
+                            type="date"
+                            label="Start Date"
+                            InputLabelProps={{ shrink: true }}
+                            {...register("startTime")}
+                            required
+                            fullWidth
+                            variant="outlined"
+                        />
+                        {/* End Date */}
+                        <TextField
+                            type="date"
+                            label="End Date"
+                            InputLabelProps={{ shrink: true }}
+                            {...register("endTime")}
+                            required
+                            fullWidth
+                            variant="outlined"
+                        />
+
+                        {error && (
+                            <Typography color="error" sx={{ textAlign: "center" }}>
+                                {error}
+                            </Typography>
+                        )}
+                        <Button type="submit" variant="contained" fullWidth>
+                            Submit Booking
+                        </Button>
+                    </Box>
+                </form>
+            </Box>
+=======
         <Container sx={{ py: 4 }}>
             <Paper elevation={3} sx={{ p: 3, mb: 4 }}>
                 {adDetails && (
@@ -389,6 +474,7 @@ export const BookingAds = () => {
                     </form>
                 </Box>
             </Paper>
+>>>>>>> 208ccc70bdf1d111ff50315f2c6bf675854f7eee
         </Container>
     );
 };

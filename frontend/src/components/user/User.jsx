@@ -46,9 +46,7 @@ const Footer = () => {
 };
 
 export const User = () => {
-  //const user = (localStorage.getItem("token")) || {};
-  const user = JSON.parse(localStorage.getItem("user")) || null;
-
+  const user = (localStorage.getItem("token")) || {};
 
   const [ads, setAds] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -69,41 +67,41 @@ export const User = () => {
 
   return (
     <>
-      <CssBaseline />
-      <UserSidebar />
-
-      <Box
+     <CssBaseline/>
+    <UserSidebar/>
+    
+    <Box
+      sx={{
+        display: "flex",
+        flexDirection: "column",
+        minHeight: "100vh", // Ensures the footer stays at the bottom
+        overflowX: "hidden", // Prevents horizontal scrolling
+      }}
+    >
+      <Container
+        maxWidth="xl"
+        disableGutters
         sx={{
+          width: "100%", // Prevents horizontal overflow
+          flexGrow: 1, // Allows the main content to grow and push the footer down
+          backgroundImage: `url(${bgImage})`,
+          backgroundSize: "cover",
+          backgroundPosition: "center",
+          backgroundRepeat: "no-repeat",
           display: "flex",
           flexDirection: "column",
-          minHeight: "100vh", // Ensures the footer stays at the bottom
-          overflowX: "hidden", // Prevents horizontal scrolling
+          alignItems: "center",
+          textAlign: "center",
+          padding: 4,
         }}
       >
-        <Container
-          maxWidth="xl"
-          disableGutters
-          sx={{
-            width: "100%", // Prevents horizontal overflow
-            flexGrow: 1, // Allows the main content to grow and push the footer down
-            backgroundImage: `url(${bgImage})`,
-            backgroundSize: "cover",
-            backgroundPosition: "center",
-            backgroundRepeat: "no-repeat",
-            display: "flex",
-            flexDirection: "column",
-            alignItems: "center",
-            textAlign: "center",
-            padding: 4,
-          }}
-        >
-          {/* Welcome Section */}
-          <Typography variant="h4" gutterBottom>
-            Welcome, {user ? user.firstName : "User"}! 🎉
-          </Typography>
-          <Typography variant="subtitle1" color="textSecondary">
-            Explore the latest ads and find what you need.
-          </Typography>
+        {/* Welcome Section */}
+        <Typography variant="h4" gutterBottom>
+          Welcome, {user ? user.firstName : "User"}! 🎉
+        </Typography>
+        <Typography variant="subtitle1" color="textSecondary">
+          Explore the latest ads and find what you need.
+        </Typography>
 
           {/* Quick Access Cards */}
           <Grid container spacing={3} sx={{ my: 3, justifyContent: "center" }}>

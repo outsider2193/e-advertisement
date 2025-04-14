@@ -10,9 +10,14 @@ import { Navbar } from "../Navbar"
 
 const Login = () => {
 
-    const { register, handleSubmit, formState: { errors } } = useForm();
+    const { register, handleSubmit, formState: { errors }, watch } = useForm();
     const navigate = useNavigate();
     const [loading, setLoading] = useState(false);
+
+
+    const handleForgotPasswordClick = () => {
+        navigate(`/forgot-password/`);
+    };
 
     const submitHandler = async (data) => {
         setLoading(true)
@@ -23,13 +28,11 @@ const Login = () => {
             if (token && user) {
                 localStorage.removeItem("token");
                 localStorage.setItem("token", token);
-                localStorage.setItem("user", JSON.stringify(user));  // Store user details
             } else {
                 console.error("No token received from the server");
             }
 
             console.log(token);
-            console.log(user);
             const decoded = jwtDecode(token);
             console.log(decoded);
             const userRole = decoded.role;
@@ -121,6 +124,13 @@ const Login = () => {
                             helperText={errors.password?.message}
                             sx={{ mb: 2 }}
                         />
+                        <Button variant="text" onClick={handleForgotPasswordClick}>
+                            Forgot Password?
+                        </Button>
+
+
+
+
                         <Button type="submit" variant="contained" color="primary" fullWidth disabled={loading}>
                             {loading ? "Logging in..." : "Login"}
                         </Button>

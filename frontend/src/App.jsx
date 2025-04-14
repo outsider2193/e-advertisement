@@ -28,6 +28,8 @@ import { AllAds } from "./components/admin/AllAds";
 import { AllUsers } from "./components/admin/AllUsers";
 import { AllBookings } from "./components/admin/AllBookings";
 import BookedAds from "./components/user/BookedAds";
+import SetPassword from "./components/pages/SetPassword";
+import ResetPassword from "./components/pages/ResetPassword";
 
 function App() {
 
@@ -63,6 +65,11 @@ function App() {
           <Route path="/screenings" element={<Screens />}></Route>
           <Route path="/screenings2" element={<Screens2 />}></Route>
           <Route path="/saved-ads" element={<SavedAds />}></Route>
+
+          <Route path="/forgot-password/" element={<SetPassword/>} />
+          <Route path="/reset-password/:role/:token" element={<ResetPassword />} />
+
+
           <Route path="/getbookings" element={<BookedAds />}></Route>
 
           <Route path="/admin/:id" element={<AdminPage />}>
