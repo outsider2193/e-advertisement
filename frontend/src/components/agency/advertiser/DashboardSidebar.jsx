@@ -15,9 +15,7 @@ const Sidebar = () => {
   };
 
   const menuItems = [
-    { text: "Profile", icon: <AccountCircleIcon sx={{ color: "white" }} />, path: "/advertiserprofile" },
-    { text: "Payment", icon: <PaymentIcon sx={{ color: "white" }} /> },
-    { text: "History", icon: <HistoryIcon sx={{ color: "white" }} /> }
+    { text: "Profile", icon: <AccountCircleIcon sx={{ color: "white" }} />, path: "/advertiserprofile" }
   ];
 
   return (
