@@ -23,6 +23,10 @@ import { ChangePassword } from "./components/agency/advertiser/profile/ChangePas
 import { UserProfile } from "./components/user/profile/UserProfile";
 import { UserChangePassword } from "./components/user/profile/UserChangePassword";
 import { UserInfo } from "./components/user/profile/UserInfo";
+import { AdminPage } from "./components/admin/AdminPage";
+import { AllAds } from "./components/admin/AllAds";
+import { AllUsers } from "./components/admin/AllUsers";
+import { AllBookings } from "./components/admin/AllBookings";
 import BookedAds from "./components/user/BookedAds";
 import SetPassword from "./components/pages/SetPassword";
 import ResetPassword from "./components/pages/ResetPassword";
@@ -44,10 +48,12 @@ function App() {
           <Route path="/managebookings" element={<ManageBookings />}></Route>
           <Route path="/ad-detail" element={<AdDetails />}></Route>
           <Route path="/ad-details2" element={<AdDetails2 />}></Route>
+
           <Route path="/advertiserprofile" element={<AdvertiserProfile />}>
             <Route path="profile" element={<PersonalInfo />} />
             <Route path="change-password" element={<ChangePassword />} />
           </Route>
+
           <Route path='/user/dashboard' element={<User />}></Route>
           <Route path="/userprofile" element={<UserProfile />}>
             <Route path="profile" element={<UserInfo />} />
@@ -65,6 +71,18 @@ function App() {
 
 
           <Route path="/getbookings" element={<BookedAds />}></Route>
+
+          <Route path="/admin/:id" element={<AdminPage />}>
+            <Route path="viewallads" element={<AllAds />} />
+            <Route path="viewallusers" element={<AllUsers />} />
+            <Route path="viewallbookings" element={<AllBookings />} />
+          </Route>
+
+          <Route path="/admin/:id" element={<AdminPage />}>
+            <Route path="viewallads" element={<AllAds />} />
+            <Route path="viewallusers" element={<AllUsers />} />
+            <Route path="viewallbookings" element={<AllBookings />} />
+          </Route>
 
         </Routes>
         <ToastContainer />
