@@ -47,9 +47,9 @@ export const AdminPage = () => {
         if (detail === "View all the users") {
             navigate("viewallusers")
         }
-        if (detail === "View all the bookings") {
-            navigate("viewallbookings")
-        }
+        // if (detail === "View all the bookings") {
+        //     navigate("viewallbookings")
+        // }
     }
 
     const checkId = () => {
@@ -73,8 +73,8 @@ export const AdminPage = () => {
         }
     }
 
-    const details = ["View all ads", "View all the users", "View all the bookings"];
-    const userDetails = ["Account", "Sign out "]
+    const details = ["View all ads", "View all the users"];
+    const userDetails = ["Sign out"]
 
     return (
         <>
@@ -85,7 +85,6 @@ export const AdminPage = () => {
                             variant='h4'
                             component={Link}
                             to="/"
-
                             sx={{
                                 mr: 2,
                                 display: "flex",
@@ -145,7 +144,6 @@ export const AdminPage = () => {
                                     </MenuItem>
                                 ))}
                             </Menu>
-
                         </Box>
 
                         <Box sx={{ flexGrow: 0 }}>
@@ -177,18 +175,25 @@ export const AdminPage = () => {
                                 onClose={handleCloseUserMenu}
                             >
                                 {userDetails.map((user) => (
-                                    <MenuItem key={user} onClick={handleCloseUserMenu}>
+                                    <MenuItem
+                                        key={user}
+                                        onClick={() => {
+                                            handleCloseUserMenu();
+                                            if (user === "Sign out") {
+                                                localStorage.removeItem("token");
+                                                toast.success("Signed out successfully", { transition: Bounce });
+                                                navigate("/login");
+                                            }
+                                        }}
+                                    >
                                         {user}
                                     </MenuItem>
                                 ))}
                             </Menu>
                         </Box>
-
-
                     </Toolbar>
-
                 </Container>
-            </AppBar >
+            </AppBar>
 
             <Outlet />
         </>
