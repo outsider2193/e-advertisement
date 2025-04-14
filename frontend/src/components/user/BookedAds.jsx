@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import API from "../../api/axios";
 import { Card, CardContent, Typography, CircularProgress, Container, Grid, Box } from "@mui/material";
 import { CheckCircle, Close } from "@mui/icons-material";
-import bgimg from "../assets/images/BookMyAd1.jpg";
+import bgimg from "../assets/images/BrowseAdsBg.jpg";
 
 const BookedAds = () => {
     const [bookedAds, setBookedAds] = useState([]);

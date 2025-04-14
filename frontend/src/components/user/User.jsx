@@ -97,7 +97,7 @@ export const User = () => {
       >
         {/* Welcome Section */}
         <Typography variant="h4" gutterBottom>
-          Welcome, {user ? user.firstName : "User"}! 🎉
+          Welcome, {User ? User.firstName : "User"}! 🎉
         </Typography>
         <Typography variant="subtitle1" color="textSecondary">
           Explore the latest ads and find what you need.
