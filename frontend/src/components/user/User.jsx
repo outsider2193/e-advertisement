@@ -46,7 +46,8 @@ const Footer = () => {
 };
 
 export const User = () => {
-  const user = (localStorage.getItem("token")) || {};
+  // const user = (localStorage.getItem("token")) || {};
+  const user = JSON.parse(localStorage.getItem("user")) || null;
 
   const [ads, setAds] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -97,7 +98,7 @@ export const User = () => {
       >
         {/* Welcome Section */}
         <Typography variant="h4" gutterBottom>
-          Welcome, {User ? User.firstName : "User"}! 🎉
+          Welcome, {user ? user.firstName : "User"}! 🎉
         </Typography>
         <Typography variant="subtitle1" color="textSecondary">
           Explore the latest ads and find what you need.
