@@ -78,48 +78,48 @@ export const ManageBookings = () => {
                     >
                         <CardContent>
                             <Typography sx={{ fontSize: "1.2rem", fontWeight: "bold", mb: 1 }}>
-                                {detail.adId.title}
+                                {detail.adId?.title}
                             </Typography>
                             <Typography sx={{ opacity: 0.9, fontSize: "0.9rem" }}>
-                                {detail.adId.description}
+                                {detail.adId?.description}
                             </Typography>
                             <Typography sx={{ fontWeight: "bold", mt: 1 }}>
-                                Budget: <span style={{ color: "#ffd700" }}>{detail.adId.budget} RS</span>
+                                Budget: <span style={{ color: "#ffd700" }}>{detail.adId?.budget} RS</span>
                             </Typography>
                             <Typography sx={{ fontSize: "0.9rem", mt: 1 }}>
-                                Location: {detail.adId.stateId.name}, {detail.adId.cityId.name}
+                                Location: {detail.adId?.stateId?.name}, {detail.adId?.cityId?.name}
                             </Typography>
                             <Typography sx={{ fontSize: "0.9rem", mt: 1 }}>
         Client: {detail.clientId?.name} ({detail.clientId?.email})
     </Typography>
     <Typography sx={{ fontSize: "0.9rem", mt: 1 }}>
-        Start Time: {new Date(detail.startTime).toLocaleString()}
+        Start Time: {new Date(detail?.startTime).toLocaleString()}
     </Typography>
     <Typography sx={{ fontSize: "0.9rem", mt: 1 }}>
-        End Time: {new Date(detail.endTime).toLocaleString()}
+        End Time: {new Date(detail?.endTime).toLocaleString()}
     </Typography>
     <Typography sx={{ fontSize: "0.9rem", mt: 1 }}>
-        Display Frequency: {detail.displayFrequency}
+        Display Frequency: {detail?.displayFrequency}
     </Typography>
     {detail.specialPlacement && (
         <Typography sx={{ fontSize: "0.9rem", mt: 1 }}>
-            Special Placement: {detail.specialPlacement}
+            Special Placement: {detail?.specialPlacement}
         </Typography>
     )}
     {detail.contactPerson && (
         <Typography sx={{ fontSize: "0.9rem", mt: 1 }}>
-            Contact Person: {detail.contactPerson}
+            Contact Person: {detail?.contactPerson}
         </Typography>
     )}
     {detail.specialInstructions && (
         <Typography sx={{ fontSize: "0.9rem", mt: 1 }}>
-            Instructions: {detail.specialInstructions}
+            Instructions: {detail?.specialInstructions}
         </Typography>
     )}
     <Typography sx={{ fontSize: "0.9rem", mt: 1 }}>
-        Analytics Required: {detail.analyticsRequired ? "Yes" : "No"}
+        Analytics Required: {detail?.analyticsRequired ? "Yes" : "No"}
     </Typography>
-                            <Typography sx={{ mt: 1, fontWeight: "bold", color: detail.status === "confirmed" ? "lightgreen" : "red" }}>
+                            <Typography sx={{ mt: 1, fontWeight: "bold", color: detail?.status === "confirmed" ? "lightgreen" : "red" }}>
                                 Status: {detail.status}
                             </Typography>
 
