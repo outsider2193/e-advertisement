@@ -1,5 +1,5 @@
-const user = require("../models/user");
 const mongoose = require("mongoose");
+const user = require("../models/userModel");
 
 const getAdDashboard = async (req, res) => {
     const { id } = req.params;
@@ -14,8 +14,9 @@ const getAdDashboard = async (req, res) => {
         let reqUserId;
         try {
             reqUserId = new mongoose.Types.ObjectId(req.user.id); // Convert req.user.id to ObjectId
-        } catch (err) {~
-            console.error("Error converting req.user.id to ObjectId:", err); // Log the error
+        } catch (err) {
+            ~
+                console.error("Error converting req.user.id to ObjectId:", err); // Log the error
             return res.status(400).json({ message: "Invalid user ID format" }); // Return an error response
         }
         const paramId = new mongoose.Types.ObjectId(id); //Ensuring id is also an ObjectId

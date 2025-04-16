@@ -9,7 +9,9 @@ const userSchema = new mongoose.Schema({
         type: String,
         enum: ["viewer", "admin", "advertiser"],
         default: "viewer"
-    }
+    },
+    savedAds: { type: [mongoose.Schema.Types.ObjectId], ref: "Ad", default: [] }
+
 
 }, { timestamps: true });
 

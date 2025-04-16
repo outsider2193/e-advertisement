@@ -1,7 +1,8 @@
 require("dotenv").config();
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
-const user = require("../models/user");
+const user = require("../models/userModel");
+const mailMiddleware = require("../middleware/mailMiddleware");
 
 // const router = express.Router();
 const secretKey = process.env.JWT_SECRET;
@@ -31,18 +32,9 @@ const registerAdvertiser = async (req, res) => {
             role
         });
         await newUser.save();
-        // const token = jwt.sign(
-        //     {
-        //         id: existingUser._id,
-        //         email: existingUser.email,
-        //         role: existingUser.role
-        //     },
-        //     secretKey,
-        //     {
-        //         expiresIn: "1y"
-        //     }
-        // );
-        res.status(201).json({ message: "Advertiser registered succesfully", token });
+
+        await mailMiddleware.sendingMail(newUser.email, "Welcome to Adverse", "We Wish You a Warm Welcome");
+        res.status(201).json({ message: "Advertiser registered succesfully" });
     } catch (error) {
         console.error(error);
         res.status(500).json({ message: "Server Error" });
@@ -55,6 +47,7 @@ const loginAdvertiser = async (req, res) => {
     try {
         const { email, password } = req.body;
         const existingAdvertiser = await user.findOne({ email });
+        console.log("Existing Advertiser:", existingAdvertiser);
         if (!existingAdvertiser) {
             return res.status(400).json({ message: "advertiser not found!" });
         }
@@ -64,10 +57,15 @@ const loginAdvertiser = async (req, res) => {
 
         }
         const token = jwt.sign(
-            { id: existingAdvertiser._id, email: existingAdvertiser.email, role: existingAdvertiser.role },
+            {
+                id: existingAdvertiser._id,
+                email: existingAdvertiser.email,
+                role: existingAdvertiser.role
+            },
             secretKey,
             { expiresIn: '1y' }
         );
+        console.log("Token:", token);
         res.status(200).json({ message: "Login succesfull", token });
     } catch (error) {
         console.error(error);
@@ -75,4 +73,50 @@ const loginAdvertiser = async (req, res) => {
     }
 }
 
-module.exports = { registerAdvertiser, loginAdvertiser };
+const updateAdvertiserProfile = async (req, res) => {
+    const { id } = req.params;
+    const { firstName, lastName, email } = req.body;
+    try {
+
+        const updateDetails = await user.findByIdAndUpdate(id, { firstName, lastName, email }, { new: true });
+        if (!updateDetails) {
+            res.status(404).json({ message: "Advertiser not found" });
+        }
+        res.status(200).json({ message: "Details updated succesfully", data: updateDetails })
+    } catch (error) {
+        console.log(error);
+        res.status(500).json({ message: "Internal Server error" });
+    }
+
+}
+
+const updateAdvertiserPassword = async (req, res) => {
+    const { id } = req.params;
+    const { oldPassword, newPassword, confirmPassword } = req.body;
+
+    try {
+        const existingAdvertiser = await user.findById(id);
+        if (!existingAdvertiser) return res.status(404).json({ message: "Not found" })
+
+        const isMatch = await bcrypt.compare(oldPassword, existingAdvertiser.password);
+        if (!isMatch) return res.status(404).json({ message: "Current password is wrong" });
+        if (confirmPassword !== newPassword) {
+            return res.status(400).json({ message: "Incorrect password" })
+        }
+        const salt = await bcrypt.genSalt(10);
+        const hashedPassword = await bcrypt.hash(newPassword, salt);
+
+        const updatePassword = await user.findByIdAndUpdate(id, { password: hashedPassword }, { new: true });
+
+        res.status(200).json({ message: "Password updated", data: updatePassword });
+
+
+    } catch (error) {
+        console.log(error);
+        res.status(500).json({ message: "Internal server error" });
+    }
+}
+
+
+
+module.exports = { registerAdvertiser, loginAdvertiser, updateAdvertiserProfile, updateAdvertiserPassword };
